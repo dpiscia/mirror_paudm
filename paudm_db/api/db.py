@@ -1,5 +1,5 @@
 from flask.ext import restful
-import model #in the future it will be imported by other packages
+from paudm_db import model #in the future it will be imported by other packages
 
 
 class db_list(restful.Resource):
