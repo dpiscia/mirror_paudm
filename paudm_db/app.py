@@ -5,6 +5,6 @@ app = Flask(__name__)
 api = restful.Api(app)
 		
 api.add_resource(db.db_list, '/api/db_list')
-
+api.add_resource(db.tb_list, '/api/tb/<tb_name>')
 if __name__ == '__main__':
     app.run(debug=True) 

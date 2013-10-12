@@ -960,7 +960,7 @@ def main(argv = None):
 
 def recreate():
     # Drop and recreate the database
-    
+    metadata.drop_all()
     metadata.create_all()
     if metadata.bind.url.database == 'paudb' and metadata.bind.url.drivername == 'postgresql':
         metadata.create_comments()
