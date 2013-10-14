@@ -5,3 +5,5 @@ This is about db schema reading and analysis
 
 The backend is powered by FLask
 The frontend is powered by Angularjs
+
+Continuos testing by travis
