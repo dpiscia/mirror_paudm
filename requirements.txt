@@ -1,5 +1,0 @@
-flask
-sqlalchemy
-flask-restful
--i http://packages.astro.pic.es/simple/ brownthrower
-nose
