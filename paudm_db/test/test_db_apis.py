@@ -19,14 +19,25 @@ def test_db_routes():
   
 
 def test_db_ites_routes():
-  rv = test_app.get('/api/db/quality_control')
+  rv = test_app.get('/api/tb/User')
   check_content_type(rv.headers)
   resp = json.loads(rv.data)
   #import pdb; pdb.set_trace() 
   #make sure we get a response
   eq_(rv.status_code,200)
   #make sure tit gets one list
-  eq_(len(resp), 0)
+  eq_(len(resp['list']), 1)
+  
+def test_db_ites_routes_empty():
+  rv = test_app.get('/api/tb/production')
+  check_content_type(rv.headers)
+  resp = json.loads(rv.data)
+  #import pdb; pdb.set_trace() 
+  #make sure we get a response
+  eq_(rv.status_code,200)
+  #make sure tit gets one list
+  
+  eq_(len(resp['list']), 0)
   
     
 if __name__ == '__main__':

@@ -7,4 +7,6 @@ api = restful.Api(app)
 api.add_resource(db.db_list, '/api/db_list')
 api.add_resource(db.tb_list, '/api/tb/<tb_name>')
 if __name__ == '__main__':
-    app.run(debug=True) 
+	model.init('sqlite:///paudm_db/test/prova.db')
+	model.recreate()
+	app.run(debug=True) 

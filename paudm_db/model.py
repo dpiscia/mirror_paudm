@@ -72,7 +72,7 @@ class User(Base):
         self.email = email
         self.name = name
         self.surname = surname 
-        self._password = hashlib.sha512(password + _salt).hexdigest()
+        self._password = password
         self.validated = 0
         self.permissions = permissions
         
