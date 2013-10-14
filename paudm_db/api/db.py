@@ -1,15 +1,27 @@
 from flask.ext import restful
 from paudm_db import model #in the future it will be imported by other packages
 
-model.init('sqlite:///test/prova.db')
+model.init('sqlite:///paudm_db/test/prova.db')
+model.recreate()
 class db_list(restful.Resource):
 	"""It defines a rest api to get all tables present in db """
 	def get(self):
 		return { 'list' : model.metadata.tables.keys() }
 		
 class tb_list(restful.Resource):
-	"""It defines a rest api to get all tables present in db """
+	"""It defines a rest api to get all tables present in db
+	the syntax is the following api/tb/<tb_name> """
 	def get(self,tb_name):
-		tb_object = getattr(model,tb_name)
-		self.items = model.session.query(tb_object).all()
+		self.items = []
+		tb_object = getattr(model,tb_name.title())
+		items = model.session.query(tb_object).all()
+		for item in items:
+			self.items.append(row2dict(item))
 		return { 'list' : self.items }
+		
+def row2dict(row):
+    d = {}
+    for column in row.__table__.columns:
+        d[column.name] = getattr(row, column.name)
+
+    return d
