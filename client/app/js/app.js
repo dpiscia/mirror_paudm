@@ -4,6 +4,7 @@
 // Declare app level module which depends on filters, and services
 angular.module('paudm_db', [
   'ngRoute',
+  'ngResource',
   'paudm_db.filters',
   'paudm_db.services',
   'paudm_db.directives',

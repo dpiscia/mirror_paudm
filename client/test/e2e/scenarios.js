@@ -5,7 +5,7 @@
 describe('my app', function() {
 
   beforeEach(function() {
-    browser().navigateTo('../../app/index.html');
+    browser().navigateTo('static/index.html');
   });
 
 
@@ -14,7 +14,7 @@ describe('my app', function() {
   });
 
 
-  describe('view1', function() {
+ /* describe('view1', function() {
 
     beforeEach(function() {
       browser().navigateTo('#/view1');
@@ -26,10 +26,10 @@ describe('my app', function() {
         toMatch(/partial for view 1/);
     });
 
-  });
+  });*/
 
 
-  describe('view2', function() {
+ /* describe('view2', function() {
 
     beforeEach(function() {
       browser().navigateTo('#/view2');
@@ -41,5 +41,5 @@ describe('my app', function() {
         toMatch(/partial for view 2/);
     });
 
-  });
+  });*/
 });
