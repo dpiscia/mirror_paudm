@@ -14,8 +14,8 @@ def test_db_routes():
   #make sure we get a response
   eq_(rv.status_code,200)
   #make sure tit gets one list
-  eq_(len(resp), 1)
-  eq_(len(resp['list']), 19)
+  eq_(len(resp), 19)
+  
   
 
 def test_db_ites_routes():
