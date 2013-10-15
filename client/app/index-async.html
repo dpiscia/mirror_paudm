@@ -31,14 +31,17 @@
     // load all of the dependencies asynchronously.
     $script([
       'lib/angular/angular.js',
+      'lib/angular/angular-route.js',
+      'lib/angular/angular-resource.js',
       'js/app.js',
       'js/services.js',
       'js/controllers.js',
       'js/filters.js',
-      'js/directives.js'
+      'js/directives.js',
+      'js/resources.js'
     ], function() {
       // when all is done, execute bootstrap angular application
-      angular.bootstrap(document, ['myApp']);
+      angular.bootstrap(document, ['paudm_db']);
     });
   </script>
   <title>My AngularJS App</title>

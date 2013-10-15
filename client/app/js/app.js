@@ -2,12 +2,13 @@
 
 
 // Declare app level module which depends on filters, and services
-angular.module('myApp', [
+angular.module('paudm_db', [
   'ngRoute',
-  'myApp.filters',
-  'myApp.services',
-  'myApp.directives',
-  'myApp.controllers'
+  'paudm_db.filters',
+  'paudm_db.services',
+  'paudm_db.directives',
+  'paudm_db.controllers',
+  'paudm_db.resources'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/view1', {templateUrl: 'partials/partial1.html', controller: 'MyCtrl1'});
