@@ -5,7 +5,7 @@ python:
 
 # command to install dependencies
 install: 
-  -"pip install -i http://packages.astro.pic.es/simple/ brownthrower"
+  - "pip install -i http://packages.astro.pic.es/simple/ brownthrower"
   - "python setup.py install"
 # command to run tests
 
