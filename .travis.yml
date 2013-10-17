@@ -7,6 +7,10 @@ python:
 install: 
   - "pip install -i http://packages.astro.pic.es/simple/ brownthrower"
   - "python setup.py install"
+  - "sudo apt-get install karma-tools"
 # command to run tests
 
-script: nosetests
+script: 
+   - nosetests
+   - karma start client/config/karma.conf.js --no-auto-watch --single-run --reporters=dots --browsers=Firefox
+
