@@ -30,22 +30,22 @@
 
     // load all of the dependencies asynchronously.
     $script([
-      'lib/angular/angular.js',
-      'lib/angular/angular-route.js',
-      'lib/angular/angular-resource.js',
-      'js/app.js',
-      'js/services.js',
-      'js/controllers.js',
-      'js/filters.js',
-      'js/directives.js',
-      'js/resources.js'
+      'static/lib/angular/angular.js',
+      'static/lib/angular/angular-route.js',
+      'static/lib/angular/angular-resource.js',
+      'static/js/app.js',
+      'static/js/services.js',
+      'static/js/controllers.js',
+      'static/js/filters.js',
+      'static/js/directives.js',
+      'static/js/resources.js'
     ], function() {
       // when all is done, execute bootstrap angular application
       angular.bootstrap(document, ['paudm_db']);
     });
   </script>
   <title>My AngularJS App</title>
-  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="static/css/bootstrap.css">
 </head>
 <body ng-cloak>
   <ul class="menu">
