@@ -7,5 +7,6 @@
         "karma-junit-reporter" : "*",    
         "karma-jasmine" : "*",
         "karma-ng-scenario" : "*"
+,        "recess" : "*"
     }
 }
