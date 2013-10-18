@@ -14,6 +14,9 @@ angular.module('paudm_db.controllers', []).
 	});
 	console.log("ccc");
   }])
+   .controller('db_list', ['$scope', function db_list($scope) {
+	$scope.db = {"prova":"db general biew"};
+  }])
   .controller('MyCtrl2', ['$scope', function MyCtrl2($scope) {
 	$scope.db_list = [];
   }]);
