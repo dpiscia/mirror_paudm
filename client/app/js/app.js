@@ -30,9 +30,11 @@ angular.module('paudm_db', [
         /////////////////////////////
         // Redirects and Otherwise //
         /////////////////////////////
-
+		 
         // Use $urlRouterProvider to configure any redirects (when) and invalid urls (otherwise).
-        $urlRouterProvider.otherwise("/view1");
+        $urlRouterProvider
+             
+             .otherwise("/view1");
         
         $stateProvider
 
@@ -58,7 +60,7 @@ angular.module('paudm_db', [
 
 
           })        .state('view1.table', {
-            url: "/table",
+            url: "/{contactId}",
             templateUrl: "static/partials/partial2.html",
             controller: "MyCtrl2"
         })

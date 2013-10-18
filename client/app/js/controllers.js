@@ -18,6 +18,15 @@ angular.module('paudm_db.controllers', []).
    .controller('db_list', ['$scope', function db_list($scope) {
 	$scope.db = {"prova":"db general biew"};
   }])
-  .controller('MyCtrl2', ['$scope', function MyCtrl2($scope) {
-	$scope.db_list = [];
+  .controller('MyCtrl2', ['$scope','$stateParams','table_schema', function MyCtrl2($scope, $stateParams, table_schema) {
+	$scope.prova   = $stateParams.contactId;
+	console.log($scope.prova);
+	table_schema.query({table_name :$stateParams.contactId}, function(data){
+	//1.callback on d3.plot, in the future implement on promise
+	//2. implement callback on failure
+	$scope.table_fields = data;
+	
+	console.log('success, got data: ');
+	
+	});
   }]);
