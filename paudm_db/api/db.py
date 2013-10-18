@@ -4,7 +4,11 @@ from paudm_db import model #in the future it will be imported by other packages
 class db_list(restful.Resource):
 	"""It defines a rest api to get all tables present in db """
 	def get(self):
-		return  model.metadata.tables.keys() 
+		tables = model.metadata.tables.keys()
+		result = []
+		for table in tables:
+			result.append({"name" : table})
+		return  result
 		
 class tb_list(restful.Resource):
 	"""It defines a rest api to get all tables present in db
