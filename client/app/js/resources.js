@@ -11,6 +11,12 @@ angular.module('paudm_db.resources', ['ngResource'])
     query: {method:'GET', params:{}, isArray:true}
   });
   
+})
+  .factory('table_schema', function($resource){
+  return $resource('/api/tb/:table_name', {table_name: "@table_name"} ,{
+    query: {method:'GET', params:{}, isArray:false}
+  });
+  
 });
 
 
