@@ -31,3 +31,7 @@ class tb_list(restful.Resource):
 #        d[column.name] = getattr(row, column.name)
 
 #    return d
+ç
+
+#for c in model.Detection.__table__.foreign_keys:
+#for c in model.Detection.__table__.columns:
