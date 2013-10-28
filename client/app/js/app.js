@@ -6,12 +6,15 @@
 angular.module('paudm_db', [
   'ngRoute',
   'ngResource',
+  'd3',
+  'd3_plots',
   'paudm_db.filters',
   'paudm_db.services',
   'paudm_db.directives',
   'paudm_db.controllers',
   'paudm_db.resources',
   'ui.router'
+  
 ]).run(
       [        '$rootScope', '$state', '$stateParams',
       function ($rootScope,   $state,   $stateParams) {

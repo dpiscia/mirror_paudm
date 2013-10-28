@@ -8,7 +8,10 @@ class db_list(restful.Resource):
 		tables = model.metadata.tables.keys()
 		result = []
 		for table in tables:
-			result.append({"name" : table})
+			for_keys = []
+			for c in Table(table,model.metadata, autoload=True).foreign_keys:
+				 for_keys.append(c.target_fullname)
+			result.append({"name" : table, "foreign_keys" : for_keys })
 		return  result
 		
 class tb_list(restful.Resource):
