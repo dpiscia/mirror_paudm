@@ -2,19 +2,20 @@
 <html lang="en" ng-app="paudm_db">
 <head>
   <meta charset="utf-8">
-  <title>My AngularJS App</title>
+  
   <link rel="stylesheet" href="static/css/bootstrap.css"/>
+  <title ng-bind="$state.current.name + ' - ui-router'">ui-router</title>
 </head>
 <body>
+
 <div class="container">
-  <ul class="menu">
-    <li><a href="#/view1">view1</a></li>
-    <li><a href="#/view2">view2</a></li>
-  </ul>
-  
+ <div class="row">	
+  <div ng-include="'static/partials/header.html'"></div>
+ </div>
+</div>  
   <div ui-view></div>
 
-  <div>Angular seed app: v<span app-version></span></div>
+  
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
