@@ -31,8 +31,11 @@
     // load all of the dependencies asynchronously.
     $script([
       'static/lib/angular/angular.js',
+      'static/lib/angular/angular-ui-router.js',
       'static/lib/angular/angular-route.js',
       'static/lib/angular/angular-resource.js',
+      'static/lib/d3/d3_3.3.9_ang.js',
+      'static/lib/d3/force_dep.js',
       'static/js/app.js',
       'static/js/services.js',
       'static/js/controllers.js',
@@ -48,15 +51,16 @@
   <link rel="stylesheet" href="static/css/bootstrap.css">
 </head>
 <body ng-cloak>
-<div class="container">
-  <ul class="menu">
-    <li><a href="#/view1">view1</a></li>
-    <li><a href="#/view2">view2</a></li>
-  </ul>
+   <div class="container">
+       <div class="row">	
+          <div ng-include="'static/partials/header.html'">
+          </div>
+       </div>
+   </div>  
+    <div ui-view>
+    </div>
 
-  <div ng-view></div>
 
-  <div>Angular seed app: v<span app-version></span></div>
-</div>
 </body>
 </html>
+
