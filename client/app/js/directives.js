@@ -87,8 +87,8 @@ svg.selectAll("rect")
       
       var svg = d3.select(element[0])
             .append("svg")
-            .attr("width", "400")
-            .attr("height","200");
+            .attr("width", "500")
+            .attr("height","500");
 
 
      // on window resize, re-render d3 canvas
@@ -108,7 +108,7 @@ svg.selectAll("rect")
      scope.force =  d3.layout.force()
         .charge(-120)
         .linkDistance(30)
-        .size([400, 400]);
+        .size([500, 500]);
      scope.force
         .nodes(scope.data.nodes)
         .links(scope.data.links)
