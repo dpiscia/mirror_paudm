@@ -16,9 +16,9 @@ from sqlalchemy.sql.expression import func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, MetaData, Table
 from sqlalchemy.ext.hybrid import hybrid_property
-import brownthrower.model 
+import model_bt  
 
-Base = brownthrower.model.Base
+Base = model_bt.Base
 metadata      = Base.metadata
 session       = None
 tables        = {}
@@ -72,7 +72,7 @@ class User(Base):
         self.email = email
         self.name = name
         self.surname = surname 
-        self._password = password
+        self._password = hashlib.sha512(password + _salt).hexdigest()
         self.validated = 0
         self.permissions = permissions
         
@@ -861,11 +861,7 @@ Index('ik_targetlocation', Target.ra, Target.dec)
     
 
     # Job Table
-class Job_pau(brownthrower.model.Job) :
-        
-        quality_controls = relationship('Quality_control',  back_populates="job")   
-    
-    # Documentation
+
     #comment="Job",
 
     
@@ -960,7 +956,7 @@ def main(argv = None):
 
 def recreate():
     # Drop and recreate the database
-    
+    metadata.drop_all()
     metadata.create_all()
     if metadata.bind.url.database == 'paudb' and metadata.bind.url.drivername == 'postgresql':
         metadata.create_comments()
