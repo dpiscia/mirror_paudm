@@ -7,7 +7,7 @@ python:
 install: 
   - "pip install -i http://packages.astro.pic.es/simple/ brownthrower"
   - "python setup.py install"
-  - "sudo apt-get install libkarma-cil"
+  - "sudo npm install -g karma"
 # command to run tests
 
 script: 
