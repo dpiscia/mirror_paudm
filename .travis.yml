@@ -7,6 +7,12 @@ python:
 install: 
   - "pip install -i http://packages.astro.pic.es/simple/ brownthrower"
   - "python setup.py install"
+  - "wget http://nodejs.org/dist/v0.8.21/node-v0.8.21.tar.gz"
+  - "tar -xvzf node-v0.8.21.tar.gz"
+  - "cd node-v0.8.21"
+  - "./configure"
+  - "make"
+  - "sudo make install"
   - "sudo npm install -g karma"
 # command to run tests
 
