@@ -10,9 +10,13 @@ install:
   - "pip install -i http://packages.astro.pic.es/simple/ brownthrower"
   - "python setup.py install"
   - "npm install -g karma"
+  - "cd client"
+  - "npm install"
+  - "cd .."
 # command to run tests
 
 script: 
    - nosetests
-   - karma start client/config/karma.conf.js --no-auto-watch --single-run --reporters=dots --browsers=Firefox
+   - cd client
+   - ./script/test.sh
 
