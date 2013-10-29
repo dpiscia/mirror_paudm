@@ -4,6 +4,8 @@ node_js:
 
 # command to install dependencies
 install: 
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
   - "sudo easy_install virtualenv"
   - "virtualenv prova"
   - "source prova/bin/activate"
