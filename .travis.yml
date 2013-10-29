@@ -18,5 +18,5 @@ install:
 script: 
    - nosetests
    - cd client
-   - ./script/test.sh
+   - ./scripts/test.sh
 
