@@ -21,4 +21,4 @@ script:
    - nosetests
    - cd client
    - ./scripts/test.sh
-
+   - ./scripts/e2e-test.sh
