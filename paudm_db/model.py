@@ -16,9 +16,9 @@ from sqlalchemy.sql.expression import func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, MetaData, Table
 from sqlalchemy.ext.hybrid import hybrid_property
-import model_bt  
+import brownthrower.model  
 
-Base = model_bt.Base
+Base = brownthrower.model.Base
 metadata      = Base.metadata
 session       = None
 tables        = {}
