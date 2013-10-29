@@ -4,6 +4,7 @@ node_js:
 
 # command to install dependencies
 install: 
+  - "sudo easy_install virtualenv"
   - "virtualenv prova"
   - "source prova/bin/activate"
   - "pip install -i http://packages.astro.pic.es/simple/ brownthrower"
