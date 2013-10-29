@@ -7,7 +7,11 @@ module.exports = function(config){
       'app/lib/angular/angular-resource.js',
       'test/lib/angular/angular-mocks.js',
       'app/js/**/*.js',
-      'test/unit/controllersSpec.js'
+      'app/lib/angular/angular-ui-router.js',
+      'app/lib/angular/angular-route.js',
+      'test/unit/controllersSpec.js',
+      'app/lib/d3/d3_3.3.9_ang.js',
+      'app/lib/d3/force_dep.js'
     ],
 
     autoWatch : true,

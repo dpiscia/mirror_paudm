@@ -80,6 +80,8 @@ svg.selectAll("rect")
   
   
   .directive('d3Force', ['d3', function(d3) {
+  // data should be provided as:
+  // scope.data = {nodes : ['name' : name, group : group"], links : ["target" : id, "source " : id , "value" :  number] }
     return {
       restrict: 'EA',
     scope: {data: '=data',},

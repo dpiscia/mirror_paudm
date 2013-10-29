@@ -20,9 +20,10 @@ describe('PhoneCat controllers', function() {
 describe('myApp', function () {
     var scope,
         controller,
+        state,
         service;
     beforeEach(function () {
-        module('paudm_db.controllers');
+        module('paudm_db');
     });
     
     // Mocking service?
@@ -34,10 +35,12 @@ describe('myApp', function () {
     }));
     
     describe('MyCtrl1', function () {
-        beforeEach(inject(function ($rootScope, $controller) {
+        beforeEach(inject(function ($rootScope, $state,  $controller) {
             scope = $rootScope.$new();
+            state = $state;
             controller = $controller('MyCtrl1', {
-                '$scope': scope
+                '$scope': scope,
+                '$state':state
             });
         }));
         

@@ -19,6 +19,7 @@ module.exports = function(config){
     proxies : {
       '/': 'http://localhost:5000/'
     },
+    urlRoot: '__karma__',
 
     plugins : [
             'karma-junit-reporter',
