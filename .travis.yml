@@ -4,6 +4,8 @@ node_js:
 
 # command to install dependencies
 install: 
+  - "virtualenv prova"
+  - "source prova/bin/activate"
   - "pip install -i http://packages.astro.pic.es/simple/ brownthrower"
   - "python setup.py install"
   - "npm install -g karma"
