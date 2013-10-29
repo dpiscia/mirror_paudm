@@ -14,7 +14,7 @@ module.exports = function(config){
       'app/lib/d3/force_dep.js'
     ],
 
-    autoWatch : true,
+    singleRun : true,
 
     frameworks: ['jasmine'],
 
