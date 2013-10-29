@@ -1,5 +1,5 @@
 angular.module('d3_plots', ['d3'])
-  .factory('force_plots', ['d3Service', function(d3){
+  .factory('force_plots', ['d3', function(d3){
     var createSVG_Force;
     createSVG_Force = function(scope, element) {
   scope.width = 800;
@@ -10,13 +10,43 @@ angular.module('d3_plots', ['d3'])
     .size([scope.width, scope.height]);
  
   if (scope.svg == null) {
-    return scope.svg = d3.select("#prova").append("svg:svg").attr("width", scope.width).attr("height", scope.height);
+    return scope.svg = d3.select(element[0]).append("svg:svg")
+            .attr("width", "100%");
     }
    };
    //return createSVG_Force;
    var update_force_tree;
-   update_force_tree = function(newVal, oldVal,  scope) {
-   scope.svg.append("p").text("New paragraph!");
+   update_force_tree = function(newVal, oldVal,  scope, element) {
+   
+   scope.data = [
+  {name: "Greg", score:98},
+  {name: "Ari", score:96},
+  {name: "Loser", score: 48}
+];
+// setup variables
+var width, height, max;
+width = d3.select(element[0])[0][0].offsetWidth - 20;
+  // 20 is for margins and can be changed
+height = scope.data.length * 35;
+  // 35 = 30(bar height) + 5(margin between bars)
+max = 98;
+  // this can also be found dynamically when the data is not static
+  // max = Math.max.apply(Math, _.map(data, ((val)-> val.count)))
+
+// set the height based on the calculations above
+svg.attr('height', height);
+
+scope.svg.selectAll("rect")
+  .data(scope.data)
+  .enter()
+    .append("rect")
+    .attr("height", 30) // height of each bar
+    .attr("width", 0) // initial width of 0 for transition
+    .attr("x", 10) // half of the 20 side margin specified above
+    .attr("y", function(d, i){return i * 35;}) // height + margin between bars
+    .transition()
+      .duration(1000) // time of duration
+      .attr("width", function(d){return d.score/(max/width);}); // width based on scale
 /*     scope.force
       .nodes(scope.data.nodes)
       .links(scope.data.links)
