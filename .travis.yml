@@ -21,4 +21,5 @@ script:
    - nosetests
    - cd client
    - ./scripts/test.sh
+   - python ../paudm_db/app.py &
    - ./scripts/e2e-test.sh
