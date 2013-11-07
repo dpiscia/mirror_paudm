@@ -1,0 +1,37 @@
+<div class="container">
+<p> Siamo qua </p>
+<!-- data table section --->
+	<div class="row">
+		<div class="span12">
+			<table class="table table-striped  table-hover">	
+				<thead>
+					<tr>
+						<th><a href="" ng-click="orderProp = 'id'; reverse=!reverse">ID</a></th>
+						<th><a href="" ng-click="orderProp = 'task'; reverse=!reverse">Name</a></th>
+						<th>Jobs</th>
+						<th><a href="" ng-click="orderProp = 'status'; reverse=!reverse">Status</a></th>
+						<th>QC</th>
+						<th><a href="" ng-click="orderProp = 'ts_created'; reverse=!reverse">Created</a></th>
+						<th><a href="" ng-click="orderProp = 'ts_started'; reverse=!reverse">Started</a></th>
+						<th><a href="" ng-click="orderProp = 'ts_ended'; reverse=!reverse">Ended</a></th>
+						<th>All subjobs</th>
+						<th>One level subjobs</th> 
+					</tr>
+				</thead>
+			<tbody>
+				<tr ng-repeat="job in jobs " >
+					<td><a href="">{{job.id}}</a></td>
+					<td><p>{{job.task}}</p>  </td>
+					<td><p>{{job.nbr}}</p></td>
+					<td> <p>{{job.status}}</p>   </td>
+					<td> <i class= "{{job.qc && 'icon-ok' || 'icon-remove' }}" ></i> </td>
+					<td> <p>{{job.ts_created | date:'medium'}}</p>   </td>
+					<td> <p>{{job.ts_started | date:'medium'}}</p>   </td>
+					<td> <p>{{job.ts_ended | date:'medium'}}</p>   </td>
+          			<td> <a ng-show="job.nbr > 0"  href="#/detailed_view/{{job.id}}/All" class="btn btn-primary"><i   class="icon-pencil"></i></a> </td>
+					<td> <a ng-show="job.nbr > 0"  href="#/detailed_view/{{job.id}}/1" class="btn btn-primary"><i   class="icon-pencil"></i></a> </td>
+         		</tr>
+			</tbody>  
+		</table>
+	</div>
+</div>

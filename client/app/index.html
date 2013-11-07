@@ -9,8 +9,10 @@
 <body>
 
 <div class="container">
+ 
  <div class="row">	
-  <div ng-include="'static/partials/header.html'"></div>
+  <div ng-include="'static/nav_bar.html'"></div>
+  <div ng-include="'static/header.html'"></div>
  </div>
 </div>  
   <div ui-view></div>
@@ -30,6 +32,9 @@
   <script src="static/common/directives/d3/directives.js"></script>
   <script src="static/common/resources/db_schema.js"></script>
   <script src="static/common/services/bread_crumbs.js"></script>
+  <script src="static/common/resources/jobs.js"></script>
+  <script src="static/job_monitor/job_monitor.js"></script>
+  <script src="static/job_monitor/controllers.js"></script>
   <script src="static/app.js"></script>
 </div>
 </body>
