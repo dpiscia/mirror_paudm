@@ -1,1 +1,9 @@
 *.pyc
+*.db
+.coverage
+.project
+build
+dist
+node_modules
+paudm_db.egg-info
+*.log

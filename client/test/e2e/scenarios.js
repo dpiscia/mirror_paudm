@@ -15,32 +15,31 @@ describe('my app', function() {
   });
 
 
- /* describe('view1', function() {
+  describe('view1', function() {
 
     beforeEach(function() {
-      browser().navigateTo('#/view1');
+      browser().navigateTo('#/db_schema/list');
     });
 
 
-    it('should render view1 when user navigates to /view1', function() {
-      expect(element('[ng-view] p:first').text()).
-        toMatch(/partial for view 1/);
+    it('should render view1 when user navigates to /db_schema/list', function() {
+expect(browser().location().path()).toBe("/db_schema/list");
     });
 
-  });*/
+  });
 
 
- /* describe('view2', function() {
+
+  describe('view2', function() {
 
     beforeEach(function() {
-      browser().navigateTo('#/view2');
+      browser().navigateTo('#/db_schema/global_object');
     });
 
 
     it('should render view2 when user navigates to /view2', function() {
-      expect(element('[ng-view] p:first').text()).
-        toMatch(/partial for view 2/);
+expect(browser().location().path()).toBe("/db_schema/global_object");
     });
 
-  });*/
+  });
 });
