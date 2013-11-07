@@ -11,7 +11,7 @@ describe('my app', function() {
 
   it('should automatically redirect to /view1/list when location hash/fragment is empty', function() {
    console.log(browser().location().path());
-    expect(browser().location().path()).toBe("/view1/list");
+    expect(browser().location().path()).toBe("/db_schema");
   });
 
 

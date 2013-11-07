@@ -3,7 +3,7 @@
 /* Directives */
 
 
-angular.module('paudm_db.directives', []).
+angular.module('d3.directives', []).
   directive('appVersion', ['version', function(version) {
     return function(scope, elem, attrs) {
       elm.text(version);

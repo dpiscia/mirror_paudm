@@ -5,8 +5,8 @@
 
 // Demonstrate how to register services
 // In this case it is a simple value service.
-angular.module('paudm_db.services', []);
-angular.module('paudm_db.services').factory('breadcrumbs', ['$rootScope', '$location', function($rootScope, $location){
+angular.module('paudm.breadcrumbs', []);
+angular.module('paudm.breadcrumbs').factory('breadcrumbs', ['$rootScope', '$location', function($rootScope, $location){
 
   var breadcrumbs = [];
   var breadcrumbsService = {};

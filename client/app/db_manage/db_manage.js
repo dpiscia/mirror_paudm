@@ -4,16 +4,8 @@
 
 // Declare app level module which depends on filters, and services
 angular.module('paudm_db', [
-  'ngRoute',
-  'ngResource',
-  'd3',
-  'd3_plots',
-  'paudm_db.filters',
-  'paudm_db.services',
-  'paudm_db.directives',
-  'paudm_db.controllers',
-  'paudm_db.resources',
-  'ui.router'
+  'db_manage.controllers',
+  'paudm.db_schema'
   
 ]).run(
       [        '$rootScope', '$state', '$stateParams',
@@ -35,9 +27,7 @@ angular.module('paudm_db', [
         /////////////////////////////
 		 
         // Use $urlRouterProvider to configure any redirects (when) and invalid urls (otherwise).
-        $urlRouterProvider
-             
-             .otherwise("/view1");
+   
         
         $stateProvider
 
@@ -45,37 +35,47 @@ angular.module('paudm_db', [
           // Home //
           //////////
 
-          .state("view1", {
-
+          .state("db_schema", {
+            
             // Use a url of "/" to set a states as the "index".
-            url: "/view1",
+            url: "/db_schema",
             templateUrl: "static/partials/partial1.html", 
-            controller: "MyCtrl1"
+            resolve : {        
+            table_list: function($q, db_list){
+             var deferred = $q.defer();
+             db_list.query({}, function(data){ deferred.resolve(data);})
 
+             return deferred.promise;
+         }},
+            controller: "db_schema",
+                
 
           })
-          .state("view1.list", {
+          .state("db_schema.list", {
 
             // Use a url of "/" to set a states as the "index".
             url: "/list",
             templateUrl: "static/partials/db_list_plot.html", 
-            controller: "db_list"
+            controller: "tables_plot"
 
 
-          })        .state('view1.table', {
+          })        .state('db_schema.table', {
             url: "/{contactId}",
             templateUrl: "static/partials/partial2.html",
-            controller: "MyCtrl2"
+                        resolve : {        
+            fields_list: function($q, table_schema, $stateParams){
+             var deferred = $q.defer();
+             if (undefined != $stateParams ){
+             table_schema.query({table_name :$stateParams.contactId}, function(data){
+             deferred.resolve(data);
+             })
+             return deferred.promise;
+             }
+         }},
+            controller: "fields_list"
         })
         
         
  }]);     
       
       
-/*.
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view1', {templateUrl: 'static/partials/partial1.html', controller: 'MyCtrl1'});
-  $routeProvider.when('/view2', {templateUrl: 'static/partials/partial2.html', controller: 'MyCtrl2'});
-  $routeProvider.otherwise({redirectTo: '/view1'});
-
-*/
