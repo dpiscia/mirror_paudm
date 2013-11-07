@@ -2,6 +2,7 @@ angular.module('paudm_all', [
   'ngRoute',
   'ngResource',
   'ui.router',
+  'ui.bootstrap',
   'paudm.breadcrumbs',
   'd3',
   'd3.directives',
