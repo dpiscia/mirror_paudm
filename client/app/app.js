@@ -3,7 +3,7 @@ angular.module('paudm_all', [
   'ngResource',
   'ui.router',
   'ui.bootstrap',
-  'paudm.breadcrumbs',
+  
   'paudm.filters',
   'd3',
   'd3.directives',
