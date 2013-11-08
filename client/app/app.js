@@ -4,6 +4,7 @@ angular.module('paudm_all', [
   'ui.router',
   'ui.bootstrap',
   'paudm.breadcrumbs',
+  'paudm.filters',
   'd3',
   'd3.directives',
   'paudm_db',

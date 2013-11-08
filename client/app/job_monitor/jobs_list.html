@@ -1,5 +1,26 @@
 <div class="container">
-<p> Siamo qua </p>
+<!-- filter section --->
+	<div class="row">
+	<!--Sidebar content-->
+ 		Status filter
+		<select ng-model="status_filter" >
+     		<option value="!!">-- All Status --</option>
+     		<option ng-repeat="job in filteredData | unique:'status'" value="{{job.status}}">{{job.status}}</option>
+  			// unique options from the categories
+		</select>
+		Task filter    
+		<select ng-model="task_filter" >
+			<option value="!!">-- All Tasks --</option>
+ 			<option ng-repeat="job in filteredData | unique:'task'" value="{{job.task}}">{{job.task}}</option>
+		</select> 
+		Production filter &nbsp;    
+		<select ng-model="production_filter" >
+    		<option value="!!">-- All Jobs --</option>
+ 			<option ng-repeat="production in productions " value="{{production.job_id}}">{{production.release}}</option>
+		</select> 
+		<br>
+	</div>     
+       <!-- filter section end here---> 
 <!-- data table section --->
 	<div class="row">
 		<div class="table-responsive">
@@ -19,7 +40,7 @@
 					</tr>
 				</thead>
 			<tbody>
-				<tr ng-repeat="job in jobs " >
+				<tr ng-repeat="job in filteredData = (jobs |filter:{status:status_filter} | filter:{task:task_filter} | job_check:production_filter) | startFrom:currentPage*pageSize | limitTo:maxSize" >
 					<td><a href="">{{job.id}}</a></td>
 					<td><p>{{job.task}}</p>  </td>
 					<td><p>{{job.nbr}}</p></td>
@@ -33,5 +54,25 @@
          		</tr>
 			</tbody>  
 		</table>
+		<pagination total-items="filteredData.length" page="currentPage"></pagination>
+		<!--div >
+			<ul class="pagination pull-left">
+				<li ng-class="{disabled: currentPage == 0}">
+					<a href ng-click="prevPage()">« Prev</a>
+				</li>
+				<li ng-repeat="n in [] | range:Math.ceil(filteredData.length/pageSize)" ng-class="{active: $index == currentPage}" ng-click="setPage()" >
+					<a href="" ng-bind="$index + 1">1</a>
+				</li>
+				<li ng-class="{disabled: currentPage >= Math.ceil(filteredData.length/pageSize)-1}">
+					<a href ng-click="if (currentPage < Math.ceil(filteredData.length/pageSize) - 1) {currentPage++}  ">Next »</a>
+				</li>
+ 			</ul>
+		</div-->
+		
+		
+		{{filteredData.length}}
+		{{currentPage*pageSize}}
+		{{pageSize}}
 	</div>
+	
 </div>
