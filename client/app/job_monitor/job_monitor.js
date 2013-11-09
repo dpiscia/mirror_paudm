@@ -29,7 +29,7 @@ angular.module('paudm_jobs', [
             
             // Use a url of "/" to set a states as the "index".
             url: "/general_view",
-            templateUrl: "static/job_monitor/job.html", 
+            templateUrl: "static/job_monitor/jobs_list.html", 
             resolve : {        
             jobs: function($q, jobs_list){
              var deferred = $q.defer();

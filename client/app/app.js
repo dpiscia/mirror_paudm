@@ -3,7 +3,7 @@ angular.module('paudm_all', [
   'ngResource',
   'ui.router',
   'ui.bootstrap',
-  
+  'paudm.breadcrumbs',
   'paudm.filters',
   'd3',
   'd3.directives',
@@ -36,7 +36,7 @@ angular.module('paudm_all', [
         
         
  }])
-    .controller('HeaderCtrl', ['$scope','$state', function HeaderCtrl($scope, $state) {
+    .controller('HeaderCtrl', ['$scope','$state','breadcrumbs' , function HeaderCtrl($scope, $state, breadcrumbs) {
 	$scope.db = {"prova":"Header ctrl view in different position"};
-
+    $scope.breadcrumbs = breadcrumbs;
     }]);

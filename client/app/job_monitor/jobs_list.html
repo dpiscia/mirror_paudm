@@ -52,7 +52,7 @@
 					</tr>
 				</thead>
 			<tbody>
-				<tr ng-repeat="job in filteredData = (jobs |filter:{status:status_filter} | filter:{task:task_filter} | job_check:production_filter) | startFrom:currentPage*pageSize | limitTo:maxSize" >
+				<tr ng-repeat="job in filteredData = (jobs |filter:{status:status_filter} | filter:{task:task_filter} | job_check:production_filter) | startFrom:currentPage*maxSize | limitTo:maxSize" >
 					<td><a href="">{{job.id}}</a></td>
 					<td><p>{{job.task}}</p>  </td>
 					<td><p>{{job.nbr}}</p></td>
@@ -67,24 +67,9 @@
 			</tbody>  
 		</table>
 		<pagination total-items="filteredData.length" page="currentPage"></pagination>
-		<!--div >
-			<ul class="pagination pull-left">
-				<li ng-class="{disabled: currentPage == 0}">
-					<a href ng-click="prevPage()">« Prev</a>
-				</li>
-				<li ng-repeat="n in [] | range:Math.ceil(filteredData.length/pageSize)" ng-class="{active: $index == currentPage}" ng-click="setPage()" >
-					<a href="" ng-bind="$index + 1">1</a>
-				</li>
-				<li ng-class="{disabled: currentPage >= Math.ceil(filteredData.length/pageSize)-1}">
-					<a href ng-click="if (currentPage < Math.ceil(filteredData.length/pageSize) - 1) {currentPage++}  ">Next »</a>
-				</li>
- 			</ul>
-		</div-->
 		
 		
-		{{filteredData.length}}
-		{{currentPage*pageSize}}
-		{{pageSize}}
+		  {{maxSize}}
 	</div>
 	
 </div>
