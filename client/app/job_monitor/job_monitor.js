@@ -17,14 +17,13 @@ angular.module('paudm_jobs', [
         /////////////////////////////
 		 
         // Use $urlRouterProvider to configure any redirects (when) and invalid urls (otherwise).
-   
-        
+		
         $stateProvider
 
           //////////
           // Home //
           //////////
-
+			
           .state("jobs_list", {
             
             // Use a url of "/" to set a states as the "index".
@@ -48,6 +47,25 @@ angular.module('paudm_jobs', [
                 
 
           })
+         .state("jobs_detail", {
+            
+            // Use a url of "/" to set a states as the "index".
+            url: "/general_view/{path:.*}detail_view/:job_id/:level",
+            templateUrl: "static/job_monitor/jobs_list.html", 
+            resolve : {        
+		jobs: function($q, jobs_list, $location, $stateParams){
+             var deferred = $q.defer();
+             jobs_list.query({id :$stateParams.job_id, all: $stateParams.level}, function(data){ deferred.resolve(data);})
+             //deferred.resolve([]);
+             return deferred.promise;
+			},
+		productions: function() {return [];}
+        },
+            controller: "jobs_controller",
+                
+
+          })
+          
         
         
  }]);     

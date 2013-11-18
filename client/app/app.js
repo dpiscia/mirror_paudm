@@ -22,8 +22,8 @@ angular.module('paudm_all', [
         $rootScope.$stateParams = $stateParams;
       }]).
     config(
-    [          '$stateProvider', '$urlRouterProvider',
-      function ($stateProvider,   $urlRouterProvider) {
+    [          '$stateProvider', '$urlRouterProvider', '$locationProvider',
+      function ($stateProvider,   $urlRouterProvider , $locationProvider) {
 
         /////////////////////////////
         // Redirects and Otherwise //
@@ -32,7 +32,8 @@ angular.module('paudm_all', [
         // Use $urlRouterProvider to configure any redirects (when) and invalid urls (otherwise).
         $urlRouterProvider
              
-             .otherwise("/db_schema");
+             //.otherwise("/db_schema");
+             $locationProvider.html5Mode(true);
         
         
  }])
