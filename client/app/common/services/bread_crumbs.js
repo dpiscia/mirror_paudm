@@ -10,11 +10,26 @@ angular.module('paudm.breadcrumbs').factory('breadcrumbs', ['$rootScope', '$loca
 
   var breadcrumbs = [];
   var breadcrumbsService = {};
-
+  breadcrumbs = breads();
   //we want to update breadcrumbs only when a route is actually changed
   //as $location.path() will get updated imediatelly (even if route change fails!)
-  $rootScope.$on('$locationChangeStart', function(event, current){
+  $rootScope.$on('$locationChangeSuccess', function(event, current){
+	breadcrumbs = breads();
+  });
 
+  breadcrumbsService.getAll = function() {
+    return breadcrumbs;
+  };
+
+  breadcrumbsService.getFirst = function() {
+    return breadcrumbs[0] || {};
+  };
+
+  return breadcrumbsService;
+
+
+
+	function breads() {
 	var pathElements = $location.path().split('/'), result = [], i;
 	
     var breadcrumbPath = function (index) {
@@ -34,17 +49,7 @@ angular.module('paudm.breadcrumbs').factory('breadcrumbs', ['$rootScope', '$loca
 		result.splice(i,1);
 		}
 	}
-    breadcrumbs = result;
+    return result;
+    }
     
-  });
-
-  breadcrumbsService.getAll = function() {
-    return breadcrumbs;
-  };
-
-  breadcrumbsService.getFirst = function() {
-    return breadcrumbs[0] || {};
-  };
-
-  return breadcrumbsService;
 }]);

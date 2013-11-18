@@ -30,9 +30,7 @@ angular.module('paudm_all', [
         /////////////////////////////
 		 
         // Use $urlRouterProvider to configure any redirects (when) and invalid urls (otherwise).
-        $urlRouterProvider
-             
-             //.otherwise("/db_schema");
+
              $locationProvider.html5Mode(true);
         
         
