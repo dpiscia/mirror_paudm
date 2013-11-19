@@ -1,21 +1,8 @@
 <div class="navbar "  ng-controller = "HeaderCtrl">
-{{db.prova}}
-    <div>
-        <ul class="breadcrumb">
-            <li ng-repeat="state in $state.$current.path">
-                <a href="#{{state.url.format($stateParams)}}">{{state.url.format($stateParams).substring(state.url.format($stateParams).lastIndexOf('/') + 1 )}}</a>
-            </li>
-        </ul>
-        <p ng-bind="$state.current.name ">breadcrumbs</p>
-        {{ $state.$current.url.source }}
-        {{$stateParams}}
-        {{$state.$current.path.length}} 
-       
-    </div>
     <div>
  		<ul class="breadcrumb">
 			<li ng-repeat="breadcrumb in breadcrumbs.getAll()">
-				<span class="divider">/</span>
+				
 				<ng-switch on="$last">
 					<span ng-switch-when="true">{{breadcrumb.name}}</span>
         			<span ng-switch-default><a href="{{breadcrumb.path}}">{{breadcrumb.name}}</a></span>

@@ -60,15 +60,25 @@ filter('range', function() {
         return (text.length > 0 ? '<p>' + text.replace(/\s/g, '&nbsp;') + '</p>' : null);
     };
 }).filter('job_check', function () {
-    return function(arrays,job_id){
+    return function(arrays,filters){
     var arrayToReturn = []; 
-    if (job_id === undefined  || job_id === "!!") {
+    var prod_filter = false;
+    var task_filter = false;
+    var status_filter = false;
+    
+    if (!(filters[0] === undefined  || filters[0] === "!!")) prod_filter = true;
+    if (!(filters[1] === undefined  || filters[1] === "!!")) task_filter = true;
+    if (!(filters[2] === undefined  || filters[2] === "!!")) status_filter = true;
+    
+    if (!(prod_filter) && !(task_filter) && !(status_filter)) {
         return arrays; }
         else
         {
         for (var i=0; i<arrays.length; i++){
             
-            if (arrays[i].id === parseInt(job_id) || arrays[i].parent_job_id === parseInt(job_id) ) {
+            if ( (arrays[i].id === parseInt(filters[0]) || arrays[i].parent_job_id === parseInt(filters[0]) || !(prod_filter) ) && 
+            	(arrays[i].task === filters[1] || !(task_filter) )  &&
+            	(arrays[i].status === filters[2] || !(status_filter) ) ) {
                 arrayToReturn.push(arrays[i]);
                 console.log(arrays[i].id);
             }

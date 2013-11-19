@@ -12,5 +12,10 @@ angular.module('job_monitor.controllers', [])
   		$scope.currentPage = 1;
   		$scope.maxSize = 10;
   		$scope.current_location = '#'+$location.$$url;
+  		$scope.items = ['pie_chart', 'bar_chart', 'other'];
+		$scope.selection = $scope.items[0];
+		$scope.type_tasks = ["task",'status'];
+		$scope.type_task = $scope.type_tasks[1];
+		//$rootScopeProvider.limit = 20;
   }])
  
