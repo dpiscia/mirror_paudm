@@ -11,6 +11,6 @@ angular.module('job_monitor.controllers', [])
     	$scope.productions = productions;
   		$scope.currentPage = 1;
   		$scope.maxSize = 10;
-  		$scope.current_location = $location.$$url;
+  		$scope.current_location = '#'+$location.$$url;
   }])
  

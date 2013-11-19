@@ -31,7 +31,7 @@ angular.module('paudm_all', [
 		 
         // Use $urlRouterProvider to configure any redirects (when) and invalid urls (otherwise).
 
-             $locationProvider.html5Mode(true);
+             //$locationProvider.html5Mode(true);
         
         
  }])
