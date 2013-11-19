@@ -8,6 +8,9 @@ angular.module('paudm_all', [
   'd3Force',
   'd3Bars',
   'd3Pie',
+  'd3Lines',
+  'd3Zoom',
+  'd3ForceTree',
   'paudm_db',
   'paudm_jobs'
   ])

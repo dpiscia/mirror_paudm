@@ -9,14 +9,18 @@
 </head>
 <body>
 
-<div class="container">
+
  
- <div class="row">	
+
   <div ng-include="'static/nav_bar.html'"></div>
-  <div ng-include="'static/header.html'"></div>
- </div>
-  
-  <div ui-view></div>
+  <div class="container">
+
+	  	<div ng-include="'static/header.html'"></div>
+
+	
+
+	  	<div ui-view></div>
+
 
   
 
@@ -34,6 +38,9 @@
   <script src="static/common/directives/d3/d3Force.js"></script>
   <script src="static/common/directives/d3/d3Bars.js"></script>
   <script src="static/common/directives/d3/d3Pie.js"></script>
+  <script src="static/common/directives/d3/d3Lines.js"></script>
+  <script src="static/common/directives/d3/d3Zoom.js"></script>
+  <script src="static/common/directives/d3/d3ForceTree.js"></script>
   <script src="static/common/resources/db_schema.js"></script>
   <script src="static/common/filters/filters.js"></script>
   <script src="static/common/services/bread_crumbs.js"></script>

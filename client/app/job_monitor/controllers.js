@@ -4,10 +4,16 @@
 
 angular.module('job_monitor.controllers', [])
 	.controller('jobs_controller', ['$scope', 'jobs','productions','$location','$stateParams',  function jobs_controller($scope, jobs,productions, $location, $stateParams) {
+		$scope.jobs = jobs;
+		if ($location.path().indexOf('detail') !== -1) $scope.detail = true;
+		if ($scope.detail){
+			$scope.parent_job = [];
+			$scope.parent_job.push($scope.jobs[0]);
+			$scope.jobs.splice(0,1);
+			}
 		$scope.task_filter = "!!";
 		$scope.status_filter = "!!";
 		$scope.production_filter = "!!";
-    	$scope.jobs = jobs;
     	$scope.productions = productions;
   		$scope.currentPage = 1;
   		$scope.maxSize = 10;
