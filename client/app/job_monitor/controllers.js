@@ -14,6 +14,7 @@ angular.module('job_monitor.controllers', [])
 		$scope.task_filter = "!!";
 		$scope.status_filter = "!!";
 		$scope.production_filter = "!!";
+		$scope.orderProp = '-id';
     	$scope.productions = productions;
   		$scope.currentPage = 1;
   		$scope.maxSize = 10;
