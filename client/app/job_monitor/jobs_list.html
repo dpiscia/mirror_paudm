@@ -7,7 +7,7 @@
 			<table class="table">	
 				<tbody>
 					<tr ng-repeat="hjob in parent_job" class="success">
-						<td><a href="">{{hjob.id}}</a></td>
+						<td><a href="{{current_location}}/single_view/{{hjob.id}}">{{hjob.id}}</a></td>
 						<td><p>{{hjob.task}}</p>  </td>
 						<td><p>{{hjob.nbr}}</p></td>
 						<td> <p>{{hjob.status}}</p>   </td>
@@ -42,7 +42,7 @@
 				<span ng-switch-when="pie_chart"> <d3-pie data="filteredData" type="type_task" ></d3-pie>  </span>
 				<span ng-switch-when="evolution"> <d3-lines data="filteredData" type="type_task" ></d3-lines>  </span>
 				<span ng-switch-when="zoom"> <d3-zoom head= "parent_job" data="filteredData" type="type_task" ></d3-zoom>  </span>
-				<span ng-switch-when="force_tree"><d3-forceTree data="filteredData" type="type_task" ></d3-forceTree> </span>
+				<span ng-switch-when="force_tree"><d3-forcetree head= "parent_job" data="filteredData" type="type_task" ></d3-forcetree> </span>
 				<span ng-switch-default>default  </span>
 			</div>
 		</div> 
@@ -107,22 +107,22 @@
 						<th>One level subjobs</th> 
 					</tr>
 				</thead>
-			<tbody>
-				<tr ng-repeat="job in filteredData = (jobs | job_check:[production_filter,task_filter , status_filter]) | startFrom:(currentPage-1)*maxSize | limitTo:maxSize" ng-class="{ danger: (job.status == 'FAILED') }">
-					<td><a href="">{{job.id}}</a></td>
-					<td><p>{{job.task}}</p>  </td>
-					<td><p>{{job.nbr}}</p></td>
-					<td> <p>{{job.status}}</p>   </td>
-					<td> <i class= "{{job.qc && 'icon-ok' || 'icon-remove' }}" ></i> </td>
-					<td> <p>{{job.ts_created | date:'medium'}}</p>   </td>
-					<td> <p>{{job.ts_started | date:'medium'}}</p>   </td>
-					<td> <p>{{job.ts_ended | date:'medium'}}</p>   </td>
-          			<td> <a ng-show="job.nbr > 0"  href="{{current_location}}/detail_view/{{job.id}}/All" class="btn btn-primary"><i   class="glyphicon glyphicon-icon-pencil"></i></a> </td>
-					<td> <a ng-show="job.nbr > 0"  href="{{current_location}}/detail_view/{{job.id}}/1" class="btn btn-primary"><i   class="glyphicon glyphicon-icon-pencil"></i></a> </td>
-         		</tr>
-			</tbody>  
-		</table>
-		<pagination total-items="filteredData.length" page="currentPage"></pagination>
-	</div>
-	
+				<tbody>
+					<tr ng-repeat="job in filteredData = (jobs | job_check:[production_filter,task_filter , status_filter]) | startFrom:(currentPage-1)*maxSize | limitTo:maxSize" ng-class="{ danger: (job.status == 'FAILED') }">
+						<td><a href="{{current_location}}/single_view/{{job.id}}">{{job.id}}</a></td>
+						<td><p>{{job.task}}</p>  </td>
+						<td><p>{{job.nbr}}</p></td>
+						<td> <p>{{job.status}}</p>   </td>
+						<td> <i class= "{{job.qc && 'icon-ok' || 'icon-remove' }}" ></i> </td>
+						<td> <p>{{job.ts_created | date:'medium'}}</p>   </td>
+						<td> <p>{{job.ts_started | date:'medium'}}</p>   </td>
+						<td> <p>{{job.ts_ended | date:'medium'}}</p>   </td>
+	          			<td> <a ng-show="job.nbr > 0"  href="{{current_location}}/detail_view/{{job.id}}/All" class="btn btn-primary"><i   class="glyphicon glyphicon-icon-pencil"></i></a> </td>
+						<td> <a ng-show="job.nbr > 0"  href="{{current_location}}/detail_view/{{job.id}}/1" class="btn btn-primary"><i   class="glyphicon glyphicon-icon-pencil"></i></a> </td>
+	         		</tr>
+				</tbody>  
+			</table>
+			<pagination total-items="filteredData.length" page="currentPage"></pagination>
+		</div>
+	</div>	
 </div>

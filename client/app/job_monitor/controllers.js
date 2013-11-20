@@ -23,5 +23,6 @@ angular.module('job_monitor.controllers', [])
 		$scope.type_tasks = ["task",'status'];
 		$scope.type_task = $scope.type_tasks[1];
 		//$rootScopeProvider.limit = 20;
-  }])
+  }]);
+  
  

@@ -10,7 +10,7 @@ angular.module('paudm_all', [
   'd3Pie',
   'd3Lines',
   'd3Zoom',
-  'd3ForceTree',
+  'd3Forcetree',
   'paudm_db',
   'paudm_jobs'
   ])
