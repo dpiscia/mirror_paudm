@@ -40,6 +40,7 @@ angular.module('d3Forcetree', ['d3', 'plot_data_prepation'])
 					svg.selectAll("circle").remove();
 					svg.selectAll("text").remove();
 					svg.selectAll("g").remove();      
+					svg.selectAll("line.link").remove();
 					var node,
 					    link,
 					    root;
@@ -74,46 +75,40 @@ angular.module('d3Forcetree', ['d3', 'plot_data_prepation'])
 						.nodes(nodes)
 						.links(links)
 						.start();
-	        
-	  // Update the links…
-					link = svg.selectAll("line.link")
-						.data(links, function(d) { return d.target.id; });
-	
-	  // Enter any new links.
-					link.enter().insert("svg:line", ".node")
-						.attr("class", "link")
-						.attr("x1", function(d) { return d.source.x; })
-						.attr("y1", function(d) { return d.source.y; })
-						.attr("x2", function(d) { return d.target.x; })
-						.attr("y2", function(d) { return d.target.y; })
-							.style('stroke-width', 3)
-						.attr("marker-end", "url(#end)");
-	
-	  // Exit any old links.
-					link.exit().remove();
-	
-	  // Update the nodes…
+
+
+			      	link = svg.selectAll('line.link')
+			          .data(links)
+			       	  .enter().append('svg:line')
+			          .attr("class", function(d) { if (d.value == 1) {return 'link';} else {return 'link'; } })       
+			          .style('stroke-width', 3)
+			          .attr("marker-end", "url(#end)")
+			          .attr("x1", function(d) { return d.source.x; })
+			          .attr("y1", function(d) { return d.source.y; })
+			          .attr("x2", function(d) { return d.target.x; })
+			          .attr("y2", function(d) { return d.target.y; });
+
 					node = svg.selectAll("circle.node")
-						.data(nodes, function(d) { return d.id; })
-						.style("fill", function(d) {if (scope.type === 'task' ) 
-							{return color(d.name);} else {return color(d.status);}})
-						.enter().append("svg:circle")
-						.attr("class", "node")
-						.attr("cx", function(d) { return d.x; })
-						.attr("cy", function(d) { return d.y; })
-						.attr("r", 5)
-						.style("fill", function(d) {if (scope.type === 'task' ) {return color(d.name);} else {return color(d.status);}})
-						.on("click", function(d){
-							if (d.children) {
-								d._children = d.children;
-								d.children = null;
-							} else {
-								d.children = d._children;
-								d._children = null;
-							}
-							update_force_tree(newVal,oldVal,scope);
-						})
-  						.call(scope.force.drag);
+					      .data(nodes)
+					      .enter().append("svg:circle")
+					      .attr("class", "node")
+					      .attr("cx", function(d) { return d.x; })
+					      .attr("cy", function(d) { return d.y; })
+					      .attr("r",  5)
+					      .style("fill", function(d) {if (scope.type === 'task' ) {return color(d.name);} else {return color(d.status);}})
+										.on("click", function(d){
+											if (d.children) {
+												d._children = d.children;
+												d.children = null;
+											} else {
+												d.children = d._children;
+												d._children = null;
+											}
+											
+										})
+					      .on("mouseover", mouseover)
+						  .on("mouseout", mouseout)
+					      .call(scope.force.drag);
 
 					node.append('svg:title')
 						.text(function(d) { return d.name; });

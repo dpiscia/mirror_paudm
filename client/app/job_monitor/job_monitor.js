@@ -9,6 +9,11 @@ angular.module('paudm_jobs', [
   'paudm.jobs',
   'paudm.productions',
   'paudm.QC',
+  'd3Bars',
+  'd3Pie',
+  'd3Lines',
+  'd3Zoom',
+  'd3Forcetree',
   'ngSanitize'
   
 ]).config(

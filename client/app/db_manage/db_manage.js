@@ -5,6 +5,7 @@
 // Declare app level module which depends on filters, and services
 angular.module('paudm_db', [
   'db_manage.controllers',
+  'd3Force',
   'paudm.db_schema'
   
 ]).config(

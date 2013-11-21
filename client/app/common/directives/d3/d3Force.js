@@ -37,6 +37,7 @@ angular.module('d3Force', [])
 				.nodes(scope.data.nodes)
 				.links(scope.data.links)
 				.start();
+
 			var link = svg.selectAll(".link")
 				.data(scope.data.links)
 				.enter().append("line")

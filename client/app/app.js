@@ -5,12 +5,6 @@ angular.module('paudm_all', [
   'ui.bootstrap',
   'paudm.breadcrumbs',
   'paudm.filters',
-  'd3Force',
-  'd3Bars',
-  'd3Pie',
-  'd3Lines',
-  'd3Zoom',
-  'd3Forcetree',
   'paudm_db',
   'paudm_jobs'
   ])
