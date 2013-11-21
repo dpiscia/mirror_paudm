@@ -63,7 +63,9 @@ top: 80px;
   pointer-events: none;
 }
 
-
+marker#arrow {
+    fill: #666;
+}
      line.link {
         stroke: #999;
         stroke-opacity: .6;

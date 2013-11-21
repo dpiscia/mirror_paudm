@@ -4,7 +4,7 @@
 
 
 angular.module('d3Forcetree', ['d3', 'plot_data_prepation'])
-.directive('d3Forcetree', ['d3',  'tree_dict_from_flatten' ,'group_task','group_status',function(d3,tree_dict_from_flatten,group_task, group_status) {
+.directive('d3Forcetree', ['d3',  'tree_dict_from_flatten' ,'group_task','group_status','select_by_id' , function(d3,tree_dict_from_flatten,group_task, group_status, select_by_id) {
   // data should be provided as:
   // scope.data = {nodes : ['name' : name, group : group"], links : ["target" : id, "source " : id , "value" :  number] }
 	return {
@@ -18,7 +18,7 @@ angular.module('d3Forcetree', ['d3', 'plot_data_prepation'])
 				scope.h = 500;
 				scope.force = d3.layout.force()
 					.charge(function(d) { return d._children ? -d.size / 100 : -30; })
-					.linkDistance(function(d) { return d.target._children ? 80 : 30; })
+					.linkDistance(80)
 					.size([scope.w, scope.h - 160]);
 				var svg = d3.select(element[0])
 					.append("svg:svg")
@@ -41,22 +41,28 @@ angular.module('d3Forcetree', ['d3', 'plot_data_prepation'])
 					svg.selectAll("text").remove();
 					svg.selectAll("g").remove();      
 					svg.selectAll("line.link").remove();
+					svg.selectAll("line.link_2").remove();
 					var node,
 					    link,
 					    root;
 					var color = d3.scale.category20();    
-	    
+					var links_dep = [];
 					root = tree_dict_from_flatten(mod_data[0],[],mod_data)[0];
 					root.fixed = true;
 					root.x = scope.w / 2;
 					root.y = scope.h / 2 - 80;  
 					var nodes = flatten(root),
 	  					links = d3.layout.tree().links(nodes);
+	  					
+	    			for (var i=0; i< scope.data.length; i++)
+	    				{for (var j=0; j< scope.data[i].dep.length; j++)
+	    					{links_dep.push( {source : select_by_id(nodes, nodes[i].id) , target : select_by_id(nodes, scope.data[i].dep[j] ) , type : "dep" }); }
+	    				}
 					var legend = svg.selectAll('g')
 						.data(function() {if (scope.type === 'task' ) {return group_task(mod_data);}
 											else {return group_status(mod_data);}})
 						.enter().append('g').attr('class', 'legend').attr("transform", "translate(0 ,20 )");
-	  
+	  				links = links.concat(links_dep);
 					legend.append('rect')
 						.attr('x', scope.w - 300)
 						.attr('y', function(d, i){ return i *  25;})
@@ -80,14 +86,16 @@ angular.module('d3Forcetree', ['d3', 'plot_data_prepation'])
 			      	link = svg.selectAll('line.link')
 			          .data(links)
 			       	  .enter().append('svg:line')
-			          .attr("class", function(d) { if (d.value == 1) {return 'link';} else {return 'link'; } })       
+			          .attr("class", function(d) { if (d.type === undefined) {return 'link';} else {return 'link_2'; } })      
 			          .style('stroke-width', 3)
 			          .attr("marker-end", "url(#end)")
 			          .attr("x1", function(d) { return d.source.x; })
 			          .attr("y1", function(d) { return d.source.y; })
 			          .attr("x2", function(d) { return d.target.x; })
-			          .attr("y2", function(d) { return d.target.y; });
+			          .attr("y2", function(d) { return d.target.y; })
+					  .attr("marker-end", "url(#arrow)");;
 
+			          
 					node = svg.selectAll("circle.node")
 					      .data(nodes)
 					      .enter().append("svg:circle")
@@ -127,9 +135,6 @@ angular.module('d3Forcetree', ['d3', 'plot_data_prepation'])
 						node.attr("cx", function(d) { return d.x; })
 						    .attr("cy", function(d) { return d.y; });
 					});
-				//};
-
-
 
 					// Returns a list of all nodes under the root.
 					function flatten(root) {

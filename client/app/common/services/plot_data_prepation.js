@@ -193,4 +193,14 @@ angular.module('plot_data_prepation',[]).factory('mod_chart_status', [ function(
 		return hist;
      }
     
+}]).factory('select_by_id', [ function(){  
+        return function(data,id){
+		
+		for (var i=0; i<data.length; i++)
+			{
+			if (data[i].id === id) return data[i];
+			}
+		return null;
+     }
+    
 }]);

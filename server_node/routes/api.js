@@ -20,24 +20,24 @@ var config = require('../config');
 var query = require('../lib/query');
 //jobs rest api
 
-//parameter all defined the recursive level of query:0 no recursive level. 1: one depth level query indefinite: all avaialable depth query
+//parameter all defined the recursive level of query:0 no recursive level. 1: one depth level query indefinite: 99 available depth query
 module.exports.list = function(req, res)
 	{
-	console.log("param all "+req.params.all);
-	console.log("param id "+req.params.id);
-	query_post(req.params.id,req.params.all).then(function(val) 
+	query_jobs(req.params.id,req.params.all).then(function(val) 
 		{
 			res.send(val);
 		});  
 	};
+	
 //quality control rest api
 module.exports.qc_list = function(req, res){
 	console.log("qc api");
-	query_qc_post(req.params.id).then (function(val) 
+	query_QC(req.params.id).then (function(val) 
 		{
 		res.send(val);
 		});
 	};
+//production list
 	
 module.exports.prod_list = function(req, res)
 	{
@@ -47,7 +47,10 @@ module.exports.prod_list = function(req, res)
 			res.send(val);
 		});  
 	};
-// select operative quality_controls as a funciton of job id
+	
+	
+	
+// function for production query
 function query_prods()
 	{  
 		var deferred = q.defer();
@@ -65,8 +68,10 @@ function query_prods()
 		); 
 	return deferred.promise;
 	}  
-// select operative quality_controls as a funciton of job id
-function query_qc_post(id)
+
+
+// function for quality_controls query
+function query_QC(id)
 	{  
 		var deferred = q.defer();
 		db.client_pau("quality_control").select().where('job_id',id).andWhere('ref', 'not like', 'general').then  
@@ -84,7 +89,8 @@ function query_qc_post(id)
 	return deferred.promise;
 	}  
 
-function query_post(id,all)
+
+function query_jobs(id,all)
 {  
 	var deferred = q.defer();
 	console.log("entra");
@@ -96,13 +102,13 @@ function query_post(id,all)
 	}
 	else 
 	{
-		if (all === '1') 
+		if (all === '1' || all ==='99') 
 		{	//select all job with one level depth for the given job id
 			//if db backend is postgres query will be sql recursive enabled if sqlite the recursion is given at server level (it takes much more time)
 			if (config.job.client === "pg")
 			{
 				console.log("all == 1");
-				db.client_job.raw(query.recursive_query(id,1)).then
+				db.client_job.raw(query.recursive_query(id,parseInt(all))).then
 				( 
 					function(resp) 
 					{
@@ -113,45 +119,17 @@ function query_post(id,all)
 			}
 			else
 			{
-				flat_tree_dict(id, 0,1, function (treeSet) 
+				flat_tree_dict(id, 0,parseInt(all), function (treeSet) 
 				{
-					console.log("lunghezza",treeSet.length);
-					console.log("lunghezza",treeSet[0].id);
 					query. quality_control(treeSet).then(deferred.resolve,console.log);
 				});
 			}
 
 		}
 		if (all === '0') 
-		{   //select all job with zero level depth for the given job id
+		{   
 			db.client_job('job').where("id",id).select().then
-			( query.quality_control).then(deferred.resolve, console.log);
-		}
-		if (all === 'All') 
-		{  //select all job with infinite level depth for the given job id
-			if (config.job.client === "pg")
-			{
-				
-				db.client_job.raw(query.recursive_query(id,100)).then
-				( 
-					function(resp) 
-					{
-						
-						query.quality_control(resp.rows).then(deferred.resolve,console.log);
-						
-					}
-				);
-			}
-			else
-			{
-				query.flat_tree_dict(id, 0,100, function (treeSet) 
-				{
-					console.log("lunghezza",treeSet.length);
-					console.log("lunghezza",treeSet[0].id);
-					query.quality_control(treeSet).then(deferred.resolve,console.log);
-					
-				});
-			}
+				( query.quality_control).then(deferred.resolve, console.log);
 		}
 
 	}
