@@ -6,6 +6,7 @@
 angular.module('paudm_db', [
   'db_manage.controllers',
   'd3Force',
+  'd3Circle',
   'paudm.db_schema'
   
 ]).config(
@@ -43,10 +44,10 @@ angular.module('paudm_db', [
                 
 
           })
-          .state("db_schema.list", {
+          .state("db_schema.plot", {
 
             // Use a url of "/" to set a states as the "index".
-            url: "/list",
+            url: "/plot",
             templateUrl: "static/db_manage/db_list_plot.html", 
             controller: "tables_plot"
 

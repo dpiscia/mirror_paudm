@@ -4,7 +4,7 @@ angular.module('job_monitor.single_job', [])
 		$scope.quality_controls = QC;	
 		window.qc = "";
 		$http({method: "GET", url: "http://localhost:3000/js/qc_constants.py"}).success(function(data){$scope.info = eval("(" +data+ ')'); });
-		      $scope.open = function (name) {
+		$scope.open = function (name) {
  			 	$scope.img = name;
 				var modalInstance = $modal.open({
 					templateUrl: 'myModalContent.html',
