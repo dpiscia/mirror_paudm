@@ -83,3 +83,7 @@ marker#arrow {
 .node.b { fill: #ff7f0e; }
 .node.c { fill: #2ca02c; }
       }
+      
+.modal {
+  display: block; 
+}
