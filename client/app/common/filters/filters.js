@@ -65,7 +65,13 @@ filter('range', function() {
     var prod_filter = false;
     var task_filter = false;
     var status_filter = false;
-    
+    var check_parent = function() {   
+            		for (var j=0; j<arrays[i].array.length; j++)
+            			{
+						if (arrays[i].id === parseInt(filters[0]) || arrays[i].array[j] === parseInt(filters[0]) ) return true;
+						}
+						return false;
+				}
     if (!(filters[0] === undefined  || filters[0] === "!!")) prod_filter = true;
     if (!(filters[1] === undefined  || filters[1] === "!!")) task_filter = true;
     if (!(filters[2] === undefined  || filters[2] === "!!")) status_filter = true;
@@ -76,11 +82,11 @@ filter('range', function() {
         {
         for (var i=0; i<arrays.length; i++){
             
-            if ( (arrays[i].id === parseInt(filters[0]) || arrays[i].parent_job_id === parseInt(filters[0]) || !(prod_filter) ) && 
+            if ( (check_parent()  || !(prod_filter) ) && 
             	(arrays[i].task === filters[1] || !(task_filter) )  &&
             	(arrays[i].status === filters[2] || !(status_filter) ) ) {
                 arrayToReturn.push(arrays[i]);
-                console.log(arrays[i].id);
+                
             }
             
         }
