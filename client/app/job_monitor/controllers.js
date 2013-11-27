@@ -5,6 +5,7 @@
 angular.module('job_monitor.controllers', [])
 	.controller('jobs_controller', ['$scope', 'jobs','productions','$location','$stateParams',  function jobs_controller($scope, jobs,productions, $location, $stateParams) {
 		$scope.jobs = jobs;
+		$scope.detail = false;
 		if ($location.path().indexOf('detail') !== -1) $scope.detail = true;
 		if ($scope.detail){
 			$scope.parent_job = [];
