@@ -4,32 +4,55 @@
   <meta charset="utf-8">
   
   <link rel="stylesheet" href="static/css/bootstrap.css"/>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
   <title ng-bind="$state.current.name + ' - ui-router'">ui-router</title>
+  
 </head>
 <body>
 
-<div class="container">
- <div class="row">	
-  <div ng-include="'static/partials/header.html'"></div>
- </div>
-</div>  
-  <div ui-view></div>
+
+ 
+
+  <div ng-include="'static/nav_bar.html'"></div>
+  <div class="container">
+
+	  	<div ng-include="'static/header.html'"></div>
+
+	
+
+	  	<div ui-view></div>
+
 
   
 
   <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
   -->
-  <script src="static/lib/angular/angular.js"></script>
+  <script src="static/lib/angular/angular.min.js"></script>
   <script src="static/lib/angular/angular-ui-router.js"></script>
   <script src="static/lib/angular/angular-route.js"></script>
   <script src="static/lib/angular/angular-resource.js"></script>
+   <script src="static/lib/angular/angular-sanitize.min.js"></script>
+  <script src="static/lib/angular/ui-bootstrap-tlp-0.7.0.min.js"></script>
   <script src="static/lib/d3/d3_3.3.9_ang.js"></script>
   <script src="static/db_manage/db_manage.js"></script>
   <script src="static/db_manage/controllers.js"></script>
-  <script src="static/common/directives/d3/directives.js"></script>
+  <script src="static/common/directives/d3/d3Force.js"></script>
+  <script src="static/common/directives/d3/d3Bars.js"></script>
+  <script src="static/common/directives/d3/d3Pie.js"></script>
+  <script src="static/common/directives/d3/d3Lines.js"></script>
+  <script src="static/common/directives/d3/d3Zoom.js"></script>
+  <script src="static/common/directives/d3/d3ForceTree.js"></script>
   <script src="static/common/resources/db_schema.js"></script>
+  <script src="static/common/filters/filters.js"></script>
   <script src="static/common/services/bread_crumbs.js"></script>
+  <script src="static/common/services/plot_data_prepation.js"></script>
+  <script src="static/common/resources/jobs.js"></script>
+  <script src="static/common/resources/productions.js"></script>
+  <script src="static/common/resources/quality_control.js"></script>
+  <script src="static/job_monitor/job_monitor.js"></script>
+  <script src="static/job_monitor/controllers.js"></script>
+   <script src="static/job_monitor/job_controller.js"></script>
   <script src="static/app.js"></script>
 </div>
 </body>

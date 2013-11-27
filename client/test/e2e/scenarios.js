@@ -23,7 +23,8 @@ describe('my app', function() {
 
 
     it('should render view1 when user navigates to /db_schema/list', function() {
-expect(browser().location().path()).toBe("/db_schema/list");
+    	
+		expect(browser().location().path()).toBe("/db_schema/list");
     });
 
   });

@@ -5,7 +5,7 @@ from paudm_db import model
 import jinja2
 app = Flask(__name__,static_path="/static", template_folder="static")
 api = restful.Api(app)
-#the static foleder is a symbolic link to ../client/app folder
+#the static foleder irs a symbolisc link to ../client/app folder
 
 api.add_resource(db.db_list, '/api/db_list')
 api.add_resource(db.tb_list, '/api/tb/<tb_name>')
