@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flask.ext import restful
 from api import db
-from paudm_db import model
+from paudm.tools.db import model
 import jinja2
 app = Flask(__name__,static_path="/static", template_folder="static")
 api = restful.Api(app)
