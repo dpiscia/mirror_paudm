@@ -96,8 +96,18 @@ function query_jobs(id,all)
 	console.log("entra");
 	if (id === undefined) 
 	{	//select all job with super_id null
-		db.client_job('job as p').select(db.client_job.raw('*, array (select parent_job_id from dependency where child_job_id = p.id), (select count(*)  from job a where a.super_id = p.id) as nbr')).whereNull('p.super_id').then
-		(query.quality_control).then(deferred.resolve, console.log);	
+			if (config.job.client === "pg")
+			{
+			db.client_job('job as p').select(db.client_job.raw('*,  (select array_agg(parent_job_id) from dependency where child_job_id = p.id) as dep, (select count(*)  from job a where a.super_id = p.id) as nbr')).whereNull('p.super_id').then
+			(query.quality_control).then(deferred.resolve, console.log);	
+			}
+			else {
+			//sqlite db
+			db.client_job('job as p').select(db.client_job.raw('*,  (select group_concat(parent_job_id) from dependency where child_job_id = p.id) as dep, (select count(*)  from job a where a.super_id = p.id) as nbr')).whereNull('p.super_id')
+			.then(list_to_array).then
+			(query.quality_control).then(deferred.resolve, console.log);				
+			}
+		//jobs[21].dep.split(',').length
 	}
 	else 
 	{
@@ -135,3 +145,17 @@ function query_jobs(id,all)
 return deferred.promise;
 }
  
+// function for quality_controls query
+function list_to_array(result)
+	{  
+		var deferred = q.defer();
+		result.map(function(x){ 
+			if(x.dep != null) 
+				x.dep = String(x.dep).split(',').map(function(y){ return parseInt(y);}); //x.dep = x.dep.slipt(','); 
+				
+			return x;})
+			
+		
+		deferred.resolve(result);
+		return deferred.promise;
+	}  
