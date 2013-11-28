@@ -9,6 +9,7 @@
 var async = require('async');
 var q = require('q');
 var db = require('../db');
+var data_functions = require('./data_mod.js');
 
 module.exports.recursive_query =  function(id,level) {//Postgresql recursive query, much faster than function flat_tree_dict
 	return (/*jshint multistr: true */"with recursive t(level,nbr, dep, super_id,id, task, status, config, input, output , ts_created, ts_started, ts_ended) as ( \
@@ -30,14 +31,16 @@ module.exports.recursive_query =  function(id,level) {//Postgresql recursive que
 };
 /*jshint unused:true*/
 
-module.exports.flat_tree_dict = function(root_job,level, level_set, callback) //sqlite recursive query
+module.exports.flat_tree_dict = function flat_tree_dict(root_job,level, level_set, callback) //sqlite recursive query
 {
+	//db.client_job('job as p').select(db.client_job.raw('*,  (select group_concat(parent_job_id) from dependency where child_job_id = p.id) as dep, (select count(*)  from job a where a.super_id = p.id) as nbr')).whereNull('p.super_id')
+	//		.then(list_to_array).then
 	var treeSet = []; 
-	db.client_job('job as p').select(db.client_job.raw('*, (select count(*) from job a where a.super_id = p.id) as nbr')).where('id',root_job).then
+	db.client_job('job as p').select(db.client_job.raw('*,  (select group_concat(parent_job_id) from dependency where child_job_id = p.id) as dep, (select count(*) from job a where a.super_id = p.id) as nbr')).where('id',root_job).then
 	(
 		function(resp) 
 		{
-			treeSet.push(resp[0]); 
+			data_functions.list_to_array(resp).then(treeSet.push(resp[0])); 
 		}, 
 		function(err) 
 		{
@@ -100,3 +103,5 @@ module.exports.quality_control = function(resp) //get the general quality contro
 				);  
 			return deferred.promise;	
 			};
+			
+// function for quality_controls query

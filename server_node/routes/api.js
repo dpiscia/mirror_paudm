@@ -18,6 +18,7 @@ var db = require('../db');
 var async = require('async');
 var config = require('../config');
 var query = require('../lib/query');
+var data_functions = require('../lib/data_mod.js');
 //jobs rest api
 
 //parameter all defined the recursive level of query:0 no recursive level. 1: one depth level query indefinite: 99 available depth query
@@ -104,7 +105,7 @@ function query_jobs(id,all)
 			else {
 			//sqlite db
 			db.client_job('job as p').select(db.client_job.raw('*,  (select group_concat(parent_job_id) from dependency where child_job_id = p.id) as dep, (select count(*)  from job a where a.super_id = p.id) as nbr')).whereNull('p.super_id')
-			.then(list_to_array).then
+			.then(data_functions.list_to_array).then
 			(query.quality_control).then(deferred.resolve, console.log);				
 			}
 		//jobs[21].dep.split(',').length
@@ -128,7 +129,7 @@ function query_jobs(id,all)
 			}
 			else
 			{
-				flat_tree_dict(id, 0,parseInt(all), function (treeSet) 
+				query.flat_tree_dict(id, 0,parseInt(all), function (treeSet) 
 				{
 					query. quality_control(treeSet).then(deferred.resolve,console.log);
 				});
@@ -146,16 +147,3 @@ return deferred.promise;
 }
  
 // function for quality_controls query
-function list_to_array(result)
-	{  
-		var deferred = q.defer();
-		result.map(function(x){ 
-			if(x.dep != null) 
-				x.dep = String(x.dep).split(',').map(function(y){ return parseInt(y);}); //x.dep = x.dep.slipt(','); 
-				
-			return x;})
-			
-		
-		deferred.resolve(result);
-		return deferred.promise;
-	}  
