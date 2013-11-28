@@ -99,7 +99,7 @@ function query_jobs(id,all)
 	{	//select all job with super_id null
 			if (config.job.client === "pg")
 			{
-			db.client_job('job as p').select(db.client_job.raw('*,  (select array_agg(parent_job_id) from dependency where child_job_id = p.id) as dep, (select count(*)  from job a where a.super_id = p.id) as nbr')).whereNull('p.super_id').then
+			db.client_job('job as p').select(db.client_job.raw('*,  array(select parent_job_id from dependency where child_job_id = p.id) as dep, (select count(*)  from job a where a.super_id = p.id) as nbr')).whereNull('p.super_id').then
 			(query.quality_control).then(deferred.resolve, console.log);	
 			}
 			else {

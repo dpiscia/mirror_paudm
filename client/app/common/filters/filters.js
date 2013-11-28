@@ -66,9 +66,9 @@ filter('range', function() {
     var task_filter = false;
     var status_filter = false;
     var check_parent = function() {   
-            		for (var j=0; j<arrays[i].array.length; j++)
+            		for (var j=0; j<arrays[i].dep.length; j++)
             			{
-						if (arrays[i].id === parseInt(filters[0]) || arrays[i].array[j] === parseInt(filters[0]) ) return true;
+						if (arrays[i].id === parseInt(filters[0]) || arrays[i].dep[j] === parseInt(filters[0]) ) return true;
 						}
 						return false;
 				}
