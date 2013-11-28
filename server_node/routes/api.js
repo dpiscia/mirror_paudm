@@ -18,6 +18,7 @@ var db = require('../db');
 var async = require('async');
 var config = require('../config');
 var query = require('../lib/query');
+var data_functions = require('../lib/data_mod.js');
 //jobs rest api
 
 //parameter all defined the recursive level of query:0 no recursive level. 1: one depth level query indefinite: 99 available depth query
@@ -96,8 +97,18 @@ function query_jobs(id,all)
 	console.log("entra");
 	if (id === undefined) 
 	{	//select all job with super_id null
-		db.client_job('job as p').select(db.client_job.raw('*, array (select parent_job_id from dependency where child_job_id = p.id), (select count(*)  from job a where a.super_id = p.id) as nbr')).whereNull('p.super_id').then
-		(query.quality_control).then(deferred.resolve, console.log);	
+			if (config.job.client === "pg")
+			{
+			db.client_job('job as p').select(db.client_job.raw('*,  (select array_agg(parent_job_id) from dependency where child_job_id = p.id) as dep, (select count(*)  from job a where a.super_id = p.id) as nbr')).whereNull('p.super_id').then
+			(query.quality_control).then(deferred.resolve, console.log);	
+			}
+			else {
+			//sqlite db
+			db.client_job('job as p').select(db.client_job.raw('*,  (select group_concat(parent_job_id) from dependency where child_job_id = p.id) as dep, (select count(*)  from job a where a.super_id = p.id) as nbr')).whereNull('p.super_id')
+			.then(data_functions.list_to_array).then
+			(query.quality_control).then(deferred.resolve, console.log);				
+			}
+		//jobs[21].dep.split(',').length
 	}
 	else 
 	{
@@ -118,7 +129,7 @@ function query_jobs(id,all)
 			}
 			else
 			{
-				flat_tree_dict(id, 0,parseInt(all), function (treeSet) 
+				query.flat_tree_dict(id, 0,parseInt(all), function (treeSet) 
 				{
 					query. quality_control(treeSet).then(deferred.resolve,console.log);
 				});
@@ -135,3 +146,4 @@ function query_jobs(id,all)
 return deferred.promise;
 }
  
+// function for quality_controls query
