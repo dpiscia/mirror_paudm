@@ -13,7 +13,16 @@ angular.module('strc_query.controllers', [])
    			}
    		})
 }]).controller('strc_query_fields_ctrl', ['$scope','$stateParams','$state','fields_list', function ($scope, $stateParams, $state, fields_list) {
-		$scope.where = [];
+		$scope.fields = [];
+		$scope.add_field = function(){$scope.fields.push({name : ""}); }
+		$scope.remove_field = function(index){
+			$scope.fields.splice(index,1); 
+			};
+		$scope.conditions = [];
+		$scope.add_condition = function(){$scope.conditions.push({field : "", op: "", value :""}); }
+		$scope.remove_condition = function(index){
+			$scope.conditions.splice(index,1); 
+			}
 		$scope.prova   = $stateParams.table_name;
 		$scope.table_fields = fields_list;
 		$scope.comparison_op = [{name : 'less than', op : '<'},
