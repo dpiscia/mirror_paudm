@@ -31,7 +31,7 @@ module.exports.structure_query = function(req, res)
 	console.log(command);
 	query(command).then(function(val) 
 		{
-			res.send(val.rows);
+			res.send(val);
 		});  
 	
 	};
@@ -45,8 +45,14 @@ function query(text)
 		(
 			function(resp) 
 			{
-				
-				deferred.resolve(resp);
+				if (config.job.client === "pg"){
+					console.log(resp);
+					deferred.resolve(resp.rows);
+					}
+				else {
+					console.log(resp[0]);
+					deferred.resolve(resp[0]);					
+					}
 			}, 
 			function(err) 
 			{

@@ -1,0 +1,34 @@
+<button ng-click="fields.push({field : ""})" class="btn btn-primary" >Push</button>
+{{where.length}}
+
+
+	<div class="row">
+		<div class="col-md-2">
+		<!--Sidebar content-->
+	 		Where
+	 	</div>
+	 	<div class="col-md-2">
+			<select ng-model="field" >
+	     		<option ng-repeat="field in table_fields.list " value="{{field}}">{{field}}</option>
+	  			// unique options from the categories
+			</select>
+		</div>
+		<div class="col-md-2">
+		<!--Sidebar content-->
+	 		Is
+	 	</div>
+		<div class="col-md-2">
+			<select ng-model="op_filter" >
+	     		<option ng-repeat="op in comparison_op " value="{{op.op}}">{{op.name}}</option>
+	  			// unique options from the categories
+			</select>
+		</div>		
+		<div class="col-md-2">
+	     		 <input type="text" ng-model="value">
+		</div>
+		 
+	</div>
+	<div class="row">
+		<button  class="btn btn-primary" ng-click= "submit()" tooltip-popup-delay='1000'  tooltip="Click to run the query">Submit</button> 
+	</div>
+	<div ui-view></div>
