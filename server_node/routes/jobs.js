@@ -15,9 +15,8 @@
 
 var q = require('q');
 var db = require('../db');
-var async = require('async');
 var config = require('../config');
-var query = require('../lib/query');
+var query = require('../lib/query_jobs');
 var data_functions = require('../lib/data_mod.js');
 //jobs rest api
 

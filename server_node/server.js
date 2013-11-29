@@ -5,8 +5,9 @@
  */
 
 var express = require('express'),
-  routes = require('./routes'),
-  api = require('./routes/api'),
+  
+  api_jobs = require('./routes/jobs'),
+  api_strc_query = require('./routes/strc_query'),
   path = require('path'),
   cors = require('cors'),
   flash = require('connect-flash'),
@@ -54,6 +55,13 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, '../client')));
 app.use(app.router);
 
+db.connectDatabase(config);
+     // Socket.io Communication
+  // Sync work only with two-phases commit disabled in postgresql
+if (config.sync){
+	io.sockets.on('connection', require('./routes/socket'));
+}
+
 // development only
 if (app.get('env') === 'development') {
   app.use(express.errorHandler());
@@ -71,18 +79,22 @@ security.strategy;
 
 // serve index and view partials
 
-app.get('/',  routes.index);
-app.get('/partials/:name', routes.partials);
 
-// JSON API
-app.get('/api/jobs/:id',  api.list);
-app.get('/api/jobs/:id/:all', api.list);
-app.get('/api/jobs', api.list);
-app.get('/api/qc/:id', api.qc_list);
-app.get('/api/prods', api.prod_list);
-app.get('/api/prods', api.prod_list);
-//app.get('/api/jobs/prod/:id', api.job_prod_list);
+
+// Jobs API
+app.get('/api/jobs/:id',  api_jobs.list);
+app.get('/api/jobs/:id/:all', api_jobs.list);
+app.get('/api/jobs', api_jobs.list);
+app.get('/api/qc/:id', api_jobs.qc_list);
+app.get('/api/prods', api_jobs.prod_list);
+app.get('/api/prods', api_jobs.prod_list);
+//app.get('/api/jobs/prod/:id', api_jobs.job_prod_list);
 // redirect all others to the index (HTML5 history)
+
+//structured query API
+//api/str_query/:table/:fields/:clauses/:limit
+
+app.get('/api/strc_query/:table/:fields/:clauses/:limit',api_strc_query.structure_query)
 
 //login/logout/register points
 app.get('/login', register.login_get);
@@ -91,12 +103,7 @@ app.get('/register', register.reg_get);
 app.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), register.login_post);
 app.post('/register',register.reg_post);
 
-db.connectDatabase(config);
-     // Socket.io Communication
-  // Sync work only with two-phases commit disabled in postgresql
-if (config.sync){
-	io.sockets.on('connection', require('./routes/socket'));
-}
+
 
 /**
  * Start Server
