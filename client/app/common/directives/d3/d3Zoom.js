@@ -3,8 +3,8 @@
 /* Directives */
 
 
-angular.module('d3Zoom', ['d3', 'plot_data_prepation'])
-.directive('d3Zoom', ['d3',  'tree_dict_from_flatten' ,'group_task','group_status',function(d3,tree_dict_from_flatten,group_task, group_status) {
+angular.module('d3Zoom', ['d3', 'plot_data_prepation','d3_tooltip'])
+.directive('d3Zoom', ['d3',  'tree_dict_from_flatten' ,'group_task','group_status','d3_tip', function(d3,tree_dict_from_flatten,group_task, group_status,d3_tip) {
   // data should be provided as:
   // scope.data = {nodes : ['name' : name, group : group"], links : ["target" : id, "source " : id , "value" :  number] }
 	return {
@@ -33,12 +33,15 @@ angular.module('d3Zoom', ['d3', 'plot_data_prepation'])
 // define render function
 			
 			scope.render = function(){
+			/* Initialize tooltip */
+				var tip = d3_tip().attr('class', 'd3-tip').html(function(d) { return d; });
 				var mod_data = scope.head.concat(scope.data);
 				svg.selectAll("legend").remove();
 				svg.selectAll("rect").remove();
 				svg.selectAll("circle").remove();
 				svg.selectAll("text").remove();
 				svg.selectAll("g").remove();
+				svg.call(tip);	
 				var x = d3.scale.linear().range([0, scope.r]),
 				    y = d3.scale.linear().range([0, scope.r]),
 				    node,
@@ -80,7 +83,9 @@ angular.module('d3Zoom', ['d3', 'plot_data_prepation'])
 					.attr("r", function(d) { return d.r; })
 					.style("fill", function(d) {if (scope.type === 'task' ) return color(d.name); else return color(d.status);})
 					.on("click", function(d) 
-					{ return zoom(node === d ? root : d); });
+					{ return zoom(node === d ? root : d); })
+					.on('mouseover', tip.show)
+ 					.on('mouseout', tip.hide);
 
 				svg.selectAll("text")
 					.data(nodes)

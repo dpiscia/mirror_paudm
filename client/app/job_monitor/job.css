@@ -40,9 +40,7 @@ circle.parent:hover {
   stroke-width: .5px;
 }
 
-circle.child {
-  pointer-events: none;
-}
+
      .legend {
 position : absolute;
 left: 200px;
