@@ -34,7 +34,7 @@ angular.module('paudm_jobs', [
 		.state("jobs_list", {
             
             // Use a url of "/" to set a states as the "index".
-            url: "/general_view",
+            url: "/Top_level_jobs",
 			templateUrl: "static/job_monitor/jobs_list.html", 
 			resolve : {        
 				jobs: function($q, jobs_list){
@@ -52,26 +52,10 @@ angular.module('paudm_jobs', [
         	 },
             controller: "jobs_controller",
 		})
-		.state("jobs_detail", {
+				.state("job_single", {
             
             // Use a url of "/" to set a states as the "index".
-			url: "/general_view/{path:.*}detail_view/:job_id/:level",
-			templateUrl: "static/job_monitor/jobs_list.html", 
-            resolve : {        
-				jobs: function($q, jobs_list, $location, $stateParams){
-				     var deferred = $q.defer();
-				     jobs_list.query({id :$stateParams.job_id, all: $stateParams.level}, function(data){ deferred.resolve(data);})
-				     //deferred.resolve([]);
-				     return deferred.promise;
-					},
-				productions: function() {return [];}
-       		 },
-            controller: "jobs_controller",
-		})
-		.state("job_single", {
-            
-            // Use a url of "/" to set a states as the "index".
-			url: "/general_view/{path:.*}single_view/:job_id",
+			url: "/Top_level_jobs/{path:.*}Job_details/:job_id",
 			templateUrl: "static/job_monitor/job_single.html", 
             resolve : {        
 				job: function($q, jobs_list, $location, $stateParams){
@@ -89,6 +73,23 @@ angular.module('paudm_jobs', [
        		 },
             controller: "job_single",
 		})
+		.state("jobs_detail", {
+            
+            // Use a url of "/" to set a states as the "index".
+			url: "/Top_level_jobs/{path:.*}/:job_id/:level",
+			templateUrl: "static/job_monitor/jobs_list.html", 
+            resolve : {        
+				jobs: function($q, jobs_list, $location, $stateParams){
+				     var deferred = $q.defer();
+				     jobs_list.query({id :$stateParams.job_id, all: $stateParams.level}, function(data){ deferred.resolve(data);})
+				     //deferred.resolve([]);
+				     return deferred.promise;
+					},
+				productions: function() {return [];}
+       		 },
+            controller: "jobs_controller",
+		})
+
  }]);     
       
       

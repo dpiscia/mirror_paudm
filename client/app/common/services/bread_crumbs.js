@@ -39,7 +39,7 @@ angular.module('paudm.breadcrumbs').factory('breadcrumbs', ['$rootScope', '$loca
     pathElements.shift();
 
     for (i=0; i<pathElements.length; i++) {  
-      result.push({name: pathElements[i], path: breadcrumbPath(i)});
+      result.push({name: pathElements[i].replace(/_/g, ' '), path: breadcrumbPath(i)});
     }
 
 	for (i=(result.length-1); i>0; i--) {
