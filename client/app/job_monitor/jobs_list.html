@@ -4,17 +4,31 @@
 <!-- first job section --->
 	<div  class="row">
 		<div ng-show="detail == true" class="table-responsive">
-			<table class="table">	
+			<table class="table table-condensed">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Jobs</th>
+						<th>Status</th>
+						<th>QC</th>
+						<th>Created</th>
+						<th>Started</th>
+						<th>Ended</th>
+						<th>Details</th>
+					</tr>
+				</thead>	
 				<tbody>
 					<tr ng-repeat="hjob in parent_job" class="success">
-						<td><a href="{{current_location}}/single_view/{{hjob.id}}">{{hjob.id}}</a></td>
+						<td>{{hjob.id}}</td>
 						<td><p>{{hjob.task}}</p>  </td>
 						<td><p>{{hjob.nbr}}</p></td>
 						<td> <p>{{hjob.status}}</p>   </td>
-						<td> <i class= "{{hjob.qc && 'icon-ok' || 'icon-remove' }}" ></i> </td>
+						<td><i ng-show="!(hjob.qc === undefined)" class= "{{job.qc && 'glyphicon glyphicon-ok' || 'glyphicon glyphicon-remove' }}" ></i></td>
 						<td> <p>{{hjob.ts_created | date:'medium'}}</p>   </td>
 						<td> <p>{{hjob.ts_started | date:'medium'}}</p>   </td>
 						<td> <p>{{hjob.ts_ended | date:'medium'}}</p>   </td>
+						<td class = "text-center"> <a  href="{{current_location}}/Job_details/{{hjob.id}}" tooltip-popup-delay='1000'  class="btn btn-primary" tooltip="Click to access job details and quality controls" ><i   class=" glyphicon glyphicon-zoom-in" ></i></a> </td>
 	         		</tr>
 				</tbody>  
 			</table>
@@ -105,11 +119,12 @@
 						<th><a href="" ng-click="orderProp = 'ts_ended'; reverse=!reverse">Ended</a></th>
 						<th>All subjobs</th>
 						<th>One level subjobs</th> 
+						<th>Details</th> 				
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="job in filteredData = (jobs | job_check:[production_filter,task_filter , status_filter]) | orderBy:orderProp:reverse | startFrom:(currentPage-1)*maxSize | limitTo:maxSize" ng-class="{ danger: (job.status == 'FAILED') }">
-						<td><a href="{{current_location}}/Job_details/{{job.id}}" tooltip-popup-delay='1000' tooltip-placement="left" tooltip="Click to see detail job info and quality controls">{{job.id}}</a></td>
+						<td>{{job.id}}</td>
 						<td><p>{{job.task}}</p>  </td>
 						<td><p>{{job.nbr}}</p></td>
 						<td> <p>{{job.status}}</p>   </td>
@@ -119,6 +134,7 @@
 						<td> <p>{{job.ts_ended | date:'medium'}}</p>   </td>
 	          			<td class = "text-center"> <a ng-show="job.nbr > 0"  href="{{current_location}}/List_jobs/{{job.id}}/99" class="btn btn-primary" tooltip-popup-delay='1000'  tooltip="Click to access all child jobs"><i   class="glyphicon glyphicon-list" ></i></a> </td>
 						<td class = "text-center"> <a ng-show="job.nbr > 0"  href="{{current_location}}/{{job.task}}/{{job.id}}/1" class="btn btn-primary" tooltip-popup-delay='1000'  tooltip="Click to access one level depth child jobs" ><i   class="glyphicon glyphicon-circle-arrow-down" ></i></a> </td>
+	         			<td class = "text-center"> <a  href="{{current_location}}/Job_details/{{job.id}}" tooltip-popup-delay='1000'  class="btn btn-primary" tooltip="Click to access job details and quality controls" ><i   class=" glyphicon glyphicon-zoom-in" ></i></a> </td>
 	         		</tr>
 				</tbody>  
 			</table>

@@ -43,13 +43,13 @@ angular.module('d3Zoom', ['d3', 'plot_data_prepation'])
 				    y = d3.scale.linear().range([0, scope.r]),
 				    node,
 				    root;	
-				root = tree_dict_from_flatten(mod_data[0],[],mod_data)[0];
+				var nodes = root = tree_dict_from_flatten(mod_data[0],[],mod_data)[0];
 				var color = d3.scale.category20();	
 				var pack = d3.layout.pack()
 				    .size([scope.r, scope.r])
 				    .value(function(d) { return d.size; });
     
-				var nodes = pack.nodes(tree_dict_from_flatten(mod_data[0],[],mod_data)[0]); 
+				var nodes = pack.nodes(root); 
 				var legend = svg.selectAll('g')
 							.data(function() {if (scope.type === 'task' ) return group_task(mod_data); else return group_status(mod_data);})
 							.enter().append('g').attr('class', 'legend').attr("transform", "translate(0 ,20 )");
@@ -79,7 +79,8 @@ angular.module('d3Zoom', ['d3', 'plot_data_prepation'])
 					return d.y; })
 					.attr("r", function(d) { return d.r; })
 					.style("fill", function(d) {if (scope.type === 'task' ) return color(d.name); else return color(d.status);})
-					.on("click", function(d) { return zoom(node === d ? root : d); });
+					.on("click", function(d) 
+					{ return zoom(node === d ? root : d); });
 
 				svg.selectAll("text")
 					.data(nodes)
@@ -93,7 +94,8 @@ angular.module('d3Zoom', ['d3', 'plot_data_prepation'])
 					.text(function(d) { return d.id; })
 					.attr("class","plot");
 
-  //d3.select(window).on("click", function() { zoom(root); });
+  				d3.select(window).on("click", 	
+  					function() { zoom(root); });
 
 
 				function zoom(d) {
