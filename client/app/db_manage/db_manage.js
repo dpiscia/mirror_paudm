@@ -21,7 +21,7 @@ angular.module('paudm_db', [
    
         $urlRouterProvider
              
-             .otherwise("/db_schema");
+             .otherwise("/db_schema/plot");
         $stateProvider
 
           //////////
