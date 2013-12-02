@@ -12,7 +12,7 @@ angular.module('d3Bars', ['d3', 'plot_data_prepation'])
 		scope: {data: '=data',
 				type : '=',},
 		link: function(scope, element, attrs){
-			scope.w = 800;
+			scope.w = (800 + 300);
 			scope.h = 400;
       		var svg = d3.select(element[0])
 				.append("svg")
@@ -36,8 +36,8 @@ angular.module('d3Bars', ['d3', 'plot_data_prepation'])
 				svg.selectAll(".bar").remove();
 				
 				var x = d3.scale.ordinal()
-					.rangeRoundBands([0, 800], 0.1 , 0.5);
-
+					.rangeRoundBands([0, (scope.w - 300) ], 0.1 , 0.5);
+				//300 px for legend space
 				var y = d3.scale.linear()
 				    .range([400, 0]);
 
@@ -56,7 +56,7 @@ angular.module('d3Bars', ['d3', 'plot_data_prepation'])
 				  });
   				var legend = svg.selectAll('g').data(data_mod).enter().append('g').attr('class', 'legend').attr("transform", "translate(0 ,20 )");
 				legend.append('rect')
-					.attr('x', scope.w - 200)
+					.attr('x', scope.w - 300)
 					.attr('y', function(d, i){ return i *  25;})
 					.attr('width', 10)
 					.attr('height', 10)
@@ -64,9 +64,10 @@ angular.module('d3Bars', ['d3', 'plot_data_prepation'])
 					  return color(d.status);
 					});
 				legend.append('text')
-					.attr('x', scope.w - 188)
+					.attr('x', scope.w - 280)
 					.attr('y', function(d, i){ return (i *  25) + 9;})
-					.text(function(d){ return d.status; });
+					.text(function(d,nodes)
+						{ return d.status+" counts: "+d.data; });
         		
         		x.domain(data_mod.map(function(d) { return d.status; }));
  				y.domain([0, d3.max(data_mod, function(d) { return d.data; })]);
