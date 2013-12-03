@@ -6,7 +6,8 @@ angular.module('paudm_all', [
   'paudm.breadcrumbs',
   'paudm.filters',
   'paudm_db',
-  'paudm_jobs'
+  'paudm_jobs',
+  'paudm_strc_query',
   ])
   .run(
       [        '$rootScope', '$state', '$stateParams',

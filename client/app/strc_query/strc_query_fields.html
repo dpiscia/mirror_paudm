@@ -1,0 +1,60 @@
+<div class="row">
+	<button ng-click="add_field()" class="btn btn-primary" >Add field</button>
+	{{fields.length}}
+
+</div>
+<div ng-repeat="field in fields"class="row">
+	 	<div class="col-md-2">
+			<select ng-model="field.name" >
+	     		<option ng-repeat="field in table_fields.list " value="{{field}}">{{field}}</option>
+	  			// unique options from the categories
+			</select>
+		</div>
+		<div class="col-md-2">
+				<button ng-click="remove_field($index)" class="btn btn-primary" >Remove</button>			
+		</div>
+</div>
+<div class="row">
+	<button ng-click="add_condition()" class="btn btn-primary" >Add conditions</button>
+	{{fields.length}}
+
+</div>
+
+	<div ng-repeat="cond in conditions" class="row">
+		<div class="col-md-2">
+		<!--Sidebar content-->
+	 		Where
+	 	</div>
+	 	<div class="col-md-2">
+			<select ng-model="cond.field" >
+	     		<option ng-repeat="field in table_fields.list " value="{{field}}">{{field}}</option>
+	  			// unique options from the categories
+			</select>
+		</div>
+
+		<div class="col-md-2"> 
+			<select ng-model="cond.op" >
+	     		Is <option ng-repeat="op in comparison_op " value="{{op.op}}">{{op.name}}</option>
+	  			// unique options from the categories
+			</select>
+		</div>		
+		<div class="col-md-2">
+	     		 <input type="text" ng-model="cond.value">
+		</div>
+		<div class="col-md-2">
+			<select ng-model="cond.logical" >
+	     		<option ng-repeat="logical in logical_op " value="{{logical}}">{{logical}}</option>
+	  			// unique options from the categories
+			</select>
+		</div>	
+		<div class="col-md-2">
+				<button ng-click="remove_condition($index)" class="btn btn-primary" >Remove</button>			
+		</div>
+	</div>
+	<div class="row">
+	     		 <input type="text" ng-model="limit">
+	</div>
+	<div class="row">
+		<button  class="btn btn-primary" ng-click= "submit()">Submit</button> 
+	</div>
+	<div ui-view></div>

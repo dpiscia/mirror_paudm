@@ -12,9 +12,6 @@
 /* jshint -W003 */
 var q = require('q');
 var db = require('../db');
-var async = require('async');
-var config = require('../config');
-var passport = require('passport');
 //jobs rest api
 
 module.exports.reg_post = function(req, res){

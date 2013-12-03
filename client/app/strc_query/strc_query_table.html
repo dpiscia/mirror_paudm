@@ -1,0 +1,15 @@
+<!-- filter section --->
+	<div class="row">
+		<div class="col-md-2">
+		<!--Sidebar content-->
+	 	From
+	 	</div>
+	 	<div class="col-md-2">
+			<select ng-model="tables_filter" >
+	     		<option ng-repeat="db in db_list " value="{{db.name}}">{{db.name}}</option>
+	  			// unique options from the categories
+			</select>
+		</div>
+	</div>
+	<div ui-view></div>
+	
