@@ -8,18 +8,19 @@ var config = require('../config');
 //api/str_query/:table/:fields/:clauses/:limit
 module.exports.structure_query = function(req, res)
 	{
-	console.log(req.params.table);
-	var table = req.params.table;
-	console.log(req.params.fields);
-	var fields = req.params.fields;
-	console.log(req.params.clauses);
-	var clauses= req.params.clauses;
+
+	
+	var table = req.query.table;
+	console.log(req.query.fields);
+	var fields = req.query.fields;
+	console.log(req.query.clauses);
+	var clauses= req.query.clauses;
 	if (clauses == null) clauses = "" 
-	else clauses = req.params.clauses.split(',');
+	else clauses = req.query.clauses.split(',');
 	console.log(clauses);
 	//if (clauses == null) clauses = ""
 	console.log("clauses "+clauses);
-	var limit = req.params.limit;
+	var limit = req.query.limit;
 	var command = "select "+fields+" from "+table;
 	console.log(clauses.length);
 	for (var i=0; i < clauses.length; i++)

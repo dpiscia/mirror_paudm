@@ -6,6 +6,7 @@
 angular.module('paudm_strc_query', [
   'strc_query.controllers',
   'paudm.strc_query',
+  'd3Scatter',
   
 ]).config(
     [          '$stateProvider', '$urlRouterProvider',
@@ -53,12 +54,12 @@ angular.module('paudm_strc_query', [
 			        controller: "strc_query_fields_ctrl",
  		   })
  		   .state('strc_query.fields.results', {
-			      url: "/:fields/:where/:limit",
+			      url: "/result?fields&where&limit",
 			      templateUrl: "static/strc_query/strc_query_results.html" ,
 					resolve : {        
 			            results: function($q, strc_query , $stateParams){
 			             var deferred = $q.defer();
-			             strc_query.query({table:$stateParams.table_name, fields:'*', clauses: $stateParams.where, limit :'100' }, function(data){
+			             strc_query.query({table:$stateParams.table_name, fields:$stateParams.fields, clauses: $stateParams.where, limit :'100' }, function(data){
 			             deferred.resolve(data);
 			             })
 			             return deferred.promise;

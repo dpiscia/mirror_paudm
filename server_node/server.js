@@ -94,7 +94,7 @@ app.get('/api/prods', api_jobs.prod_list);
 //structured query API
 //api/str_query/:table/:fields/:clauses/:limit
 
-app.get('/api/strc_query/:table/:fields/:clauses/:limit',api_strc_query.structure_query)
+app.get('/api/strc_query',api_strc_query.structure_query)
 
 //login/logout/register points
 app.get('/login', register.login_get);
