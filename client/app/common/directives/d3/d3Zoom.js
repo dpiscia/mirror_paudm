@@ -3,8 +3,8 @@
 /* Directives */
 
 
-angular.module('d3Zoom', ['d3', 'plot_data_prepation'])
-.directive('d3Zoom', ['d3',  'tree_dict_from_flatten' ,'group_task','group_status',function(d3,tree_dict_from_flatten,group_task, group_status) {
+angular.module('d3Zoom', ['d3', 'plot_data_prepation','d3_tooltip'])
+.directive('d3Zoom', ['d3',  'tree_dict_from_flatten' ,'group_task','group_status','d3_tip', function(d3,tree_dict_from_flatten,group_task, group_status,d3_tip) {
   // data should be provided as:
   // scope.data = {nodes : ['name' : name, group : group"], links : ["target" : id, "source " : id , "value" :  number] }
 	return {
@@ -19,7 +19,7 @@ angular.module('d3Zoom', ['d3', 'plot_data_prepation'])
 			scope.r = 500;
 			var svg = d3.select(element[0])
 				.append("svg")
-				.attr("width", scope.w)
+				.attr("width", scope.w + 200)
 				.attr("height", scope.h)
 				.append("g")
 				.attr("transform", "translate(" + (scope.w -scope.r ) / 2 + "," + (scope.h - scope.r) / 2 + ")");
@@ -33,29 +33,32 @@ angular.module('d3Zoom', ['d3', 'plot_data_prepation'])
 // define render function
 			
 			scope.render = function(){
+			/* Initialize tooltip */
+				var tip = d3_tip().attr('class', 'd3-tip').html(function(d) { return d; });
 				var mod_data = scope.head.concat(scope.data);
 				svg.selectAll("legend").remove();
 				svg.selectAll("rect").remove();
 				svg.selectAll("circle").remove();
 				svg.selectAll("text").remove();
 				svg.selectAll("g").remove();
+				svg.call(tip);	
 				var x = d3.scale.linear().range([0, scope.r]),
 				    y = d3.scale.linear().range([0, scope.r]),
 				    node,
 				    root;	
-				root = tree_dict_from_flatten(mod_data[0],[],mod_data)[0];
+				var nodes = root = tree_dict_from_flatten(mod_data[0],[],mod_data)[0];
 				var color = d3.scale.category20();	
 				var pack = d3.layout.pack()
 				    .size([scope.r, scope.r])
 				    .value(function(d) { return d.size; });
     
-				var nodes = pack.nodes(tree_dict_from_flatten(mod_data[0],[],mod_data)[0]); 
+				var nodes = pack.nodes(root); 
 				var legend = svg.selectAll('g')
 							.data(function() {if (scope.type === 'task' ) return group_task(mod_data); else return group_status(mod_data);})
 							.enter().append('g').attr('class', 'legend').attr("transform", "translate(0 ,20 )");
   
 				legend.append('rect')
-					.attr('x', scope.w - 300)
+					.attr('x', scope.w - 200)
 					.attr('y', function(d, i){ return i *  25;})
 					.attr('width', 10)
 					.attr('height', 10)
@@ -64,7 +67,7 @@ angular.module('d3Zoom', ['d3', 'plot_data_prepation'])
 				});
 
 				legend.append('text')
-				    .attr('x', scope.w - 288)
+				    .attr('x', scope.w - 182)
 				    .attr('y', function(d, i){ return (i *  25) + 9;})
 				    .text(function(d){ return d; });
         
@@ -79,7 +82,10 @@ angular.module('d3Zoom', ['d3', 'plot_data_prepation'])
 					return d.y; })
 					.attr("r", function(d) { return d.r; })
 					.style("fill", function(d) {if (scope.type === 'task' ) return color(d.name); else return color(d.status);})
-					.on("click", function(d) { return zoom(node === d ? root : d); });
+					.on("click", function(d) 
+					{ return zoom(node === d ? root : d); })
+					.on('mouseover', tip.show)
+ 					.on('mouseout', tip.hide);
 
 				svg.selectAll("text")
 					.data(nodes)
@@ -93,7 +99,8 @@ angular.module('d3Zoom', ['d3', 'plot_data_prepation'])
 					.text(function(d) { return d.id; })
 					.attr("class","plot");
 
-  //d3.select(window).on("click", function() { zoom(root); });
+  				d3.select(window).on("click", 	
+  					function() { zoom(root); });
 
 
 				function zoom(d) {

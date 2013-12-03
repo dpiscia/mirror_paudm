@@ -49,6 +49,8 @@ angular.module('strc_query.controllers', [])
    		}
    		$scope.columns = $scope.heads($scope.results[0]);
 		
-   		$scope.data = results.map(function(x){return [x[$scope.heads[0]], x[$scope.heads[1]]});
+   		$scope.data = results.map(
+   			function(x)
+   			{return [ x[$scope.columns[0]], x[$scope.columns[1]] ] });
 
 }]);
