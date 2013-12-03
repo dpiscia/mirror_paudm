@@ -32,11 +32,11 @@ angular.module('d3Scatter', ['d3'])
 			scope.render = function(){
 				var data = scope.data;
 			    var x = d3.scale.linear()
-              .domain([0, d3.max(data, function(d) { return d[0]; })])
+              .domain([d3.min(data, function(d) { return d[0]; }), d3.max(data, function(d) { return d[0]; })])
               .range([ 0, scope.w ]);
     
     var y = d3.scale.linear()
-    	      .domain([0, d3.max(data, function(d) { return d[1]; })])
+    	      .domain([d3.min(data, function(d) { return d[1]; }), d3.max(data, function(d) { return d[1]; })])
     	      .range([ scope.h, 0 ]);
     	      
     	      var xAxis = d3.svg.axis()
