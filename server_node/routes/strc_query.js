@@ -42,7 +42,7 @@ module.exports.structure_query = function(req, res)
 function query(text)
 	{  
 		var deferred = q.defer();
-		db.client_job.raw(text).then  
+		db.client_pau.raw(text).then  
 		(
 			function(resp) 
 			{
