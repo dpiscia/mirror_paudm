@@ -16,7 +16,7 @@ angular.module('d3Pie', ['d3', 'plot_data_prepation'])
 			scope.h = 400;
 			var svg = d3.select(element[0])
 				.append("svg")
-				.attr("width", scope.w)
+				.attr("width", scope.w + 200)
 				.attr("height", scope.h);
 
 			scope.$watch(
@@ -57,7 +57,7 @@ angular.module('d3Pie', ['d3', 'plot_data_prepation'])
 				   }
   				var legend = svg.selectAll('g').data(pie(data_mod)).enter().append('g').attr('class', 'legend').attr("transform", "translate(0 ,20 )");
 				legend.append('rect')
-					.attr('x', scope.w - 200)
+					.attr('x', scope.w )
 					.attr('y', function(d, i){ return i *  25;})
 					.attr('width', 10)
 					.attr('height', 10)
@@ -66,7 +66,7 @@ angular.module('d3Pie', ['d3', 'plot_data_prepation'])
 					});
 
 				legend.append('text')
-					.attr('x', scope.w - 188)
+					.attr('x', scope.w + 12)
 					.attr('y', function(d, i){ return (i *  25) + 9;})
 					.text(function(d)
 					{ return d.data.status+" "+Math.floor((d.data.data/count)*100)+"%"; });

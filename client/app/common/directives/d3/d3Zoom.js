@@ -19,7 +19,7 @@ angular.module('d3Zoom', ['d3', 'plot_data_prepation','d3_tooltip'])
 			scope.r = 500;
 			var svg = d3.select(element[0])
 				.append("svg")
-				.attr("width", scope.w)
+				.attr("width", scope.w + 200)
 				.attr("height", scope.h)
 				.append("g")
 				.attr("transform", "translate(" + (scope.w -scope.r ) / 2 + "," + (scope.h - scope.r) / 2 + ")");
@@ -58,7 +58,7 @@ angular.module('d3Zoom', ['d3', 'plot_data_prepation','d3_tooltip'])
 							.enter().append('g').attr('class', 'legend').attr("transform", "translate(0 ,20 )");
   
 				legend.append('rect')
-					.attr('x', scope.w - 300)
+					.attr('x', scope.w - 200)
 					.attr('y', function(d, i){ return i *  25;})
 					.attr('width', 10)
 					.attr('height', 10)
@@ -67,7 +67,7 @@ angular.module('d3Zoom', ['d3', 'plot_data_prepation','d3_tooltip'])
 				});
 
 				legend.append('text')
-				    .attr('x', scope.w - 288)
+				    .attr('x', scope.w - 182)
 				    .attr('y', function(d, i){ return (i *  25) + 9;})
 				    .text(function(d){ return d; });
         

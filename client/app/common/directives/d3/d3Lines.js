@@ -13,10 +13,10 @@ angular.module('d3Lines', ['d3', 'plot_data_prepation'])
 				type : '=',},
 		link: function(scope, element, attrs){
 			var margin = {top: 20, right: 80, bottom: 30, left: 50};
-    		scope.w = 960 - margin.left - margin.right,
+    		scope.w = 960 - margin.left - margin.right ,
     		scope.h = 400 - margin.top - margin.bottom;
 			var svg = d3.select(element[0]).append("svg")
-				.attr("width", scope.w + margin.left + margin.right )
+				.attr("width", scope.w + margin.left + margin.right + 200)
 				.attr("height", scope.h + margin.top + margin.bottom).append("g")
     			.attr("transform", "translate(50 ,20 )");
 
@@ -90,7 +90,7 @@ var status = color.domain().map(function(name) {
         .attr('class', 'legend');
 
     legend.append('rect')
-        .attr('x', scope.w - 20)
+        .attr('x', scope.w + 70)
         .attr('y', function(d, i){ return i *  20;})
         .attr('width', 10)
         .attr('height', 10)
@@ -99,7 +99,7 @@ var status = color.domain().map(function(name) {
         });
 
     legend.append('text')
-        .attr('x', scope.w - 8)
+        .attr('x', scope.w  + 82)
         .attr('y', function(d, i){ return (i *  20) + 9;})
         .text(function(d){ return d.name; });
      

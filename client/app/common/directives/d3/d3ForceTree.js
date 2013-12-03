@@ -22,7 +22,7 @@ angular.module('d3Forcetree', ['d3', 'plot_data_prepation'])
 					.size([scope.w, scope.h - 160]);
 				var svg = d3.select(element[0])
 					.append("svg:svg")
-					.attr("width", scope.w)
+					.attr("width", scope.w + 300)
 					.attr("height", scope.h);
 	
 	
@@ -50,7 +50,7 @@ angular.module('d3Forcetree', ['d3', 'plot_data_prepation'])
 					root = tree_dict_from_flatten(mod_data[0],[],mod_data)[0];
 					root.fixed = true;
 					root.x = scope.w / 2;
-					root.y = scope.h / 2 - 80;  
+					root.y = scope.h / 2 ;  
 					var nodes = flatten(root),
 	  					links = d3.layout.tree().links(nodes);
 	  					
@@ -64,7 +64,7 @@ angular.module('d3Forcetree', ['d3', 'plot_data_prepation'])
 						.enter().append('g').attr('class', 'legend').attr("transform", "translate(0 ,20 )");
 	  				links = links.concat(links_dep);
 					legend.append('rect')
-						.attr('x', scope.w - 300)
+						.attr('x', scope.w )
 						.attr('y', function(d, i){ return i *  25;})
 						.attr('width', 10)
 						.attr('height', 10)
@@ -73,7 +73,7 @@ angular.module('d3Forcetree', ['d3', 'plot_data_prepation'])
 						});
 	
 					legend.append('text')
-						    .attr('x', scope.w - 288)
+						    .attr('x', scope.w + 12)
 						    .attr('y', function(d, i){ return (i *  25) + 9;})
 						    .text(function(d){ return d; });
 	  // Restart the force layout.
