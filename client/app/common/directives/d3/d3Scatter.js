@@ -30,6 +30,13 @@ angular.module('d3Scatter', ['d3'])
 // define render function
 			
 			scope.render = function(){
+					svg.selectAll("legend").remove();
+					svg.selectAll("rect").remove();
+					svg.selectAll("circle").remove();
+					svg.selectAll("text").remove();
+					svg.selectAll("g").remove();      
+					svg.selectAll("line.link").remove();
+					svg.selectAll("line.link_2").remove();
 				var data = scope.data;
 			    var x = d3.scale.linear()
               .domain([d3.min(data, function(d) { return d[0]; }), d3.max(data, function(d) { return d[0]; })])

@@ -37,20 +37,29 @@ angular.module('strc_query.controllers', [])
 								
 		$scope.submit = function(){
 			console.log($stateParams.table_name+"/"+$scope.field+"/"+$scope.op_filter+"/"+$scope.value);
-			$state.transitionTo('strc_query.fields.results', { table_name:$stateParams.table_name, fields : $scope.fields.map(function(x){return x.name}), where: $scope.conditions.map(function(x){return x.field+" "+x.op+" "+x.value+" "+x.logical}), limit:$scope.limit});
+			$state.transitionTo('strc_query.fields.results', { table_name:$stateParams.table_name, fields :'*', where: $scope.conditions.map(function(x){return x.field+" "+x.op+" "+x.value+" "+x.logical}), limit:$scope.limit});
 		}
 		//table_schema.query({table_name :$stateParams.contactId}	
 }]).controller('strc_query_results_ctrl', ['$scope','results','$stateParams', function ($scope , results, $stateParams) {
    		$scope.results = results;
+   		$scope.type = 'table';
    		$scope.heads = function(dict){
    		var heads = [];
    		for (var key in dict) if (!(key.substring(0, 1) === '$' ))heads.push(key);
    		return heads;
    		}
    		$scope.columns = $scope.heads($scope.results[0]);
-		
+   		$scope.var1 = $scope.columns[0];
+   		$scope.var2 = $scope.columns[1];		
    		$scope.data = results.map(
    			function(x)
-   			{return [ x[$scope.columns[0]], x[$scope.columns[1]] ] });
+   			{return [ x[$scope.var1], x[$scope.var2] ] });
+		$scope.$watch('var1+var2', function() {
+			   		$scope.data = results.map(
+			   			function(x)
+			   			{return [ x[$scope.var1], x[$scope.var2] ] });
+			   		})
+   		
 
-}]);
+}])
+;

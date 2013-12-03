@@ -41,13 +41,13 @@
 		<div class="col-md-2">
 	     		 <input type="text" ng-model="cond.value">
 		</div>
-		<div class="col-md-2">
+		<div class="col-md-2" ng-show="$index < (conditions.length - 1)">
 			<select ng-model="cond.logical" >
 	     		<option ng-repeat="logical in logical_op " value="{{logical}}">{{logical}}</option>
 	  			// unique options from the categories
 			</select>
 		</div>	
-		<div class="col-md-2">
+		<div class="col-md-2" >
 				<button ng-click="remove_condition($index)" class="btn btn-primary" >Remove</button>			
 		</div>
 	</div>

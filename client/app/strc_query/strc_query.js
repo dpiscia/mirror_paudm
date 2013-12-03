@@ -67,6 +67,7 @@ angular.module('paudm_strc_query', [
 			        }},
 			        controller: "strc_query_results_ctrl",
  		   })
+ 		   
 
 
         
