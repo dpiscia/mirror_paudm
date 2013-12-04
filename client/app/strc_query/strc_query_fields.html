@@ -15,11 +15,11 @@
 						</button>
 				</div>
 				<div class="col-md-6">
-						<button type="button" class="btn btn-success" ng-click="uncheck_all(fields_btn)"> Uncheck All
+						<button type="button" class="btn btn-danger" ng-click="uncheck_all(fields_btn)"> Uncheck All
 						</button>
 				</div>
 			</div>
-			<div class="col-md-2" ng-repeat="field in table_fields.list">
+			<div class="col-md-2" ng-repeat="field in table_fields.list" style="margin-bottom:5px">
 					<button type="button" class="btn btn-default" ng-model="fields_btn[$index]" btn-checkbox>{{field}}</button>
 					
 			</div>
