@@ -8,6 +8,7 @@ var express = require('express'),
   
   api_jobs = require('./routes/jobs'),
   api_strc_query = require('./routes/strc_query'),
+  api_raw_query = require('./routes/raw_query'),
   path = require('path'),
   cors = require('cors'),
   flash = require('connect-flash'),
@@ -92,9 +93,13 @@ app.get('/api/prods', api_jobs.prod_list);
 // redirect all others to the index (HTML5 history)
 
 //structured query API
-//api/str_query/:table/:fields/:clauses/:limit
+//api/str_query?table&fields&clauses&limit
 
 app.get('/api/strc_query',api_strc_query.structure_query)
+
+//raw query
+
+app.get('/api/raw_query',api_raw_query.raw_query)
 
 //login/logout/register points
 app.get('/login', register.login_get);
