@@ -20,9 +20,8 @@
 				</div>
 			</div>
 			<div class="col-md-2" ng-repeat="field in table_fields.list">
-				<label  class="btn btn-default">
-					<input type="checkbox" ng-model="fields_btn[$index]" value="true" ng-checked="fields_btn[$index]"> {{field}}
-				</label>
+					<button type="button" class="btn btn-default" ng-model="fields_btn[$index]" btn-checkbox>{{field}}</button>
+					
 			</div>
 		</div>
 	</div>
