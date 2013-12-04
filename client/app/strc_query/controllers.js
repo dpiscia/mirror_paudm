@@ -14,16 +14,24 @@ angular.module('strc_query.controllers', [])
    		})
 }]).controller('strc_query_fields_ctrl', ['$scope','$stateParams','$state','fields_list', function ($scope, $stateParams, $state, fields_list) {
 		$scope.fields = [];
+		$scope.fields_btn = fields_list.list.map(function(x,i){if(i==0 || i==1)return true; return false;});
 		$scope.limit = 100;
-		$scope.add_field = function(){$scope.fields.push({name : ""}); }
-		$scope.remove_field = function(index){
-			$scope.fields.splice(index,1); 
-			};
 		$scope.conditions = [];
+		$scope.showFields = true;
+		$scope.check_all = function(fields){
+			fields.forEach(
+				function(value,index,array)
+					{array[index] = true;
+					}
+			)};
+		$scope.uncheck_all = function(fields){
+			fields.forEach(
+				function(value,index,array)
+					{array[index] = false;
+					}
+			)};
 		$scope.add_condition = function(){$scope.conditions.push({field : "", op: "", value :"" , logical : ""}); }
-		$scope.remove_condition = function(index){
-			$scope.conditions.splice(index,1); 
-			}
+		$scope.remove_condition = function(index){$scope.conditions.splice(index,1); }
 		$scope.prova   = $stateParams.table_name;
 		$scope.table_fields = fields_list;
 		$scope.comparison_op = [{name : 'less than', op : '<'},
@@ -37,7 +45,9 @@ angular.module('strc_query.controllers', [])
 								
 		$scope.submit = function(){
 			console.log($stateParams.table_name+"/"+$scope.field+"/"+$scope.op_filter+"/"+$scope.value);
-			$state.transitionTo('strc_query.fields.results', { table_name:$stateParams.table_name, fields :'*', where: $scope.conditions.map(function(x){return x.field+" "+x.op+" "+x.value+" "+x.logical}), limit:$scope.limit});
+			$scope.fields = [];
+			$scope.fields_btn.map(function(x,index){if (x != 'undefined' && x ==true)  $scope.fields.push($scope.table_fields.list[index]);})
+			$state.transitionTo('strc_query.fields.results', { table_name:$stateParams.table_name, fields :$scope.fields, where: $scope.conditions.map(function(x){return x.field+" "+x.op+" "+x.value+" "+x.logical}), limit:$scope.limit});
 		}
 		//table_schema.query({table_name :$stateParams.contactId}	
 }]).controller('strc_query_results_ctrl', ['$scope','results','$stateParams', function ($scope , results, $stateParams) {

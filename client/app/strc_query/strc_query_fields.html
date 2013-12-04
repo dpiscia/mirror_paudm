@@ -1,60 +1,85 @@
 <div class="row">
-	<button ng-click="add_field()" class="btn btn-primary" >Add field</button>
-	{{fields.length}}
-
-</div>
-<div ng-repeat="field in fields"class="row">
-	 	<div class="col-md-2">
-			<select ng-model="field.name" >
-	     		<option ng-repeat="field in table_fields.list " value="{{field}}">{{field}}</option>
-	  			// unique options from the categories
-			</select>
+	<div class="panel panel-primary" style="background-color: rgb(245, 245, 245);">
+		<div class="panel-heading"> 
+				<h2 class="panel-title text-center" style="color:rgb(256,256,256); font-size:22px">
+					Select fields
+				
+				<i   class=" pull-right glyphicon glyphicon-plus" ng-click="showFields = true"></i>
+				<i   class=" pull-right glyphicon glyphicon-minus" ng-click="showFields = false">&nbsp</i>
+				</h2>
 		</div>
-		<div class="col-md-2">
-				<button ng-click="remove_field($index)" class="btn btn-primary" >Remove</button>			
-		</div>
-</div>
-<div class="row">
-	<button ng-click="add_condition()" class="btn btn-primary" >Add conditions</button>
-	{{fields.length}}
-
-</div>
-
-	<div ng-repeat="cond in conditions" class="row">
-		<div class="col-md-2">
-		<!--Sidebar content-->
-	 		Where
-	 	</div>
-	 	<div class="col-md-2">
-			<select ng-model="cond.field" >
-	     		<option ng-repeat="field in table_fields.list " value="{{field}}">{{field}}</option>
-	  			// unique options from the categories
-			</select>
-		</div>
-
-		<div class="col-md-2"> 
-			<select ng-model="cond.op" >
-	     		Is <option ng-repeat="op in comparison_op " value="{{op.op}}">{{op.name}}</option>
-	  			// unique options from the categories
-			</select>
-		</div>		
-		<div class="col-md-2">
-	     		 <input type="text" ng-model="cond.value">
-		</div>
-		<div class="col-md-2" ng-show="$index < (conditions.length - 1)">
-			<select ng-model="cond.logical" >
-	     		<option ng-repeat="logical in logical_op " value="{{logical}}">{{logical}}</option>
-	  			// unique options from the categories
-			</select>
-		</div>	
-		<div class="col-md-2" >
-				<button ng-click="remove_condition($index)" class="btn btn-primary" >Remove</button>			
+		<div class="panel-body btn-group" data-toggle="buttons" ng-show="showFields">
+			<div class="col-md-2>
+					<button type="button" class="btn btn-success" ng-click="check_all(fields_btn)"> Check All
+					</button>
+			</div>
+			<div class="col-md-2>
+					<button type="button" class="btn btn-success" ng-click="uncheck_all(fields_btn)"> Uncheck All
+					</button>
+			</div>
+			<div class="col-md-2" ng-repeat="field in table_fields.list">
+				<label  class="btn btn-default">
+					<input type="checkbox" ng-model="fields_btn[$index]" value="true" ng-checked="fields_btn[$index]"> {{field}}
+			</label>
 		</div>
 	</div>
-	<div class="row">
-	     		 <input type="text" ng-model="limit">
+</div>
+
+
+
+	<div class="panel panel-primary" style="background-color: rgb(245, 245, 245);">
+		<div class="panel-heading"> 
+				<h2 class="panel-title text-center" style="color:rgb(256,256,256); font-size:22px">
+					Conditions
+				
+				<i   class=" pull-right glyphicon glyphicon-plus" ng-click="add_condition()"></i>
+				
+				</h2>
+		</div>
+
+		<div ng-repeat="cond in conditions" class="panel-body">
+			<div class="col-md-2">
+			<!--Sidebar content-->
+		 		Where
+			</div>
+			<div class="col-md-2">
+					<select ng-model="cond.field" >
+			     		<option ng-repeat="field in table_fields.list " value="{{field}}">{{field}}</option>
+			  			// unique options from the categories
+					</select>
+			</div>
+	
+			<div class="col-md-2"> 
+					<select ng-model="cond.op" >
+			     		Is <option ng-repeat="op in comparison_op " value="{{op.op}}">{{op.name}}</option>
+			  			// unique options from the categories
+					</select>
+			</div>		
+			<div class="col-md-2">
+			     		 <input type="text" ng-model="cond.value">
+			</div>
+			<div class="col-md-2" >
+					<select ng-model="cond.logical" ng-show="$index < (conditions.length - 1)" >
+			     		<option ng-repeat="logical in logical_op " value="{{logical}}">{{logical}}</option>
+			  			// unique options from the categories
+					</select>
+			</div>	
+			<div class="col-md-2" >
+						
+						<i   class=" pull-right glyphicon glyphicon-minus" 	ng-click="remove_condition($index)"></i>		
+			</div>
+		</div>
+
+
 	</div>
-	<div class="row">
-		<button  class="btn btn-primary" ng-click= "submit()">Submit</button> 
-	</div>
+	<div class="panel panel-primary" style="background-color: rgb(245, 245, 245);">
+		<div class="panel-body">
+			<div class=" col-md-2 col-md-offset-4"">
+				<input type="text" ng-model="limit">
+			</div>
+			<div class=" col-md-2">
+					<button  class="btn btn-primary" ng-click= "submit()">Submit</button> 
+			</div>
+		</div>
+</div>
 	<div ui-view></div>

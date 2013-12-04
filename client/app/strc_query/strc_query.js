@@ -59,7 +59,7 @@ angular.module('paudm_strc_query', [
 					resolve : {        
 			            results: function($q, strc_query , $stateParams){
 			             var deferred = $q.defer();
-			             strc_query.query({table:$stateParams.table_name, fields:$stateParams.fields, clauses: $stateParams.where, limit :'100' }, function(data){
+			             strc_query.query({table:$stateParams.table_name, fields:$stateParams.fields, clauses: $stateParams.where, limit :$stateParams.limit }, function(data){
 			             deferred.resolve(data);
 			             })
 			             return deferred.promise;

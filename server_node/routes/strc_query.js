@@ -25,7 +25,7 @@ module.exports.structure_query = function(req, res)
 	console.log(clauses.length);
 	for (var i=0; i < clauses.length; i++)
 		{
-		if (i===0) command = command+" where ";
+		if (i===0 && clauses[0] != "") command = command+" where ";
 		command = command+" "+clauses[i];
 		}
 	command = command+" limit "+limit;
