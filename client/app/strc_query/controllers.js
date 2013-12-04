@@ -5,13 +5,12 @@
 angular.module('strc_query.controllers', [])
 	.controller('strc_query_ctrl', ['$scope', 'table_list','$state', function strc_query_ctrl($scope, table_list,$state) {
    		$scope.db_list = table_list;
+   		$scope.showTables = true;
    		$scope.tables_filter =  $state.params.table_name;
-   		$scope.$watch('tables_filter', function() {
-   		if ($scope.tables_filter != null){
-   			console.log($scope.tables_filter);
-   			$state.transitionTo('strc_query.fields', {table_name:$scope.tables_filter});
-   			}
-   		})
+   		$scope.select = function(name){console.log(name);
+   						$scope.tables_filter = name;
+   						$state.transitionTo('strc_query.fields', {table_name:name});
+   						}
 }]).controller('strc_query_fields_ctrl', ['$scope','$stateParams','$state','fields_list', function ($scope, $stateParams, $state, fields_list) {
 		$scope.fields = [];
 		$scope.fields_btn = fields_list.list.map(function(x,i){if(i==0 || i==1)return true; return false;});
