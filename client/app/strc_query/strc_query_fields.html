@@ -2,28 +2,30 @@
 	<div class="panel panel-primary" style="background-color: rgb(245, 245, 245);">
 		<div class="panel-heading"> 
 				<h2 class="panel-title text-center" style="color:rgb(256,256,256); font-size:22px">
-					Select fields
+					Fields
 				
 				<i   class=" pull-right glyphicon glyphicon-plus" ng-click="showFields = true"></i>
 				<i   class=" pull-right glyphicon glyphicon-minus" ng-click="showFields = false">&nbsp</i>
 				</h2>
 		</div>
-		<div class="panel-body btn-group" data-toggle="buttons" ng-show="showFields">
-			<div class="col-md-2>
-					<button type="button" class="btn btn-success" ng-click="check_all(fields_btn)"> Check All
-					</button>
-			</div>
-			<div class="col-md-2>
-					<button type="button" class="btn btn-success" ng-click="uncheck_all(fields_btn)"> Uncheck All
-					</button>
+		<div class="panel-body" data-toggle="buttons" ng-show="showFields">
+			<div class="row" style="margin-bottom:15px">
+				<div class="col-md-2 col-md-offset-4">
+						<button type="button" class="btn btn-success" ng-click="check_all(fields_btn)"> Check All
+						</button>
+				</div>
+				<div class="col-md-6">
+						<button type="button" class="btn btn-success" ng-click="uncheck_all(fields_btn)"> Uncheck All
+						</button>
+				</div>
 			</div>
 			<div class="col-md-2" ng-repeat="field in table_fields.list">
 				<label  class="btn btn-default">
 					<input type="checkbox" ng-model="fields_btn[$index]" value="true" ng-checked="fields_btn[$index]"> {{field}}
-			</label>
+				</label>
+			</div>
 		</div>
 	</div>
-</div>
 
 
 
@@ -74,7 +76,7 @@
 	</div>
 	<div class="panel panel-primary" style="background-color: rgb(245, 245, 245);">
 		<div class="panel-body">
-			<div class=" col-md-2 col-md-offset-4"">
+			<div class=" col-md-2 col-md-offset-4">
 				<input type="text" ng-model="limit">
 			</div>
 			<div class=" col-md-2">
