@@ -32,7 +32,7 @@ angular.module('paudm_db', [
             
             // Use a url of "/" to set a states as the "index".
             url: "/db_schema",
-            templateUrl: "static/db_manage/db_schema.html", 
+            templateUrl: "db_manage/db_schema.html", 
             resolve : {        
             table_list: function($q, db_list){
              var deferred = $q.defer();
@@ -48,13 +48,13 @@ angular.module('paudm_db', [
 
             // Use a url of "/" to set a states as the "index".
             url: "/plot",
-            templateUrl: "static/db_manage/db_list_plot.html", 
+            templateUrl: "db_manage/db_list_plot.html", 
             controller: "tables_plot"
 
 
           })        .state('db_schema.table', {
             url: "/{contactId}",
-            templateUrl: "static/db_manage/fields_table.html",
+            templateUrl: "db_manage/fields_table.html",
                         resolve : {        
             fields_list: function($q, table_schema, $stateParams){
              var deferred = $q.defer();

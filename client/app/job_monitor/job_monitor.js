@@ -35,7 +35,7 @@ angular.module('paudm_jobs', [
             
             // Use a url of "/" to set a states as the "index".
             url: "/Top_level_jobs",
-			templateUrl: "static/job_monitor/jobs_list.html", 
+			templateUrl: "job_monitor/jobs_list.html", 
 			resolve : {        
 				jobs: function($q, jobs_list){
 					 var deferred = $q.defer();
@@ -56,7 +56,7 @@ angular.module('paudm_jobs', [
             
             // Use a url of "/" to set a states as the "index".
 			url: "/Top_level_jobs/{path:.*}Job_details/:job_id",
-			templateUrl: "static/job_monitor/job_single.html", 
+			templateUrl: "job_monitor/job_single.html", 
             resolve : {        
 				job: function($q, jobs_list, $location, $stateParams){
 				     var deferred = $q.defer();
@@ -77,7 +77,7 @@ angular.module('paudm_jobs', [
             
             // Use a url of "/" to set a states as the "index".
 			url: "/Top_level_jobs/{path:.*}/:job_id/:level",
-			templateUrl: "static/job_monitor/jobs_list.html", 
+			templateUrl: "job_monitor/jobs_list.html", 
             resolve : {        
 				jobs: function($q, jobs_list, $location, $stateParams){
 				     var deferred = $q.defer();

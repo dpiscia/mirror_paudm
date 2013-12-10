@@ -53,7 +53,7 @@ app.use(express.session(session_config));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static(path.join(__dirname, '../client')));
+app.use(express.static(path.join(__dirname, '../client/app')));
 app.use(app.router);
 
 db.connectDatabase(config);
@@ -83,23 +83,23 @@ security.strategy;
 
 
 // Jobs API
-app.get('/api/jobs/:id',  api_jobs.list);
-app.get('/api/jobs/:id/:all', api_jobs.list);
-app.get('/api/jobs', api_jobs.list);
-app.get('/api/qc/:id', api_jobs.qc_list);
-app.get('/api/prods', api_jobs.prod_list);
-app.get('/api/prods', api_jobs.prod_list);
-//app.get('/api/jobs/prod/:id', api_jobs.job_prod_list);
+app.get('/api_node/jobs/:id',  api_jobs.list);
+app.get('/api_node/jobs/:id/:all', api_jobs.list);
+app.get('/api_node/jobs', api_jobs.list);
+app.get('/api_node/qc/:id', api_jobs.qc_list);
+app.get('/api_node/prods', api_jobs.prod_list);
+app.get('/api_node/prods', api_jobs.prod_list);
+//app.get('/api_node/jobs/prod/:id', api_jobs.job_prod_list);
 // redirect all others to the index (HTML5 history)
 
 //structured query API
 //api/str_query?table&fields&clauses&limit
 
-app.get('/api/strc_query',api_strc_query.structure_query)
+app.get('/api_node/strc_query',api_strc_query.structure_query)
 
 //raw query
 
-app.get('/api/raw_query',api_raw_query.raw_query)
+app.get('/api_node/raw_query',api_raw_query.raw_query)
 
 //login/logout/register points
 app.get('/login', register.login_get);

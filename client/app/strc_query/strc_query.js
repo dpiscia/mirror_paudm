@@ -28,7 +28,7 @@ angular.module('paudm_strc_query', [
             
             // Use a url of "/" to set a states as the "index".
             url: "/strc_query",
-            templateUrl: "static/strc_query/strc_query_table.html", 
+            templateUrl: "strc_query/strc_query_table.html", 
             resolve : {        
             table_list: function($q, db_list){
              var deferred = $q.defer();
@@ -41,7 +41,7 @@ angular.module('paudm_strc_query', [
 
           })    .state('strc_query.fields', {
 			      url: "/{table_name}",
-			      templateUrl: "static/strc_query/strc_query_fields.html" ,
+			      templateUrl: "strc_query/strc_query_fields.html" ,
 					resolve : {        
 			            fields_list: function($q, table_schema, $stateParams){
 			             var deferred = $q.defer();
@@ -55,7 +55,7 @@ angular.module('paudm_strc_query', [
  		   })
  		   .state('strc_query.fields.results', {
 			      url: "/result?fields&where&limit",
-			      templateUrl: "static/strc_query/strc_query_results.html" ,
+			      templateUrl: "strc_query/strc_query_results.html" ,
 					resolve : {        
 			            results: function($q, strc_query , $stateParams){
 			             var deferred = $q.defer();
