@@ -21,7 +21,7 @@ def get(request):
 @fields_list.get()
 def get(request):
 	"""It defines a rest api to get all tables present in db
-	the syntax is the following /tb/{tb_name} """
+	the syntax is the following api/tb/{tb_name} """
 	#def get(self,tb_name):
 	tb_name = request.matchdict['table']
 	

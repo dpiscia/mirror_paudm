@@ -7,3 +7,4 @@ dist
 node_modules
 paudm_db.egg-info
 *.log
+api_python.egg-info
