@@ -7,5 +7,5 @@ setup(
     packages=['paudm_db', 'paudm_db.api', 'paudm_db.test'],
     include_package_data=True,
     zip_safe=False,
-    install_requires=['Flask', 'Flask-restful', 'sqlalchemy','nose','six']
+    install_requires=['pyramid','cornice','Flask', 'Flask-restful', 'sqlalchemy','nose','six']
 )

@@ -36,7 +36,7 @@ angular.module('strc_query.controllers', [])
 		$scope.comparison_op = [{name : 'less than', op : '<'},
 								{name : 'greater than', op : '>'},
 								{name : 'less than or equal to', op : '<='},
-								{name : 'less than or equal to', op : '>='},
+								{name : 'greater than or equal to', op : '>='},
 								{name : 'equal than', op : '='},
 								{name : 'not equal', op : '!='}
 								]
