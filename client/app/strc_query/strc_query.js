@@ -30,9 +30,9 @@ angular.module('paudm_strc_query', [
             url: "/strc_query",
             templateUrl: "strc_query/strc_query_table.html", 
             resolve : {        
-            table_list: function($q, db_list){
+            table_list: function($q, db_list,ENV){
              var deferred = $q.defer();
-             db_list.query({}, function(data){ deferred.resolve(data);})
+             db_list(ENV.python).query({}, function(data){ deferred.resolve(data);})
 
              return deferred.promise;
          }},
@@ -43,9 +43,9 @@ angular.module('paudm_strc_query', [
 			      url: "/{table_name}",
 			      templateUrl: "strc_query/strc_query_fields.html" ,
 					resolve : {        
-			            fields_list: function($q, table_schema, $stateParams){
+			            fields_list: function($q, table_schema, $stateParams,ENV){
 			             var deferred = $q.defer();
-			             table_schema.query({table_name :$stateParams.table_name}, function(data){
+			             table_schema(ENV.python).query({table_name :$stateParams.table_name}, function(data){
 			             deferred.resolve(data);
 			             })
 			             return deferred.promise;
@@ -57,9 +57,9 @@ angular.module('paudm_strc_query', [
 			      url: "/result?fields&where&limit",
 			      templateUrl: "strc_query/strc_query_results.html" ,
 					resolve : {        
-			            results: function($q, strc_query , $stateParams){
+			            results: function($q, strc_query , $stateParams,ENV){
 			             var deferred = $q.defer();
-			             strc_query.query({table:$stateParams.table_name, fields:$stateParams.fields, clauses: $stateParams.where, limit :$stateParams.limit }, function(data){
+			             strc_query(ENV.node).query({table:$stateParams.table_name, fields:$stateParams.fields, clauses: $stateParams.where, limit :$stateParams.limit }, function(data){
 			             deferred.resolve(data);
 			             })
 			             return deferred.promise;

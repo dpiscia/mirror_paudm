@@ -16,6 +16,7 @@ module.exports = function(grunt) {
 			app: 'app/*.js',
 			job_monitor: 'app/job_monitor/*.js',
 			dest: 'dist/<%= pkg.name %>/<%= pkg.version %>',
+			dest_config : 'app/config'
 		},
 		concat: {
 			basic: {
@@ -39,19 +40,19 @@ module.exports = function(grunt) {
 	
 	  // targets
 			development: [{
-				dest: '<%= dirs.dest %>/scripts/config.js',
+				dest: '<%= dirs.dest_config %>/config_env.js',
 				wrap: '"use strict";\n\n <%= __ngModule %>',
 				name: 'config',
 				constants: {
-					ENV: 'development'
+					ENV: {python :'', node : 'http://localhost:3000'}
 				}
 			}],
 			production: [{
-				dest: '<%= dirs.dest %>/scripts/config.js',
+				dest: '<%= dirs.dest_config %>/config.js',
 				wrap: '"use strict";\n\n <%= __ngModule %>',
 				name: 'config',
 				constants: {
-					ENV: 'production'
+					ENV: {python :'/api', node : ''}
 				}
 			}]
 		}
@@ -64,7 +65,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-ng-constant');
   // Default task(s).
-	grunt.registerTask('default', ['clean','ngconstant:development','concat','uglify']);
+	grunt.registerTask('development', ['clean','ngconstant:development','concat','uglify']);
 	grunt.registerTask('production', ['clean','ngconstant:production','concat','uglify']);
    
 };

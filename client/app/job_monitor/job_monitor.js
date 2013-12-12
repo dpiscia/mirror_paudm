@@ -37,15 +37,15 @@ angular.module('paudm_jobs', [
             url: "/Top_level_jobs",
 			templateUrl: "job_monitor/jobs_list.html", 
 			resolve : {        
-				jobs: function($q, jobs_list){
+				jobs: function($q, jobs_list,ENV){
 					 var deferred = $q.defer();
-					 jobs_list.query({}, function(data){ deferred.resolve(data);})
+					 jobs_list(ENV.node).query({}, function(data){ deferred.resolve(data);})
 				 //deferred.resolve([]);
 				 return deferred.promise;
 	        	 },
-				productions: function($q, productions_list){
+				productions: function($q, productions_list,ENV){
 					 var deferred = $q.defer();
-					 productions_list.query({}, function(data){ deferred.resolve(data);})
+					 productions_list(ENV.node).query({}, function(data){ deferred.resolve(data);})
 					 //deferred.resolve([]);
 					 return deferred.promise;
 	        	 }
@@ -58,15 +58,15 @@ angular.module('paudm_jobs', [
 			url: "/Top_level_jobs/{path:.*}Job_details/:job_id",
 			templateUrl: "job_monitor/job_single.html", 
             resolve : {        
-				job: function($q, jobs_list, $location, $stateParams){
+				job: function($q, jobs_list, $location, $stateParams,ENV){
 				     var deferred = $q.defer();
-				     jobs_list.query({id :$stateParams.job_id, all: 0}, function(data){ deferred.resolve(data);})
+				     jobs_list(ENV.node).query({id :$stateParams.job_id, all: 0}, function(data){ deferred.resolve(data);})
 				     //deferred.resolve([]);
 				     return deferred.promise;
 					},
-				QC: function($q, QC_list, $location, $stateParams){
+				QC: function($q, QC_list, $location, $stateParams,ENV){
 				     var deferred = $q.defer();
-				     QC_list.query({id :$stateParams.job_id}, function(data){ deferred.resolve(data);})
+				     QC_list(ENV.node).query({id :$stateParams.job_id}, function(data){ deferred.resolve(data);})
 				     //deferred.resolve([]);
 				     return deferred.promise;
 					},
@@ -79,9 +79,9 @@ angular.module('paudm_jobs', [
 			url: "/Top_level_jobs/{path:.*}/:job_id/:level",
 			templateUrl: "job_monitor/jobs_list.html", 
             resolve : {        
-				jobs: function($q, jobs_list, $location, $stateParams){
+				jobs: function($q, jobs_list, $location, $stateParams,ENV){
 				     var deferred = $q.defer();
-				     jobs_list.query({id :$stateParams.job_id, all: $stateParams.level}, function(data){ deferred.resolve(data);})
+				     jobs_list(ENV.node).query({id :$stateParams.job_id, all: $stateParams.level}, function(data){ deferred.resolve(data);})
 				     //deferred.resolve([]);
 				     return deferred.promise;
 					},

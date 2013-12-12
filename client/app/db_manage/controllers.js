@@ -2,8 +2,8 @@
 
 /* Controllers */
 
-angular.module('db_manage.controllers', [])
-	.controller('db_schema', ['$scope', 'table_list', function db_schema($scope, table_list) {
+angular.module('db_manage.controllers', ['config'])
+	.controller('db_schema', ['$scope', 'table_list','ENV', function db_schema($scope, table_list,configuration) {
    		$scope.db_list = table_list;
 }])
    .controller('tables_plot', ['$scope', function ($scope) {

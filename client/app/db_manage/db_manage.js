@@ -34,9 +34,9 @@ angular.module('paudm_db', [
             url: "/db_schema",
             templateUrl: "db_manage/db_schema.html", 
             resolve : {        
-            table_list: function($q, db_list){
+            table_list: function($q, db_list,ENV){
              var deferred = $q.defer();
-             db_list.query({}, function(data){ deferred.resolve(data);})
+             db_list(ENV.python).query({}, function(data){ deferred.resolve(data);})
 
              return deferred.promise;
          }},
@@ -56,10 +56,10 @@ angular.module('paudm_db', [
             url: "/{contactId}",
             templateUrl: "db_manage/fields_table.html",
                         resolve : {        
-            fields_list: function($q, table_schema, $stateParams){
+            fields_list: function($q, table_schema, $stateParams,ENV){
              var deferred = $q.defer();
              if (undefined != $stateParams ){
-             table_schema.query({table_name :$stateParams.contactId}, function(data){
+             table_schema(ENV.python).query({table_name :$stateParams.contactId}, function(data){
              deferred.resolve(data);
              })
              return deferred.promise;
