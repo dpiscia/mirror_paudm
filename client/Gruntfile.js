@@ -55,7 +55,52 @@ module.exports = function(grunt) {
 					ENV: {python :'/api', node : ''}
 				}
 			}]
-		}
+		},
+		preprocess : {
+	
+		    dev : {
+		
+		        src : 'app/index.html',
+		        dest : 'dev/index.html',
+		
+		    },
+		
+		    prod : {
+		
+		        src : 'app/index.html',
+		        dest : '<%= dirs.dest %>/index.html',
+		         options : {
+			                    context : {
+					                dest : '<%= dirs.dest %>',
+	            		}
+	            	}
+		
+		        }
+		
+		  },
+		  env : {
+
+		    options : {
+		
+		        /* Shared Options Hash */
+		        //globalOption : 'foo'
+		
+		    },
+		
+		    dev: {
+		
+		        NODE_ENV : 'DEVELOPMENT'
+		
+		    },
+		
+		    prod : {
+		
+		        NODE_ENV : 'PRODUCTION'
+		
+		    }
+		
+		},
+
 	})
 	
 
@@ -64,8 +109,10 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-ng-constant');
+	grunt.loadNpmTasks('grunt-preprocess');
+	grunt.loadNpmTasks('grunt-env');
   // Default task(s).
-	grunt.registerTask('development', ['clean','ngconstant:development','concat','uglify']);
-	grunt.registerTask('production', ['clean','ngconstant:production','concat','uglify']);
+	grunt.registerTask('development', ['clean','env:dev','ngconstant:development','concat','uglify','preprocess:dev']);
+	grunt.registerTask('production', ['clean','env:prod','ngconstant:production','concat','uglify','preprocess:prod']);
    
 };
