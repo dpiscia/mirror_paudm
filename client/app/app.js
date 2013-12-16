@@ -5,6 +5,7 @@ angular.module('paudm_all', [
   'ui.bootstrap',
   'paudm.breadcrumbs',
   'paudm.filters',
+  'login',
   'paudm_db',
   'paudm_jobs',
   'paudm_strc_query',

@@ -13,6 +13,7 @@ var express = require('express'),
   cors = require('cors'),
   flash = require('connect-flash'),
   passport = require('passport'),
+  LocalStrategy = require('passport-local').Strategy,
   expressValidator = require('express-validator');
 
 var app = module.exports = express();
@@ -29,6 +30,7 @@ if (config.session_store) {
 /**
  * Configuration
  */
+ 
 
 // all environments
 app.set('port', process.env.PORT || config.port);
@@ -73,7 +75,7 @@ if (app.get('env') === 'production') {
   // TODO
 }
 
-security.strategy;
+
 /**
  * Routes
  */
@@ -99,17 +101,30 @@ app.get('/api_node/strc_query',api_strc_query.structure_query)
 
 //raw query
 
-app.get('/api_node/raw_query',api_raw_query.raw_query)
 
+
+app.get('/api_node/raw_query',api_raw_query.raw_query)
+security.strategy;
 //login/logout/register points
 app.get('/login', register.login_get);
 app.get('/logout',register.logout_get);
 app.get('/register', register.reg_get);
-app.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), register.login_post);
+//app.post('/api_node/login', passport.authenticate('basic', { session: false }), register.login_post);
+app.get('/api_node/login',  /*passport.authenticate('basic', { session: false }),*/
+  function(req, res) {
+   console.log(res);
+    res.json({ username: req.user.username, email: req.user.email });
+  });
+app.post('/api_node/login',
+  function(req, res) {
+   console.log(req.body);
+   passport.authenticate('local', { session: false ,successRedirect: '/'})
+    res.send({ username: req.body.username, email: req.body.email });
+  });
 app.post('/register',register.reg_post);
 
-
-
+app.post('/login',
+passport.authenticate('davide', { failureRedirect: '/login', failureFlash: true }), register.login_post);
 /**
  * Start Server
  */

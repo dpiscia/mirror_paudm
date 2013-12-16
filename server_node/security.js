@@ -11,7 +11,6 @@ var passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy;
 var db = require('./db');
 
-
 module.exports.ensureAuthenticated = function (req, res, next) {
   
   if (req.isAuthenticated()) { return next(); }
@@ -33,29 +32,29 @@ function findById(id, fn) {
 
 function findByUsername(username, fn) 
 {
-	db.client_pau("user").select().where('email',username).then  
-	(
-		function(resp) 
-		{	
-		console.log("entra resp");
-		
-		if (resp.length > 0)
-			{
-			users.push(resp[0]);
-			console.log(resp);
-			return fn(null, resp[0]);
-			}
-		else
-			{
-			return fn(null, null);
-			}
-		}, 
-		function(err) 
-		{
-			console.log(err.message);
-			return fn(null, null);
-		}
-	); 
+        db.client_pau("user").select().where('email',username).then  
+        (
+                function(resp) 
+                {        
+                console.log("entra resp");
+                
+                if (resp.length > 0)
+                        {
+                        users.push(resp[0]);
+                        console.log(resp);
+                        return fn(null, resp[0]);
+                        }
+                else
+                        {
+                        return fn(null, null);
+                        }
+                }, 
+                function(err) 
+                {
+                        console.log(err.message);
+                        return fn(null, null);
+                }
+        ); 
 }
 /*  for (var i = 0, len = users.length; i < len; i++) {
     var user = users[i];
@@ -83,16 +82,12 @@ passport.deserializeUser(function(id, done) {
 });
 
 
-// Use the LocalStrategy within Passport.
-//   Strategies in passport require a `verify` function, which accept
-//   credentials (in this case, a username and password), and invoke a callback
-//   with a user object.  In the real world, this would query a database;
-//   however, in this example we are using a baked-in set of users.
-module.exports.strategy  = passport.use(new 
-	LocalStrategy(
-  function(username, password, done) {
+
+module.exports.strategy = passport.use('davide', new LocalStrategy(
+
+      function(username, password, done) {
     // asynchronous verification, for effect...
-    
+    console.log("entraimo");
     process.nextTick(function () {
       
       // Find the user by username.  If there is no user with the given
@@ -112,4 +107,3 @@ console.log("does not wait");
     });
   }
 ));
-
