@@ -13,7 +13,7 @@ angular.module('paudm.breadcrumbs').factory('breadcrumbs', ['$rootScope', '$loca
   breadcrumbs = breads();
   //we want to update breadcrumbs only when a route is actually changed
   //as $location.path() will get updated imediatelly (even if route change fails!)
-  $rootScope.$on('$locationChangeSuccess', function(event, current){
+ $rootScope.$on('$locationChangeSuccess', function(event, current){
 	breadcrumbs = breads();
   });
 

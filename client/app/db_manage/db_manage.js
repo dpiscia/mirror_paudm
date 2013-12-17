@@ -18,10 +18,8 @@ angular.module('paudm_db', [
         /////////////////////////////
 		 
         // Use $urlRouterProvider to configure any redirects (when) and invalid urls (otherwise).
-   
-        $urlRouterProvider
-             
-             .otherwise("/db_schema/plot");
+		var access = routingConfig.accessLevels;
+		
         $stateProvider
 
           //////////
@@ -40,6 +38,7 @@ angular.module('paudm_db', [
 
              return deferred.promise;
          }},
+         	access : access.user,
             controller: "db_schema",
                 
 
@@ -49,6 +48,7 @@ angular.module('paudm_db', [
             // Use a url of "/" to set a states as the "index".
             url: "/plot",
             templateUrl: "db_manage/db_list_plot.html", 
+            access : access.user,
             controller: "tables_plot"
 
 
@@ -65,6 +65,7 @@ angular.module('paudm_db', [
              return deferred.promise;
              }
          }},
+         	access : access.user,
             controller: "fields_list"
         })
         

@@ -123,8 +123,20 @@ app.post('/api_node/login',
   });
 app.post('/register',register.reg_post);
 
-app.post('/login',
-passport.authenticate('davide', { failureRedirect: '/login', failureFlash: true }), register.login_post);
+//app.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), register.login_post);
+
+app.post('/login', function(req, res, next) {
+  passport.authenticate('local', function(err, user, info) {
+    if (err) { return res.send(500, info); }
+    if (!user) { return res.send(500, info); }
+    req.logIn(user, function(err) {
+      if (err) { return res.send(500, info);  }
+      return res.json( {api_key : "prova_api_key", role : 2}) 
+    });
+  })(req, res, next);
+});
+
+
 /**
  * Start Server
  */

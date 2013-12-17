@@ -24,6 +24,7 @@ angular.module('paudm_jobs', [
         /////////////////////////////
 		 
         // Use $urlRouterProvider to configure any redirects (when) and invalid urls (otherwise).
+		var access = routingConfig.accessLevels;
 		
 		$stateProvider
 
@@ -50,7 +51,9 @@ angular.module('paudm_jobs', [
 					 return deferred.promise;
 	        	 }
         	 },
+        	access : access.user,
             controller: "jobs_controller",
+            
 		})
 				.state("job_single", {
             
@@ -71,6 +74,7 @@ angular.module('paudm_jobs', [
 				     return deferred.promise;
 					},
        		 },
+       		 access : access.user,
             controller: "job_single",
 		})
 		.state("jobs_detail", {
@@ -87,6 +91,7 @@ angular.module('paudm_jobs', [
 					},
 				productions: function() {return [];}
        		 },
+       		 access : access.user,
             controller: "jobs_controller",
 		})
 

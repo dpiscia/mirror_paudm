@@ -15,7 +15,7 @@ angular.module('login', [
         /////////////////////////////
 		 
         // Use $urlRouterProvider to configure any redirects (when) and invalid urls (otherwise).
-   
+   		var access = routingConfig.accessLevels;
         $urlRouterProvider
              
              .otherwise("/login");
@@ -30,8 +30,9 @@ angular.module('login', [
             // Use a url of "/" to set a states as the "index".
             url: "/login",
             templateUrl: "security/login/login.html", 
+            access : access.public,
             controller: "login_ctrl",
-                
+            
 
           })
 

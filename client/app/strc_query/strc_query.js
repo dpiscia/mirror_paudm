@@ -17,7 +17,8 @@ angular.module('paudm_strc_query', [
         /////////////////////////////
 		 
         // Use $urlRouterProvider to configure any redirects (when) and invalid urls (otherwise).
-
+		var access = routingConfig.accessLevels;
+		
         $stateProvider
 
           //////////
@@ -35,7 +36,7 @@ angular.module('paudm_strc_query', [
              db_list(ENV.python).query({}, function(data){ deferred.resolve(data);})
 
              return deferred.promise;
-         }},
+         }},access : access.user,
             controller: "strc_query_ctrl",
                 
 
@@ -51,6 +52,7 @@ angular.module('paudm_strc_query', [
 			             return deferred.promise;
 			           
 			        }},
+			        access : access.user,
 			        controller: "strc_query_fields_ctrl",
  		   })
  		   .state('strc_query.fields.results', {
@@ -65,6 +67,7 @@ angular.module('paudm_strc_query', [
 			             return deferred.promise;
 			           
 			        }},
+			        access : access.user,
 			        controller: "strc_query_results_ctrl",
  		   })
  		   

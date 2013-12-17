@@ -59,5 +59,5 @@ module.exports.reg_get = function(req, res){
 module.exports.login_post = 
   function(req, res) {
 	console.log("redirect");
-    res.redirect('/');
+    res.json({repsosne : 'OK'});
   };
