@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('login.controllers', ['config'])
-	.controller('login_ctrl', [ '$scope','$http','user_auth', function db_schema($scope, $http, user_auth) {
+	.controller('login_ctrl', [ '$scope','$http','user_auth','$location', function db_schema($scope, $http, user_auth, $location) {
    		$scope.email = "ddddd";
    		$scope.myFunc =  function(name){
    			console.log("pressed");
@@ -19,7 +19,8 @@ angular.module('login.controllers', ['config'])
    			
    			};*/
    			user_auth.login(name.name.$modelValue,name.psw.$modelValue).then(
-   			function(data){console.log("ok works");}, 
+   			function(data){console.log("ok works");
+   			$location.path('/db_schema/plot')}, 
    			function(err){console.log(err)}
    			);
    			console.log("qua");

@@ -39,4 +39,5 @@ angular.module('paudm_all', [
     .controller('HeaderCtrl', ['$scope','$state','breadcrumbs' ,'user_auth', function HeaderCtrl($scope, $state, breadcrumbs, user_auth) {
 	$scope.db = {"prova":"Header ctrl view in different position"};
     $scope.breadcrumbs = breadcrumbs;
+    $scope.username = user_auth;
     }]);

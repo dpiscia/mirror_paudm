@@ -11,6 +11,8 @@ angular.module('paudm.user_auth').factory('user_auth', [ '$rootScope', '$http','
     var user = {};
 	user.role =	1;
 	user.api_key = "";
+	user.name ="anonymous";
+	user.id = "";
 
 
 	$rootScope.$on('$stateChangeStart', 
@@ -19,8 +21,6 @@ angular.module('paudm.user_auth').factory('user_auth', [ '$rootScope', '$http','
 			        	
 			        	event.preventDefault();
 			        	console.log(toState.name);
-			        	//if (toState.name != 'login')
-			        	//$state.transitionTo('login');
 			        	$location.path('/login');
 			        	}
 
@@ -47,10 +47,13 @@ angular.module('paudm.user_auth').factory('user_auth', [ '$rootScope', '$http','
 				var deferred = $q.defer();
 				
 					
-	 	           	$http.post('http://localhost:3000/login', { username: username, password: password })
+	 	           	$http.post('http://localhost:3000/api_node/login', { username: username, password: password })
 	 	           	.success(function(data){
 		                user.api_key = data.api_key;
 		                user.role = data.role;
+		                user.name = username;
+		                user.id = data.id;
+		                
 	                	deferred.resolve('OK');
 	                
 	            	})
@@ -71,6 +74,9 @@ angular.module('paudm.user_auth').factory('user_auth', [ '$rootScope', '$http','
                 success();
             }).error(error);
         };
+     user.getname = function() {
+    return user.name;
+  };
 	return user;
 
 

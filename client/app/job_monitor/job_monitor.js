@@ -38,9 +38,9 @@ angular.module('paudm_jobs', [
             url: "/Top_level_jobs",
 			templateUrl: "job_monitor/jobs_list.html", 
 			resolve : {        
-				jobs: function($q, jobs_list,ENV){
+				jobs: function($q, jobs_list, ENV, user_auth){
 					 var deferred = $q.defer();
-					 jobs_list(ENV.node).query({}, function(data){ deferred.resolve(data);})
+					 jobs_list(ENV.node,user_auth.api_key, user_auth.id).query({}, function(data){ deferred.resolve(data);})
 				 //deferred.resolve([]);
 				 return deferred.promise;
 	        	 },

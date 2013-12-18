@@ -14,6 +14,7 @@ var express = require('express'),
   flash = require('connect-flash'),
   passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy,
+  uuid = require('node-uuid'),
   expressValidator = require('express-validator');
 
 var app = module.exports = express();
@@ -87,7 +88,7 @@ if (app.get('env') === 'production') {
 // Jobs API
 app.get('/api_node/jobs/:id',  api_jobs.list);
 app.get('/api_node/jobs/:id/:all', api_jobs.list);
-app.get('/api_node/jobs', api_jobs.list);
+app.get('/api_node/jobs',security.ensureAuthenticated, api_jobs.list);
 app.get('/api_node/qc/:id', api_jobs.qc_list);
 app.get('/api_node/prods', api_jobs.prod_list);
 app.get('/api_node/prods', api_jobs.prod_list);
@@ -107,31 +108,26 @@ app.get('/api_node/raw_query',api_raw_query.raw_query)
 security.strategy;
 //login/logout/register points
 app.get('/login', register.login_get);
-app.get('/logout',register.logout_get);
+app.get('api_node/logout',register.logout_get);
 app.get('/register', register.reg_get);
 //app.post('/api_node/login', passport.authenticate('basic', { session: false }), register.login_post);
-app.get('/api_node/login',  /*passport.authenticate('basic', { session: false }),*/
-  function(req, res) {
-   console.log(res);
-    res.json({ username: req.user.username, email: req.user.email });
-  });
-app.post('/api_node/login',
-  function(req, res) {
-   console.log(req.body);
-   passport.authenticate('local', { session: false ,successRedirect: '/'})
-    res.send({ username: req.body.username, email: req.body.email });
-  });
+
+
 app.post('/register',register.reg_post);
 
-//app.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), register.login_post);
 
-app.post('/login', function(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
+app.post('/api_node/login', function(req, res, next) {
+  passport.authenticate('local',{ session: false }, function(err, user, info) {
     if (err) { return res.send(500, info); }
     if (!user) { return res.send(500, info); }
     req.logIn(user, function(err) {
       if (err) { return res.send(500, info);  }
-      return res.json( {api_key : "prova_api_key", role : 2}) 
+      console.log("return cred");
+      var api_key = uuid();
+      var user_id = user.id;
+      console.log(api_key);
+      security.set_users(api_key,user_id, 2);
+      return res.json( {api_key : api_key, role : 2 , id: user_id}) 
     });
   })(req, res, next);
 });

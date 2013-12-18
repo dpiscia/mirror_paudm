@@ -10,25 +10,34 @@
 var passport = require('passport'), 
         LocalStrategy = require('passport-local').Strategy;
 var db = require('./db');
-
+var q = require('q');
 
 module.exports.ensureAuthenticated = function (req, res, next) {
-  
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login');
+	console.log(req.query.apiKey);
+	console.log(req.query.user_id);
+  	findById(req.query.user_id,req.query.apiKey).then(
+  		function(data) {
+	  	console.log("api_key ok");
+	  	return next()},
+	  	function(err){
+		  	console.log("error");
+		  	return res.send(500, "not authorized");
+	  	} )
+
 };
-
-var users = [
-
-];
-
-function findById(id, fn) {
-  var idx = id - 1;
-  if (users[idx]) {
-    fn(null, users[idx]);
-  } else {
-    fn(new Error('User ' + id + ' does not exist'));
-  }
+var users = [];
+module.exports.users = function(){return users;};
+module.exports.set_users = function(api_key,id,role){users.push({api_key: api_key, role: role, id : id})};
+function findById(id,api_key) {
+	var deferred = q.defer();
+	console.log("lenght user list "+users.length);
+	users.forEach(function (x) {
+		if (x.id == id && x.api_key == api_key) deferred.resolve(); 
+		console.log("inside");})
+	console.log("before return false");
+	deferred.reject();
+	return deferred.promise;
+	//return false;
 }
 
 function findByUsername(username, fn) 
@@ -41,7 +50,7 @@ function findByUsername(username, fn)
                 
                 if (resp.length > 0)
                         {
-                        users.push(resp[0]);
+                        //users.push(resp[0]);
                         console.log(resp);
                         return fn(null, resp[0]);
                         }
@@ -57,14 +66,7 @@ function findByUsername(username, fn)
                 }
         ); 
 }
-/*  for (var i = 0, len = users.length; i < len; i++) {
-    var user = users[i];
-    if (user.username === username) {
-      return fn(null, user);
-    }
-  }
-  return fn(null, null);
-}*/
+
 
 
 // Passport session setup.
@@ -73,10 +75,12 @@ function findByUsername(username, fn)
 //   this will be as simple as storing the user ID when serializing, and finding
 //   the user by ID when deserializing.
 passport.serializeUser(function(user, done) {
+	console.log("serialize");
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
+console.log("deserialize");
   findById(id, function (err, user) {
     done(err, user);
   });
