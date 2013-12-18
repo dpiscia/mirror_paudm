@@ -12,7 +12,11 @@
 /* jshint -W003 */
 var q = require('q');
 var db = require('../db');
+var security = require('../security');
+var passport = require('passport');
+var uuid = require('node-uuid');
 //jobs rest api
+security.strategy;
 
 module.exports.reg_post = function(req, res){
 	console.log(req.body.email);
@@ -41,23 +45,30 @@ module.exports.reg_post = function(req, res){
     }
  };
 
-module.exports.logout_get =  function(req, res){
-  console.log("on logout" + req.cookies);
-  req.logout();
-  res.redirect('/');
+module.exports.logout =  function(req, res){
+  console.log("on logout");
+  
+  security.findById(req.headers.user_id,req.headers.apikey).then(
+  		function(data) {
+	  	console.log("api_key ok");
+	  	return res.json( {message :"OK"}) },
+	  	function(err){
+		  	console.log("error");
+		  	return res.send(500, "not found");
+	  	} )
+  
 };
 
-module.exports.login_get = function(req, res){
-  console.log(req.cookies);
-  res.render('login', { user: req.user, message: req.flash('error') });
-};
-
-module.exports.reg_get = function(req, res){
-  res.render('register' );
-};
-
-module.exports.login_post = 
-  function(req, res) {
-	console.log("redirect");
-    res.json({repsosne : 'OK'});
-  };
+module.exports.login = function(req, res, next) {
+	console.log("entra login");
+	passport.authenticate('local',{ session: false }, function(err, user, info) {
+	    if (err) { return res.send(500, info); }
+	    if (!user) { return res.send(500, info); }
+    	req.logIn(user, function(err) {
+      		if (err) { return res.send(500, info);  }
+    	var api_key = uuid();
+		var user_id = user.id;
+		security.set_users(api_key,user_id, 2);//todo : add callback if something wrong
+		return res.json( {api_key : api_key, role : 2 , id: user_id}) 
+    	});
+  	})(req, res, next)};

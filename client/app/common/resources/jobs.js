@@ -3,7 +3,7 @@ angular.module('paudm.jobs', ['ngResource']).
     //localhost should be substitued by config_url
     return function(env,api_key,user_id){
 		  return $resource(env+'/api_node/jobs/:id/:all', {id: "@id", all:"@all"}, {
-		    query: {method:'GET', params:{ apiKey: api_key, user_id: user_id }, isArray:true}
+		    query: {method:'GET',  isArray:true, headers:{ apiKey: api_key, user_id: user_id }}
 		  });
  	}
 })

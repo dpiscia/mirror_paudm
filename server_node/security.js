@@ -15,7 +15,10 @@ var q = require('q');
 module.exports.ensureAuthenticated = function (req, res, next) {
 	console.log(req.query.apiKey);
 	console.log(req.query.user_id);
-  	findById(req.query.user_id,req.query.apiKey).then(
+	console.log(req.headers);
+	console.log(req.headers.apikey);
+	console.log(req.headers.user_id);
+  	findById(req.headers.user_id,req.headers.apikey).then(
   		function(data) {
 	  	console.log("api_key ok");
 	  	return next()},
@@ -28,8 +31,13 @@ module.exports.ensureAuthenticated = function (req, res, next) {
 var users = [];
 module.exports.users = function(){return users;};
 module.exports.set_users = function(api_key,id,role){users.push({api_key: api_key, role: role, id : id})};
+module.exports.findById = findById;
+
 function findById(id,api_key) {
 	var deferred = q.defer();
+	console.log(users);
+	console.log(id);
+	console.log(api_key);
 	console.log("lenght user list "+users.length);
 	users.forEach(function (x) {
 		if (x.id == id && x.api_key == api_key) deferred.resolve(); 

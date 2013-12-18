@@ -105,32 +105,13 @@ app.get('/api_node/strc_query',api_strc_query.structure_query)
 
 
 app.get('/api_node/raw_query',api_raw_query.raw_query)
-security.strategy;
+
 //login/logout/register points
-app.get('/login', register.login_get);
-app.get('api_node/logout',register.logout_get);
-app.get('/register', register.reg_get);
-//app.post('/api_node/login', passport.authenticate('basic', { session: false }), register.login_post);
 
+app.post('/api_node/logout',register.logout);
+app.get('/api_node/register',register.reg_post);
+app.post('/api_node/login', register.login);
 
-app.post('/register',register.reg_post);
-
-
-app.post('/api_node/login', function(req, res, next) {
-  passport.authenticate('local',{ session: false }, function(err, user, info) {
-    if (err) { return res.send(500, info); }
-    if (!user) { return res.send(500, info); }
-    req.logIn(user, function(err) {
-      if (err) { return res.send(500, info);  }
-      console.log("return cred");
-      var api_key = uuid();
-      var user_id = user.id;
-      console.log(api_key);
-      security.set_users(api_key,user_id, 2);
-      return res.json( {api_key : api_key, role : 2 , id: user_id}) 
-    });
-  })(req, res, next);
-});
 
 
 /**

@@ -12,19 +12,8 @@ angular.module('paudm.user_auth').factory('user_auth', [ '$rootScope', '$http','
 	user.role =	1;
 	user.api_key = "";
 	user.name ="anonymous";
-	user.id = "";
 
 
-	$rootScope.$on('$stateChangeStart', 
-		function(event, toState, toParams, fromState, fromParams){ 
-			        if ((user.authorize(toState.access) === 0) ) {
-			        	
-			        	event.preventDefault();
-			        	console.log(toState.name);
-			        	$location.path('/login');
-			        	}
-
- 	})
 	user.authorize = function(accessLevel, role) {
 			console.log("access +role "+ (accessLevel & user.role) );
 			console.log("access "+accessLevel);
@@ -65,16 +54,18 @@ angular.module('paudm.user_auth').factory('user_auth', [ '$rootScope', '$http','
              	
         };
 
-	user.logout =  function(success, error) {
-            $http.post('/logout').success(function(){
-                $rootScope.user = {
-                    username : '',
-                    role : userRoles.public
-                };
-                success();
-            }).error(error);
+	user.logout =  function() {
+			var deferred = $q.defer();
+            $http({method: 'POST', url : 'http://localhost:3000/api_node/logout', headers : {user_id: user.id, apikey:user.api_key} }).success(function(){
+            	user.role =	1;
+				user.api_key = "";
+				user.name ="anonymous";
+				deferred.resolve();
+            }).error(function(data) {deferred.reject(data.message);} );
+            return deferred.promise;
         };
-     user.getname = function() {
+        
+  user.getname = function() {
     return user.name;
   };
 	return user;

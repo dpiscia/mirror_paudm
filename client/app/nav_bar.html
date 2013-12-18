@@ -7,7 +7,7 @@
 </style>
  
       <!-- Fixed navbar -->
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+<div class="navbar navbar-default navbar-fixed-top" role="navigation" ng-controller = "nav_bar_Ctrl">
 	<div class="container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -24,6 +24,8 @@
 				<li><a href="#/Top_level_jobs">Jobs Monitoring</a></li>
 				<li><a href="#/strc_query">Query</a></li>
 				<li><a href="">My account</a></li>
+				<li><a href="">Welcome {{username.getname()}}</a></li>
+				<li><a href="" ng-click = "logout()">Logout</a></li>
 			</ul>
 		</div><!--/.nav-collapse -->
 	</div>
