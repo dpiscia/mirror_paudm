@@ -11,6 +11,7 @@ var passport = require('passport'),
         LocalStrategy = require('passport-local').Strategy;
 var db = require('./db');
 var q = require('q');
+var passwordHash = require('password-hash');
 
 module.exports.ensureAuthenticated = function (req, res, next) {
 	console.log(req.query.apiKey);
@@ -118,7 +119,8 @@ console.log("does not wait");
         if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
         console.log(password);
         console.log(user.password);
-        if (user.password !== password) { return done(null, false, { message: 'Invalid password' }); }
+        console.log("check pass "+passwordHash.verify(password, user.password));
+        if (!passwordHash.verify(password, user.password)) { return done(null, false, { message: 'Invalid password' }); }
         return done(null, user);
       });
     });

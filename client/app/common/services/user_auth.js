@@ -11,7 +11,7 @@ angular.module('paudm.user_auth').factory('user_auth', [ '$rootScope', '$http','
     var user = {};
 	user.role =	1;
 	user.api_key = "";
-	user.name ="anonymous";
+	user.name = null;
 
 
 	user.authorize = function(accessLevel, role) {
@@ -22,10 +22,10 @@ angular.module('paudm.user_auth').factory('user_auth', [ '$rootScope', '$http','
             return accessLevel & user.role;
         };
 
-	user.isLoggedIn= function(user) {
-            if(user === undefined)
+	user.isLoggedIn= function() {
+            if(user.name === null)
                 return false;
-            return user.role === userRoles.user || user.role === userRoles.admin;
+            return true;
         };
 
 	user.register = function(user, success, error) {
@@ -59,7 +59,7 @@ angular.module('paudm.user_auth').factory('user_auth', [ '$rootScope', '$http','
             $http({method: 'POST', url : 'http://localhost:3000/api_node/logout', headers : {user_id: user.id, apikey:user.api_key} }).success(function(){
             	user.role =	1;
 				user.api_key = "";
-				user.name ="anonymous";
+				user.name = null;
 				deferred.resolve();
             }).error(function(data) {deferred.reject(data.message);} );
             return deferred.promise;
@@ -68,6 +68,24 @@ angular.module('paudm.user_auth').factory('user_auth', [ '$rootScope', '$http','
   user.getname = function() {
     return user.name;
   };
+  	user.register =  function(name,email,surname, password, verification) {
+				var deferred = $q.defer();
+				
+					
+	 	           	$http.post('http://localhost:3000/api_node/register', { name: name, email:email, surname:surname,  password: password, verification:verification })
+	 	           	.success(function(data){
+		                console.log("OK");
+		                
+	                	deferred.resolve('OK');
+	                
+	            	})
+	            	.error(
+	            	function(error){
+	                    deferred.reject(error);
+                	});
+             	return deferred.promise;
+             	
+        };
 	return user;
 
 

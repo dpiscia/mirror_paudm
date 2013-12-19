@@ -86,30 +86,31 @@ if (app.get('env') === 'production') {
 
 
 // Jobs API
-app.get('/api_node/jobs/:id',  api_jobs.list);
-app.get('/api_node/jobs/:id/:all', api_jobs.list);
+app.get('/api_node/jobs/:id',security.ensureAuthenticated,  api_jobs.list);
+app.get('/api_node/jobs/:id/:all',security.ensureAuthenticated, api_jobs.list);
 app.get('/api_node/jobs',security.ensureAuthenticated, api_jobs.list);
-app.get('/api_node/qc/:id', api_jobs.qc_list);
-app.get('/api_node/prods', api_jobs.prod_list);
-app.get('/api_node/prods', api_jobs.prod_list);
-//app.get('/api_node/jobs/prod/:id', api_jobs.job_prod_list);
+app.get('/api_node/qc/:id',security.ensureAuthenticated, api_jobs.qc_list);
+app.get('/api_node/prods', security.ensureAuthenticated,api_jobs.prod_list);
+app.get('/api_node/prods', security.ensureAuthenticated,api_jobs.prod_list);
+//app.get('/api_node/jobs/prod/:id', security.ensureAuthenticated, api_jobs.job_prod_list);
 // redirect all others to the index (HTML5 history)
 
 //structured query API
 //api/str_query?table&fields&clauses&limit
 
-app.get('/api_node/strc_query',api_strc_query.structure_query)
+app.get('/api_node/strc_query',security.ensureAuthenticated, api_strc_query.structure_query)
 
 //raw query
 
 
 
-app.get('/api_node/raw_query',api_raw_query.raw_query)
+app.get('/api_node/raw_query',security.ensureAuthenticated, api_raw_query.raw_query)
 
 //login/logout/register points
 
 app.post('/api_node/logout',register.logout);
-app.get('/api_node/register',register.reg_post);
+app.post('/api_node/register',register.register);
+app.post('/signup/check/username',register.check_username);
 app.post('/api_node/login', register.login);
 
 

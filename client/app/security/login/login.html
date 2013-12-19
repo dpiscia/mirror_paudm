@@ -2,19 +2,26 @@
 <link href="signin.css" rel="stylesheet">
 </style>    
     <div class="container">
-
-<form  name="login_form" class="form-signin" ng-submit="myFunc(login_form)" >
-   <input type="text" name="name" ng-model="name" class="form-control" placeholder="Name" required >
-   <p class="help-block error" ng-show="login_form.name.$error.required">please enter your name</p>
-    <br />
-    <input type="password" name="psw" ng-model="password" class="form-control" placeholder="Password" required >
-   <p class="help-block error" ng-show="login_form.name.$error.required">please enter your name</p>
-    <br />
-    <input type="email" name="email" ng-model="email" class="form-control" placeholder="Email address" required>
-     <p class="help-block error" ng-show="login_form.email.$error.required">please enter your email</p>
-     <p class="help-block error" ng-show="!login_form.email.$valid">please enter a valid email</p>
-     <button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
-</form>
-
-
+    	<div class="row">
+    		<div class="col-md-6 col-md-offset-3">
+				<form  name="login_form" class="form-signin" ng-submit="myFunc(login_form)" >
+					<input type="email" name="name" ng-model="name" class="form-control" placeholder="Email" required >
+					<p class="help-block error" ng-show="login_form.name.$error.required">please enter your email</p>
+					<p class="help-block error" ng-show="!login_form.name.$valid && !login_form.name.$error.required">please enter a valid email</p>
+			    	<br />
+			    	<input type="password" name="psw" ng-model="password" class="form-control" placeholder="Password" required >
+					<p class="help-block error" ng-show="login_form.psw.$error.required">please enter your Password</p>
+					<br />
+					<div class=" alert alert-danger " ng-show="error">{{error}}</div>
+					<button type="submit" class="btn btn-lg btn-primary btn-block">Log in</button>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				</br>
+				<button type="Register" ng-click="to_register()" class="btn btn-lg btn-info btn-block">Register</button>
+			</div>
+		</div>
+		
     </div> <!-- /container -->

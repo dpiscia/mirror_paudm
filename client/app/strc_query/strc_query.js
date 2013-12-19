@@ -59,9 +59,9 @@ angular.module('paudm_strc_query', [
 			      url: "/result?fields&where&limit",
 			      templateUrl: "strc_query/strc_query_results.html" ,
 					resolve : {        
-			            results: function($q, strc_query , $stateParams,ENV){
+			            results: function($q, strc_query , $stateParams,ENV, user_auth){
 			             var deferred = $q.defer();
-			             strc_query(ENV.node).query({table:$stateParams.table_name, fields:$stateParams.fields, clauses: $stateParams.where, limit :$stateParams.limit }, function(data){
+			             strc_query(ENV.node,user_auth.api_key, user_auth.id).query({table:$stateParams.table_name, fields:$stateParams.fields, clauses: $stateParams.where, limit :$stateParams.limit }, function(data){
 			             deferred.resolve(data);
 			             })
 			             return deferred.promise;
