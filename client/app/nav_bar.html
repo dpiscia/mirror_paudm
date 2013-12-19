@@ -23,13 +23,16 @@
 				<li><a href="#/db_schema/plot">DB schema</a></li>
 				<li><a href="#/Top_level_jobs">Jobs Monitoring</a></li>
 				<li><a href="#/strc_query">Query</a></li>
-				<li><a href="">My account</a></li>
-				<li><a href="">Welcome {{username.getname()}}</a></li>
+				
 				
 			</ul>
+
 			<form class="navbar-form navbar-right" role="search">
       			<button ng-click = "logout()" class="btn btn-default">Log out</button>
     		</form>
+    		<ul class="nav navbar-nav navbar-right">
+					<li><a href="">Welcome {{username.getname()}}</a></li>
+			</ul>
 		</div><!--/.nav-collapse -->
 	</div>
 </div>

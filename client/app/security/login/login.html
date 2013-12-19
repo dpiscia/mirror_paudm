@@ -2,32 +2,37 @@
 <link href="signin.css" rel="stylesheet">
 </style>    
     <div class="container">
-    	<div class="row">
-    		<div class="col-md-6 col-md-offset-3">
-				<form  name="login_form" class="form-signin" ng-submit="myFunc(login_form)" >
-					<input type="email" name="name" ng-model="name" class="form-control" placeholder="Email" required >
-					<p class="help-block error" ng-show="login_form.name.$error.required">please enter your email</p>
-					<p class="help-block error" ng-show="!login_form.name.$valid && !login_form.name.$error.required">please enter a valid email</p>
-			    	<br />
-			    	<input type="password" name="psw" ng-model="password" class="form-control" placeholder="Password" required >
-					<p class="help-block error" ng-show="login_form.psw.$error.required">please enter your Password</p>
-					
-					<button type="button" class="btn btn-default" ng-model="rememberme" btn-checkbox btn-checkbox-true=true btn-checkbox-false=false>
-        				
-  					<i  class= "{{rememberme && 'glyphicon glyphicon-ok' || 'glyphicon glyphicon-remove' }}" ></i> Remember me </button>
-					<br />
-					<div class=" alert alert-danger " ng-show="error">{{error}}</div>
+    	<div class="col-md-6 col-md-offset-3">
+    		
+    		<div class="panel panel-primary">
+    			<div class="panel-heading"><h4>Log in</h4></div>
+    			<div class="panel-body">
 
-  					</br>
-					<button type="submit" class="btn btn-lg btn-primary btn-block">Log in</button>
-				</form>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
-				</br>
-				<button type="Register" ng-click="to_register()" class="btn btn-lg btn-info btn-block">Register</button>
-			</div>
-		</div>
+		    		
+						<form  name="login_form" class="form-signin" ng-submit="myFunc(login_form)" novalidate>
+							<input type="email" name="name" ng-model="name" class="form-control" placeholder="Email" required >
+							<p class="help-block error" ng-show="login_form.name.$error.required">please enter your email</p>
+							<p class="help-block error" ng-show="!login_form.name.$valid && !login_form.name.$error.required">please enter a valid email</p>
+					    	<br />
+					    	<input type="password" name="psw" ng-model="password" class="form-control" placeholder="Password" required >
+							<p class="help-block error" ng-show="login_form.psw.$error.required">please enter your Password</p>
+							<p class="help-block error" ng-show="!login_form.psw.$error.required"><p>
+							<button type="button" class="btn btn-default" ng-model="rememberme" btn-checkbox btn-checkbox-true=true btn-checkbox-false=false>
+		        				
+		  					<i  class= "{{rememberme && 'glyphicon glyphicon-ok' || 'glyphicon glyphicon-remove' }}" ></i> Remember me </button>
+							<br />
+							<div class=" alert alert-danger " ng-show="error">{{error}}</div>
 		
+							<button type="submit" ng-disabled="login_form.$invalid" class="btn btn-lg btn-primary btn-block">Log in</button>
+						</form>
+					
+
+
+					
+						</br>
+						<button type="Register" ng-click="to_register()" class="btn btn-lg btn-info btn-block">Register</button>
+					
+
+			</div>
+		</div>
     </div> <!-- /container -->
