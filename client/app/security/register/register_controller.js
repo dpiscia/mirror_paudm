@@ -4,7 +4,7 @@
 
 angular.module('register.controllers', ['config'])
 	.controller('register_ctrl', [ '$scope','$http','user_auth','$location', function ($scope, $http, user_auth, $location) {
-   		$scope.email = "ddddd";
+   		
    		$scope.myFunc =  function(name){
    			console.log("pressed");
    			

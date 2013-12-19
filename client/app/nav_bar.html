@@ -25,8 +25,11 @@
 				<li><a href="#/strc_query">Query</a></li>
 				<li><a href="">My account</a></li>
 				<li><a href="">Welcome {{username.getname()}}</a></li>
-				<li><a href="" ng-click = "logout()">Logout</a></li>
+				
 			</ul>
+			<form class="navbar-form navbar-right" role="search">
+      			<button ng-click = "logout()" class="btn btn-default">Log out</button>
+    		</form>
 		</div><!--/.nav-collapse -->
 	</div>
 </div>

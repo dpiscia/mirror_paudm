@@ -19,7 +19,7 @@ angular.module('paudm_db', [
 		 
         // Use $urlRouterProvider to configure any redirects (when) and invalid urls (otherwise).
 		var access = routingConfig.accessLevels;
-		//$urlRouterProvider.otherwise('/db_schema.plot');
+		  $urlRouterProvider.otherwise('/db_schema/plot');
         $stateProvider
 
           //////////

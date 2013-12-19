@@ -11,8 +11,14 @@
 			    	<br />
 			    	<input type="password" name="psw" ng-model="password" class="form-control" placeholder="Password" required >
 					<p class="help-block error" ng-show="login_form.psw.$error.required">please enter your Password</p>
+					
+					<button type="button" class="btn btn-default" ng-model="rememberme" btn-checkbox btn-checkbox-true=true btn-checkbox-false=false>
+        				
+  					<i  class= "{{rememberme && 'glyphicon glyphicon-ok' || 'glyphicon glyphicon-remove' }}" ></i> Remember me </button>
 					<br />
 					<div class=" alert alert-danger " ng-show="error">{{error}}</div>
+
+  					</br>
 					<button type="submit" class="btn btn-lg btn-primary btn-block">Log in</button>
 				</form>
 			</div>
