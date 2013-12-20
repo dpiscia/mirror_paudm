@@ -17,7 +17,8 @@ angular.module('paudm_strc_query', [
         /////////////////////////////
 		 
         // Use $urlRouterProvider to configure any redirects (when) and invalid urls (otherwise).
-
+		var access = routingConfig.accessLevels;
+		
         $stateProvider
 
           //////////
@@ -35,7 +36,7 @@ angular.module('paudm_strc_query', [
              db_list(ENV.python).query({}, function(data){ deferred.resolve(data);})
 
              return deferred.promise;
-         }},
+         }},access : access.user,
             controller: "strc_query_ctrl",
                 
 
@@ -51,20 +52,22 @@ angular.module('paudm_strc_query', [
 			             return deferred.promise;
 			           
 			        }},
+			        access : access.user,
 			        controller: "strc_query_fields_ctrl",
  		   })
  		   .state('strc_query.fields.results', {
 			      url: "/result?fields&where&limit",
 			      templateUrl: "strc_query/strc_query_results.html" ,
 					resolve : {        
-			            results: function($q, strc_query , $stateParams,ENV){
+			            results: function($q, strc_query , $stateParams,ENV, user_auth){
 			             var deferred = $q.defer();
-			             strc_query(ENV.node).query({table:$stateParams.table_name, fields:$stateParams.fields, clauses: $stateParams.where, limit :$stateParams.limit }, function(data){
+			             strc_query(ENV.node,user_auth.api_key, user_auth.id).query({table:$stateParams.table_name, fields:$stateParams.fields, clauses: $stateParams.where, limit :$stateParams.limit }, function(data){
 			             deferred.resolve(data);
 			             })
 			             return deferred.promise;
 			           
 			        }},
+			        access : access.user,
 			        controller: "strc_query_results_ctrl",
  		   })
  		   

@@ -64,6 +64,7 @@ function query_prods()
 			function(err) 
 			{
 				console.log(err.message);
+				deferred.resolve([]);
 			}
 		); 
 	return deferred.promise;
@@ -84,6 +85,7 @@ function query_QC(id)
 			function(err) 
 			{
 				console.log(err.message);
+				deferred.resolve([]);	
 			}
 		); 
 	return deferred.promise;

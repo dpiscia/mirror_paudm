@@ -1,4 +1,4 @@
-<div class="navbar "  ng-controller = "HeaderCtrl">
+<div class="navbar "  ng-controller = "HeaderCtrl" ng-show="username.isLoggedIn()">
  		<ul class="breadcrumb">
 			<li ng-repeat="breadcrumb in breadcrumbs.getAll()">
 				
@@ -8,4 +8,5 @@
        			</ng-switch>
     		</li>
 		</ul>
+		
 </div>

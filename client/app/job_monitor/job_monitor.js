@@ -24,6 +24,7 @@ angular.module('paudm_jobs', [
         /////////////////////////////
 		 
         // Use $urlRouterProvider to configure any redirects (when) and invalid urls (otherwise).
+		var access = routingConfig.accessLevels;
 		
 		$stateProvider
 
@@ -37,20 +38,22 @@ angular.module('paudm_jobs', [
             url: "/Top_level_jobs",
 			templateUrl: "job_monitor/jobs_list.html", 
 			resolve : {        
-				jobs: function($q, jobs_list,ENV){
+				jobs: function($q, jobs_list, ENV, user_auth){
 					 var deferred = $q.defer();
-					 jobs_list(ENV.node).query({}, function(data){ deferred.resolve(data);})
+					 jobs_list(ENV.node,user_auth.api_key, user_auth.id).query({}, function(data){ deferred.resolve(data);})
 				 //deferred.resolve([]);
 				 return deferred.promise;
 	        	 },
-				productions: function($q, productions_list,ENV){
+				productions: function($q, productions_list,ENV, user_auth){
 					 var deferred = $q.defer();
-					 productions_list(ENV.node).query({}, function(data){ deferred.resolve(data);})
+					 productions_list(ENV.node,user_auth.api_key, user_auth.id).query({}, function(data){ deferred.resolve(data);})
 					 //deferred.resolve([]);
 					 return deferred.promise;
 	        	 }
         	 },
+        	access : access.user,
             controller: "jobs_controller",
+            
 		})
 				.state("job_single", {
             
@@ -58,19 +61,20 @@ angular.module('paudm_jobs', [
 			url: "/Top_level_jobs/{path:.*}Job_details/:job_id",
 			templateUrl: "job_monitor/job_single.html", 
             resolve : {        
-				job: function($q, jobs_list, $location, $stateParams,ENV){
+				job: function($q, jobs_list, $location, $stateParams,ENV, user_auth){
 				     var deferred = $q.defer();
-				     jobs_list(ENV.node).query({id :$stateParams.job_id, all: 0}, function(data){ deferred.resolve(data);})
+				     jobs_list(ENV.node,user_auth.api_key, user_auth.id).query({id :$stateParams.job_id, all: 0}, function(data){ deferred.resolve(data);})
 				     //deferred.resolve([]);
 				     return deferred.promise;
 					},
-				QC: function($q, QC_list, $location, $stateParams,ENV){
+				QC: function($q, QC_list, $location, $stateParams,ENV, user_auth){
 				     var deferred = $q.defer();
-				     QC_list(ENV.node).query({id :$stateParams.job_id}, function(data){ deferred.resolve(data);})
+				     QC_list(ENV.node,user_auth.api_key, user_auth.id).query({id :$stateParams.job_id}, function(data){ deferred.resolve(data);})
 				     //deferred.resolve([]);
 				     return deferred.promise;
 					},
        		 },
+       		 access : access.user,
             controller: "job_single",
 		})
 		.state("jobs_detail", {
@@ -79,14 +83,15 @@ angular.module('paudm_jobs', [
 			url: "/Top_level_jobs/{path:.*}/:job_id/:level",
 			templateUrl: "job_monitor/jobs_list.html", 
             resolve : {        
-				jobs: function($q, jobs_list, $location, $stateParams,ENV){
+				jobs: function($q, jobs_list, $location, $stateParams,ENV, user_auth){
 				     var deferred = $q.defer();
-				     jobs_list(ENV.node).query({id :$stateParams.job_id, all: $stateParams.level}, function(data){ deferred.resolve(data);})
+				     jobs_list(ENV.node,user_auth.api_key, user_auth.id).query({id :$stateParams.job_id, all: $stateParams.level}, function(data){ deferred.resolve(data);})
 				     //deferred.resolve([]);
 				     return deferred.promise;
 					},
 				productions: function() {return [];}
        		 },
+       		 access : access.user,
             controller: "jobs_controller",
 		})
 

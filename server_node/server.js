@@ -13,6 +13,8 @@ var express = require('express'),
   cors = require('cors'),
   flash = require('connect-flash'),
   passport = require('passport'),
+  LocalStrategy = require('passport-local').Strategy,
+  uuid = require('node-uuid'),
   expressValidator = require('express-validator');
 
 var app = module.exports = express();
@@ -29,6 +31,7 @@ if (config.session_store) {
 /**
  * Configuration
  */
+ 
 
 // all environments
 app.set('port', process.env.PORT || config.port);
@@ -73,7 +76,7 @@ if (app.get('env') === 'production') {
   // TODO
 }
 
-security.strategy;
+
 /**
  * Routes
  */
@@ -83,30 +86,32 @@ security.strategy;
 
 
 // Jobs API
-app.get('/api_node/jobs/:id',  api_jobs.list);
-app.get('/api_node/jobs/:id/:all', api_jobs.list);
-app.get('/api_node/jobs', api_jobs.list);
-app.get('/api_node/qc/:id', api_jobs.qc_list);
-app.get('/api_node/prods', api_jobs.prod_list);
-app.get('/api_node/prods', api_jobs.prod_list);
-//app.get('/api_node/jobs/prod/:id', api_jobs.job_prod_list);
+app.get('/api_node/jobs/:id',security.ensureAuthenticated,  api_jobs.list);
+app.get('/api_node/jobs/:id/:all',security.ensureAuthenticated, api_jobs.list);
+app.get('/api_node/jobs',security.ensureAuthenticated, api_jobs.list);
+app.get('/api_node/qc/:id',security.ensureAuthenticated, api_jobs.qc_list);
+app.get('/api_node/prods', security.ensureAuthenticated,api_jobs.prod_list);
+app.get('/api_node/prods', security.ensureAuthenticated,api_jobs.prod_list);
+//app.get('/api_node/jobs/prod/:id', security.ensureAuthenticated, api_jobs.job_prod_list);
 // redirect all others to the index (HTML5 history)
 
 //structured query API
 //api/str_query?table&fields&clauses&limit
 
-app.get('/api_node/strc_query',api_strc_query.structure_query)
+app.get('/api_node/strc_query',security.ensureAuthenticated, api_strc_query.structure_query)
 
 //raw query
 
-app.get('/api_node/raw_query',api_raw_query.raw_query)
+
+
+app.get('/api_node/raw_query',security.ensureAuthenticated, api_raw_query.raw_query)
 
 //login/logout/register points
-app.get('/login', register.login_get);
-app.get('/logout',register.logout_get);
-app.get('/register', register.reg_get);
-app.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), register.login_post);
-app.post('/register',register.reg_post);
+
+app.post('/api_node/logout',register.logout);
+app.post('/api_node/register',register.register);
+app.post('/signup/check/username',register.check_username);
+app.post('/api_node/login', register.login);
 
 
 
