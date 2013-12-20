@@ -13,7 +13,7 @@ angular.module('strc_query.controllers', [])
    						}
 }]).controller('strc_query_fields_ctrl', ['$scope','$stateParams','$state','fields_list', function ($scope, $stateParams, $state, fields_list) {
 		$scope.fields = [];
-		$scope.fields_btn = fields_list.list.map(function(x,i){if(i==0 || i==1)return true; return false;});
+		$scope.fields_btn = fields_list.list.columns.map(function(x,i){if(i==0 || i==1)return true; return false;});
 		$scope.limit = 100;
 		$scope.conditions = [];
 		$scope.showFields = true;

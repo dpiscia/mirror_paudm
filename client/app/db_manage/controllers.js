@@ -28,9 +28,9 @@ angular.module('db_manage.controllers', ['config'])
 		}
 		for (var i = 0; i < $scope.db_list.length; i++) {
   			for (var j = 0; j < $scope.db_list[i].foreign_keys.length; j++){
-  				$scope.db_list[i].foreign_keys[j].split(".")[0];  
-				$scope.prov.links.push({"source" : i, "target" : name_id($scope.prov.nodes,$scope.db_list[i].foreign_keys[j].split(".")[0]) , "value" : i});
-				matrix[i][name_id($scope.prov.nodes,$scope.db_list[i].foreign_keys[j].split(".")[0])] = 1;
+  				  
+				$scope.prov.links.push({"source" : i, "target" : name_id($scope.prov.nodes,$scope.db_list[i].foreign_keys[j].referred_table) , "value" : i});
+				matrix[i][name_id($scope.prov.nodes,$scope.db_list[i].foreign_keys[j].referred_table)] = 1;
 				
 			}
 		}
@@ -45,5 +45,18 @@ angular.module('db_manage.controllers', ['config'])
 		
 	.controller('fields_list', ['$scope','$stateParams','$state','table_schema','fields_list', function ($scope, $stateParams, $state, table_schema,fields_list) {
 		$scope.prova   = $stateParams.contactId;
+		
 		$scope.table_fields = fields_list;
+		$scope.is_pr_key = function(column){
+			for (var i = 0; i < $scope.table_fields.list.pr_keys.length; i++) {if(column === $scope.table_fields.list.pr_keys[i]) return true};
+			}
+		$scope.is_index = function(column,index){
+			for (var i = 0; i < $scope.table_fields.list.indexes.length; i++) {
+				if (index === $scope.table_fields.list.indexes[i].name) {
+						for (var j = 0; j < $scope.table_fields.list.indexes[i].column_names.length; j++){
+							if(column === $scope.table_fields.list.indexes[i].column_names[j]) return true};
+						}
+					}	
+			}
+		
 }]);
