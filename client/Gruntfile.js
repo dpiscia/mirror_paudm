@@ -48,7 +48,7 @@ module.exports = function(grunt) {
 				}
 			}],
 			production: [{
-				dest: '<%= dirs.dest_config %>/config.js',
+				dest: '<%= dirs.dest_config %>/config_env.js',
 				wrap: '"use strict";\n\n <%= __ngModule %>',
 				name: 'config',
 				constants: {

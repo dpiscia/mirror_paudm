@@ -45,7 +45,7 @@ angular.module('strc_query.controllers', [])
 		$scope.submit = function(){
 			console.log($stateParams.table_name+"/"+$scope.field+"/"+$scope.op_filter+"/"+$scope.value);
 			$scope.fields = [];
-			$scope.fields_btn.map(function(x,index){if (x != 'undefined' && x ==true)  $scope.fields.push($scope.table_fields.list[index]);})
+			$scope.fields_btn.map(function(x,index){if (x != 'undefined' && x ==true)  $scope.fields.push($scope.table_fields.list.columns[index]);})
 			$state.transitionTo('strc_query.fields.results', { table_name:$stateParams.table_name, fields :$scope.fields, where: $scope.conditions.map(function(x){return x.field+" "+x.op+" "+x.value+" "+x.logical}), limit:$scope.limit});
 		}
 		//table_schema.query({table_name :$stateParams.contactId}	
