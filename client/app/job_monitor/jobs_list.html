@@ -42,14 +42,17 @@
 			<div class="btn-group" >
 				<button type="button" class="btn btn-primary" ng-model="$parent.type_task" btn-radio="'task'"    tooltip="plots element grouped by Task">Task</button>
 				<button type="button" class="btn btn-primary" ng-model="$parent.type_task" btn-radio="'status'"  tooltip="plots element grouped by Status">Status</button>
+				<button ng-disabled="selection != 'bar_chart' && selection != 'pie_chart'" type="button"  class="btn btn-primary" ng-model="$parent.type_task" btn-radio="'QC'"  tooltip="plots element grouped by Quality control value">Quality</button>
 				
 			</div>  
 			<div class="btn-group" >
 				<button type="button" class="btn btn-default " ng-model="selection" btn-radio="'pie_chart'"  >Percentage</button>
 				<button type="button" class="btn btn-default" ng-model="selection" btn-radio="'bar_chart'" >Counts</button>
-				<button ng-show="detail == true" type="button" class="btn btn-default" ng-model="selection" btn-radio="'evolution'" >Evolution </button>
-				<button ng-show="detail == true" type="button" class="btn btn-default" ng-model="selection" btn-radio="'zoom'" >Processing time </button>
-				<button ng-show="detail == true" type="button" class="btn btn-default" ng-model="selection" btn-radio="'force_tree'" >Dependency </button>
+				<button ng-show="detail == true" ng-disabled = "(type_task == 'QC')" type="button" class="btn btn-default" ng-model="selection" btn-radio="'evolution'" >Evolution </button>
+				<button ng-show="detail == true" ng-disabled = "(type_task == 'QC')" type="button" class="btn btn-default" ng-model="selection" btn-radio="'zoom'" >Processing time </button>
+				<button ng-show="detail == true" ng-disabled = "(type_task == 'QC')" type="button" class="btn btn-default" ng-model="selection" btn-radio="'force_tree'" >Dependency </button>
+				
+				
 			</div>
 			<div data-toggle="buttons-radio" ng-switch on="selection" >
 				<span ng-switch-when="bar_chart"> <d3-bars data="filteredData" type="type_task" ></d3-bars>  </span>

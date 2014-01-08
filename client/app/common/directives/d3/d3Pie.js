@@ -4,7 +4,7 @@
 
 
 angular.module('d3Pie', ['d3', 'plot_data_prepation'])
-.directive('d3Pie', ['d3',  'mod_chart_status' ,'mod_chart_task',function(d3,mod_chart_status,mod_chart_task) {
+.directive('d3Pie', ['d3', 'mod_chart_qc', 'mod_chart_status' ,'mod_chart_task',function(d3, mod_chart_qc, mod_chart_status, mod_chart_task) {
   // data should be provided as:
   // scope.data = {nodes : ['name' : name, group : group"], links : ["target" : id, "source " : id , "value" :  number] }
 	return {
@@ -34,6 +34,7 @@ angular.module('d3Pie', ['d3', 'plot_data_prepation'])
 				var radius  =200;
 				var data_mod = [];
 				if (scope.type === "task") {data_mod = mod_chart_task(scope.data);}
+				else if (scope.type === "QC") {data_mod = mod_chart_qc(scope.data);}
 				else {data_mod = mod_chart_status(scope.data);}
 				
 				radius = Math.min(scope.w, scope.h) / 2;
