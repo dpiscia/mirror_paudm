@@ -31,7 +31,28 @@ angular.module('plot_data_prepation',[]).factory('mod_chart_status', [ function(
 		return data_tmp;
  		}
  	}])
-
+.factory('mod_chart_qc', [ function(){
+		return function (data_obj) 
+		{
+	//return data in json format and groupeb by quality_control value (true ,false and not available), ready to be fed into the d3 plots
+			var hist = {};
+			var data_tmp = [];
+  
+			for (var _i = 0, _len = data_obj.length; _i < _len; _i++) {
+				if (data_obj[_i].qc == undefined) data_obj[_i].qc = 'N.A';
+				var i = data_obj[_i];
+				
+				if (hist[i.qc]) hist[i.qc] ++;
+				else 
+					{
+					hist[i.qc] = 1;}
+				}
+			for (var property in hist){
+				data_tmp.push({ status : property , data : hist[property]} );
+			}
+		return data_tmp;
+ 		}
+ 	}])
 .factory('mod_plot_status', [ function(){
 	return function (data)
 	{
