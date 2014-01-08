@@ -14,6 +14,7 @@ angular.module('paudm_jobs', [
   'd3Lines',
   'd3Zoom',
   'd3Forcetree',
+  'd3Qctree',
   'ngSanitize'
   
 ]).config(
