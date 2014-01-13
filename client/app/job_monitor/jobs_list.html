@@ -75,7 +75,7 @@
 	
 	
 <!-- filter section --->
-	<div class="row">
+	<div ng-show="selection != 'qc_tree'" class="row">
 		<div class="col-md-2">
 		<!--Sidebar content-->
 	 		Status filter
@@ -109,7 +109,7 @@
 	</div>     
        <!-- filter section end here---> 
 <!-- data table section --->
-	<div class="row">
+	<div  ng-show="selection != 'qc_tree'" class="row">
 		<div class="table-responsive">
 			<table class="table  table-hover">	
 				<thead>
