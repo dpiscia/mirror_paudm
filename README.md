@@ -68,3 +68,56 @@ go to api_python folder and install setup.pt
 ```python
 python setup.py install
 ```
+
+configure the file api_python.ini in this way:
+
+```python
+
+[app:main]
+use = egg:api_python
+
+pyramid.reload_templates = true
+pyramid.debug_authorization = false
+pyramid.debug_notfound = false
+pyramid.debug_routematch = false
+pyramid.debug_templates = true
+pyramid.default_locale_name = en
+sqlalchemy.url = postgresql://production:2hot2work@db01.pau.pic.es:5432/dm
+web_app.url = /opt/dpiscia/paudm_web/client/app
+[server:main]
+use = egg:waitress#main
+
+host = 0.0.0.0
+port = 6542
+
+# Begin logging configuration
+
+[loggers]
+keys = root, api_python
+
+[handlers]
+keys = console
+
+[formatters]
+keys = generic
+
+[logger_root]
+level = INFO
+handlers = console
+
+[logger_api_python]
+level = DEBUG
+handlers =
+qualname = api_python
+
+[handler_console]
+class = StreamHandler
+args = (sys.stderr,)
+level = NOTSET
+formatter = generic
+
+[formatter_generic]
+format = %(asctime)s %(levelname)-5.5s [%(name)s][%(threadName)s] %(message)s
+
+# End logging configuration
+```
