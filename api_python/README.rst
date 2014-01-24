@@ -21,6 +21,6 @@ curl localhost:port\api_python\tb_list
 
 Based on table_name it provides columns and indexes of this table
 
-``javascript
+```javascript
 curl localhost:port\api_python\tb\{table_name}
-``
+```
