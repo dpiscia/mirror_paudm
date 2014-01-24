@@ -82,8 +82,8 @@ pyramid.debug_notfound = false
 pyramid.debug_routematch = false
 pyramid.debug_templates = true
 pyramid.default_locale_name = en
-sqlalchemy.url = postgresql://production:2hot2work@db01.pau.pic.es:5432/dm
-web_app.url = /opt/dpiscia/paudm_web/client/app
+sqlalchemy.url = postgresql://username:password@host:port/db_name
+web_app.url = absolute url pointo to ../client/app (ex. /home/username/paudm_db/client/app)
 [server:main]
 use = egg:waitress#main
 
