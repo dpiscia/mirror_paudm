@@ -125,7 +125,7 @@ format = %(asctime)s %(levelname)-5.5s [%(name)s][%(threadName)s] %(message)s
 check if it works:
 ```python
 pserve api_python.ini
-````
+```
 
 1-C Client app
 
@@ -138,4 +138,3 @@ to prepare local environment
 ```javascript
 grunt development
 ```
-
