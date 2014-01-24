@@ -21,7 +21,7 @@ git
 ```javascript
 git clone git@gitlab01.pic.es:pau/paudm_web.git
 cd paudm_web
-```2
+```
 
 1-A node.js server
 
