@@ -25,7 +25,32 @@ cd paudm_web
 
 1-A node.js server
 
-´´´javascript
+```javascript
 cd server_node
 // install all npm packages defined in file packages.json
 npm install
+```
+
+Now database connections have to configured
+Edit config file
+
+```javascript
+var config = {}
+//if postgresql use the below config scheme
+config.job = {client : "pg" , host : "localhost", user : "username" ,port : 5432, password : 'secret', name : 'db_name'}
+
+config.job = {client : "pg" , host : "localhost", user : "username" ,port : 5432, password : 'secret', name : 'db_name'}
+//if sqlite use the scheme belowe
+//config.job = {client : "sqlite3", name : "/Users/username/.sqlite/bt.db"};
+//config.pau = {client : "sqlite3", name : "/Users/username/.sqlite/paudm.db"};
+
+//Redis configuration
+config.session_store = false;
+config.port = 3000;
+config.redis = {port :6379, host : 'localhost'};
+config.sync = false; //disabled if postgresql is used with two phases transacti$
+
+
+module.exports = config;
+
+```
