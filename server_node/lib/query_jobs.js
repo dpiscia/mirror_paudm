@@ -11,6 +11,13 @@ var q = require('q');
 var db = require('../db');
 var data_functions = require('./data_mod.js');
 
+/**
+ * Description
+ * @method recursive_query
+ * @param {} id
+ * @param {} level
+ * @return BinaryExpression
+ */
 module.exports.recursive_query =  function(id,level) {//Postgresql recursive query, much faster than function flat_tree_dict
 	return (/*jshint multistr: true */"with recursive t(level,nbr, dep, super_id,id, task, status, config, input, output , ts_created, ts_started, ts_ended) as ( \
 		select 0, (select count(*) as nbr from job a where a.super_id = p.id),  array (select parent_job_id from dependency where child_job_id = p.id) , \
@@ -31,6 +38,15 @@ module.exports.recursive_query =  function(id,level) {//Postgresql recursive que
 };
 /*jshint unused:true*/
 
+/**
+ * Description
+ * @method flat_tree_dict
+ * @param {} root_job
+ * @param {} level
+ * @param {} level_set
+ * @param {} callback
+ * @return 
+ */
 module.exports.flat_tree_dict = function flat_tree_dict(root_job,level, level_set, callback) //sqlite recursive query
 {
 	//db.client_job('job as p').select(db.client_job.raw('*,  (select group_concat(parent_job_id) from dependency where child_job_id = p.id) as dep, (select count(*)  from job a where a.super_id = p.id) as nbr')).whereNull('p.super_id')
@@ -52,6 +68,13 @@ module.exports.flat_tree_dict = function flat_tree_dict(root_job,level, level_se
 			( 
 				function(resp) 
 				{
+					/**
+					 * Description
+					 * @method each
+					 * @param {} row
+					 * @param {} next
+					 * @return 
+					 */
 					function each(row, next) 
 					{
 						if (level <= level_set){
@@ -62,6 +85,11 @@ module.exports.flat_tree_dict = function flat_tree_dict(root_job,level, level_se
 						}
 						else {next(null);}
 					}
+					/**
+					 * Description
+					 * @method done
+					 * @return 
+					 */
 					function done() {
 						callback(treeSet);
 					}
@@ -75,6 +103,12 @@ module.exports.flat_tree_dict = function flat_tree_dict(root_job,level, level_se
 
 };
 
+/**
+ * Description
+ * @method quality_control
+ * @param {} resp
+ * @return MemberExpression
+ */
 module.exports.quality_control = function(resp) //get the general quality control value attached to a job list
 			{	var deferred = q.defer();
 				var job_ids = new Array();

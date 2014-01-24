@@ -5,6 +5,12 @@ console.log("entre db connection");
 
    
 
+/**
+ * Description
+ * @method connectDatabase
+ * @param {} config
+ * @return 
+ */
 module.exports.connectDatabase = function(config){
 console.log("initialize");
 console.log("config is really"+config.job.client);

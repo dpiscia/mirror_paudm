@@ -56,7 +56,7 @@ app.use(express.session(session_config));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static(path.join(__dirname, '../client/app')));
+//app.use(express.static(path.join(__dirname, '../client/app')));
 app.use(app.router);
 
 db.connectDatabase(config);
@@ -88,7 +88,7 @@ if (app.get('env') === 'production') {
 // Jobs API
 app.get('/api_node/jobs/:id',security.ensureAuthenticated,  api_jobs.list);
 app.get('/api_node/jobs/:id/:all',security.ensureAuthenticated, api_jobs.list);
-app.get('/api_node/jobs',security.ensureAuthenticated, api_jobs.list);
+app.get('/api_node/jobs',api_jobs.list);
 app.get('/api_node/qc/:id',security.ensureAuthenticated, api_jobs.qc_list);
 app.get('/api_node/prods', security.ensureAuthenticated,api_jobs.prod_list);
 app.get('/api_node/prods', security.ensureAuthenticated,api_jobs.prod_list);
@@ -119,7 +119,7 @@ app.post('/api_node/login', register.login);
  * Start Server
  */
 
-server.listen(app.get('port'), 'localhost', 511, function () {
+server.listen(app.get('port'), '0.0.0.0', 511, function () {
   console.log('Express server listening on port ' + app.get('port'));
   /*var open = require('open');
   open('http://localhost:' + app.get('port') + '/');*/

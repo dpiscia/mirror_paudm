@@ -40,7 +40,7 @@ angular.module('paudm.user_auth').factory('user_auth', [ '$rootScope', '$http','
 				var deferred = $q.defer();
 				console.log(rememberme);
 					
-	 	           	$http.post('http://localhost:3000/api_node/login', { username: username, password: password })
+	 	           	$http.post('http://localhost:2999/api_node/login', { username: username, password: password })
 	 	           	.success(function(data){
 		                user.api_key = data.api_key;
 		                user.role = data.role;
@@ -67,7 +67,7 @@ angular.module('paudm.user_auth').factory('user_auth', [ '$rootScope', '$http','
 
 	user.logout =  function() {
 			var deferred = $q.defer();
-            $http({method: 'POST', url : 'http://localhost:3000/api_node/logout', headers : {user_id: user.id, apikey:user.api_key} }).success(function(){
+            $http({method: 'POST', url : 'http://localhost:2999/api_node/logout', headers : {user_id: user.id, apikey:user.api_key} }).success(function(){
             	user.role =	1;
 				user.api_key = "";
 				user.name = null;
@@ -87,7 +87,7 @@ angular.module('paudm.user_auth').factory('user_auth', [ '$rootScope', '$http','
 				var deferred = $q.defer();
 				
 					
-	 	           	$http.post('http://localhost:3000/api_node/register', { name: name, email:email, surname:surname,  password: password, verification:verification })
+	 	           	$http.post('http://localhost:2999/api_node/register', { name: name, email:email, surname:surname,  password: password, verification:verification })
 	 	           	.success(function(data){
 		                console.log("OK");
 		                

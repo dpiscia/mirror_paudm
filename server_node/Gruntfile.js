@@ -1,5 +1,11 @@
 'use strict';
 
+/**
+ * Description
+ * @method exports
+ * @param {} grunt
+ * @return 
+ */
 module.exports = function(grunt) {
 
   // Project configuration.
