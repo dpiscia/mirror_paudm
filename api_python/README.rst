@@ -14,7 +14,7 @@ to test
 
 ```javascript
 curl localhost:port\api_python\tb_list 
-````
+```
 
 
 2 api_pyhton/tb/{table} 
@@ -23,4 +23,4 @@ Based on table_name it provides columns and indexes of this table
 
 ```javascript
 curl localhost:port\api_python\tb\{table_name}
-````
+```
