@@ -31,7 +31,7 @@ cd server_node
 npm install
 ```
 
-Now database connections have to configured
+Now database connections have to be configured
 Edit config file
 
 ```javascript
@@ -53,4 +53,18 @@ config.sync = false; //disabled if postgresql is used with two phases transacti$
 
 module.exports = config;
 
+```
+
+Once you are done with config, you can check if it works by typing:
+
+```javascript
+node server.js
+```
+
+1-B Python server
+create and activate a virtualenv then
+go to api_python folder and install setup.pt
+
+```python
+python setup.py install
 ```
