@@ -121,3 +121,21 @@ format = %(asctime)s %(levelname)-5.5s [%(name)s][%(threadName)s] %(message)s
 
 # End logging configuration
 ```
+
+check if it works:
+```python
+pserve api_python.ini
+````
+
+1-C Client app
+
+go to folder client
+
+```javascript
+npm install
+```
+to prepare local environment
+```javascript
+grunt development
+```
+
