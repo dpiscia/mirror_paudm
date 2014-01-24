@@ -1,9 +1,24 @@
-# PAUdm db schema [![Build Status](https://secure.travis-ci.org/dpiscia/paudm_db.png?branch=master)](http://travis-ci.org/dpiscia/paudm_db)
+This the PAU data management web application, its functionalities are:
 
+1-  Monitor jobs status (operation status and quality control status)
+2-  Database schema exploration
+3-  Dabase data exploration (Table and plot(scatter plot))
+4- To be implemented (API brownthrower interaaction)
 
-This is about db schema reading and analysis 
+TO GET STARTED:
 
-The backend is powered by FLask
-The frontend is powered by Angularjs
+The backend services are implmented in Pyramid (Python, thread based application) 
+and Express.js (Node.js, single process not blocking Input/Output application).
 
-Continuos testing by travis
+Prerequisites:
+
+Python language >= 2.6
+Node.js >= 0.8
+git
+
+1- Installation
+'''javascript
+git clone git@gitlab01.pic.es:pau/paudm_web.git
+cd paudm_web
+'''
+1-A node.js server
