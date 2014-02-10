@@ -13,6 +13,8 @@ var db = require('./db');
 var q = require('q');
 var passwordHash = require('password-hash');
 
+
+
 module.exports.ensureAuthenticated = function (req, res, next) {
 	console.log(req.query.apiKey);
 	console.log(req.query.user_id);
@@ -95,7 +97,7 @@ console.log("deserialize");
   });
 });
 
-
+var salt = '82299c7d63bfbe34b89fe51d5daa9738';
 // Use the LocalStrategy within Passport.
 //   Strategies in passport require a `verify` function, which accept
 //   credentials (in this case, a username and password), and invoke a callback
@@ -120,7 +122,8 @@ console.log("does not wait");
         console.log(password);
         console.log(user.password);
         console.log("check pass "+passwordHash.verify(password, user.password));
-        if (!passwordHash.verify(password, user.password)) { return done(null, false, { message: 'Invalid password' }); }
+        var userHash = require('crypto').createHash('sha512').update(password+salt).digest('hex');
+        if (userHash  != user.password) { return done(null, false, { message: 'Invalid password' }); }
         return done(null, user);
       });
     });
