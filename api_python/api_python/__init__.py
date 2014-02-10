@@ -10,7 +10,7 @@ def main(global_config, **settings):
     config = Configurator(settings=settings)
     config.include("cornice")
     config.scan("api_python.views")
-    config.add_static_view(name='', path=settings['web_app.url'])
+    #config.add_static_view(name='', path=settings['web_app.url'])
     db(settings)
     return config.make_wsgi_app()
 

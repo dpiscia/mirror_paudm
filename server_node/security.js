@@ -16,11 +16,8 @@ var passwordHash = require('password-hash');
 
 
 module.exports.ensureAuthenticated = function (req, res, next) {
-	console.log(req.query.apiKey);
-	console.log(req.query.user_id);
-	console.log(req.headers);
-	console.log(req.headers.apikey);
-	console.log(req.headers.user_id);
+
+	console.log("ensured");
   	findById(req.headers.user_id,req.headers.apikey).then(
   		function(data) {
 	  	console.log("api_key ok");
@@ -34,19 +31,21 @@ module.exports.ensureAuthenticated = function (req, res, next) {
 var users = [];
 module.exports.users = function(){return users;};
 module.exports.set_users = function(api_key,id,role){users.push({api_key: api_key, role: role, id : id})};
-module.exports.findById = findById;
+//module.exports.findById = findById;
 
 function findById(id,api_key) {
 	var deferred = q.defer();
 	console.log(users);
-	console.log(id);
-	console.log(api_key);
+	console.log("id "+id+"  ");
+	console.log("api_key "+ api_key);
 	console.log("lenght user list "+users.length);
+	console.log("print user"); 
 	users.forEach(function (x) {
 		if (x.id == id && x.api_key == api_key) deferred.resolve(); 
 		console.log("inside");})
-	console.log("before return false");
+	console.log("why is checking? before return false");
 	deferred.reject();
+	console.log("deferred")
 	return deferred.promise;
 	//return false;
 }
@@ -91,7 +90,8 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-console.log("deserialize");
+
+console.log("why deserialize now?");
   findById(id, function (err, user) {
     done(err, user);
   });

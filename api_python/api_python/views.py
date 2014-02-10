@@ -3,8 +3,8 @@
 from cornice import Service
 from sqlalchemy import inspect, create_engine
 import api_python 
-tb_list = Service(name='db_list', path='/db_list', description="Simplest app")
-fields_list = Service(name='fields_list', path='/tb/{table}', description="Simplest app")
+tb_list = Service(name='db_list', path='api_python/db_list', description="Simplest app")
+fields_list = Service(name='fields_list', path='api_python/tb/{table}', description="Simplest app")
 
         
         

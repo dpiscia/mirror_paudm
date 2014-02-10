@@ -15,7 +15,8 @@ var express = require('express'),
   passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy,
   uuid = require('node-uuid'),
-  expressValidator = require('express-validator');
+  expressValidator = require('express-validator'),
+  httpProxy = require('http-proxy');
 
 var app = module.exports = express();
 var server = require('http').createServer(app);
@@ -31,8 +32,11 @@ if (config.session_store) {
 /**
  * Configuration
  */
- 
 
+//local configuration, in production the fornt end server will handle the proxy 
+var proxy = httpProxy.createProxyServer({});
+
+//configuration of the environment
 // all environments
 app.set('port', process.env.PORT || config.port);
 app.set('views', __dirname + '/views');
@@ -40,7 +44,7 @@ app.set('view engine', 'jade');
 app.use(express.logger('dev'));
 app.use(express.cookieParser());
 app.use(express.bodyParser());
-app.use(cors());
+//app.use(cors());
 app.use(expressValidator());
 app.use(express.methodOverride());
 
@@ -55,9 +59,10 @@ app.use(express.session(session_config));
   // persistent login sessions (recommended).
 app.use(flash());
 app.use(passport.initialize());
-app.use(passport.session());
-//app.use(express.static(path.join(__dirname, '../client/app')));
+app.use(express.static(path.join(__dirname, '../client/app')));
+
 app.use(app.router);
+
 
 db.connectDatabase(config);
      // Socket.io Communication
@@ -83,7 +88,8 @@ if (app.get('env') === 'production') {
 
 // serve index and view partials
 
-
+//proxy route
+app.get('/api_python*',function(req,res){proxy.web(req, res, { target: 'http://127.0.0.1:6544' })});
 
 // Jobs API
 app.get('/api_node/jobs/:id',security.ensureAuthenticated,  api_jobs.list);
