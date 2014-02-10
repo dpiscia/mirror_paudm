@@ -10,7 +10,7 @@ angular.module('login.controllers', ['config'])
    			
    			user_auth.login(name.name.$modelValue,name.psw.$modelValue, $scope.rememberme).then(
    			function(data){console.log("ok works");
-   			$location.path('/db_schema/plot')}, 
+   			$location.path('/Top_level_jobs')}, 
    			function(err){
    				console.log(err);
    				$scope.error = err;

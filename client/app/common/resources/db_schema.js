@@ -7,16 +7,16 @@
 // In this case it is a simple value service.
 angular.module('paudm.db_schema', ['ngResource'])
   .factory('db_list', function($resource){ 
-  return function(env){
-	  return $resource(env+'/db_list', {} ,{
+  return function(){
+	  return $resource('/api_python/db_list', {} ,{
 	    query: {method:'GET', params:{}, isArray:true}
 	  });
   }
   
 })
   .factory('table_schema', function($resource){
-  return function(env){
-	  return $resource(env+'/tb/:table_name', {table_name: "@table_name"} ,{
+  return function(){
+	  return $resource('/api_python/tb/:table_name', {table_name: "@table_name"} ,{
 	  
 	    query: {method:'GET', params:{}, isArray:false}
 	  });
