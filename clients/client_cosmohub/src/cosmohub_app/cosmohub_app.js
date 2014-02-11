@@ -5,6 +5,7 @@ angular.module('catalog', [
   'admin',
   'activity',
   'homepage_cat',
+  'paudm.breadcrumbs',
   ])
   .run(
       [        '$rootScope', '$state', '$stateParams','$location','user_auth',
@@ -40,7 +41,12 @@ angular.module('catalog', [
              //$locationProvider.html5Mode(true);
         
         
- }])
+ }])    
+ .controller('HeaderCtrl', ['$scope','$state','breadcrumbs', 'user_auth' ,function HeaderCtrl($scope, $state, breadcrumbs, user_auth) {
+	$scope.db = {"prova":"Header ctrl view in different position"};
+    $scope.breadcrumbs = breadcrumbs;
+    $scope.username = user_auth;
+    }])
  .controller('nav_bar_Ctrl', ['$scope','user_auth','$location', function HeaderCtrl($scope, user_auth, $location) {
 
     $scope.username = user_auth;

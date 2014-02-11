@@ -8,6 +8,7 @@
 	<body>
 	<div ng-include="'nav_bar.html'"></div>
 	<div class="container">
+		<div ng-include="'header.html'" ></div>
 		<div ui-view></div>
 			<script src="/lib/angular/angular.min.js"></script>
 			<script src="/lib/angular/angular-ui-router.js"></script>
@@ -26,6 +27,7 @@
 			<script src="common/resources/query_resources.js"></script>
 			<script src="/common_modules/services/user_auth.js"></script>
 			<script src="/common_modules/filters/filters.js"></script>
+			<script src="/common_modules/services/bread_crumbs.js"></script>
 			<script src="config/routingConfig.js"></script>
 			<script src="/security/security.js"></script>
 			<script src="/security/login/login_controller.js"></script>
