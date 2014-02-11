@@ -64,7 +64,7 @@ def post_user(request):
 	# FIXME: Group checkboxes are not filled correctly on form error
 	# FIXME: Throw 400 if any group name does not exist.
 	try:  
-		import ipdb;ipdb.set_trace()  
+		
 		
 		deserialized = schema.deserialize(request.json_body) 
 	    
@@ -121,7 +121,7 @@ def get_groups(request):
 @public_groups_info.get()
 def get_groups(request):
 	"""Returns groups in JSON."""
-	import ipdb;ipdb.set_trace()
+	
 	groups_dict = []
 	groups = request.db.query(model.Group).order_by(model.Group.name).all()
         # Retrieve public catalogs

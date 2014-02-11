@@ -1,0 +1,93 @@
+<link rel="stylesheet" href="job_monitor/job_single.css"/>
+<div class="row">
+	<div class="panel panel-primary" style="background-color: rgb(245, 245, 245);">
+		<div class="panel-heading"> 
+			<a href="" ng-click="showDetails = ! showDetails">
+				<h2 class="panel-title text-center" style="color:rgb(256,256,256); font-size:22px">
+					Config
+				</h2>
+			</a>
+		</div>
+		 <div ng-show="showDetails" class="panel-body">
+			<p  ng-bind-html="job.config  | nl2p" ></p>
+		</div>
+		
+	</div>
+	<div class="panel panel-primary" style="background-color: rgb(245, 245, 245);">
+		<div class="panel-heading"> 
+			<a href="" ng-click="showDetails2 = ! showDetails2">
+				<h2 class="panel-title text-center" style="color:rgb(256,256,256); font-size:22px">
+					Input
+				</h2>
+			</a>
+		</div>
+		 <div ng-show="showDetails2" class="panel-body">
+			<p  ng-bind-html="job.input  | nl2p" ></p>
+		</div>
+		
+	</div>
+	<div class="panel panel-primary" style="background-color: rgb(245, 245, 245);">
+		<div class="panel-heading"> 
+				<a href="" ng-click="showDetails3 = ! showDetails3">
+					<h2 class="panel-title text-center" style="color:rgb(256,256,256); font-size:22px">
+						Output
+					</h2>
+				</a>
+		</div>
+		 <div ng-show="showDetails3" class="panel-body">
+			<p  ng-bind-html="job.output  | nl2p" ></p>
+		</div>
+	</div>
+</div>
+	
+<div class="row">
+	       <!-- data table section --->
+	<div ng-show="quality_controls.length > 0" class="row", style="background-color: rgb(245, 245, 245);">
+		<div class="table-responsive">
+			<h3> Quality control </h3>
+			<table class="table table-striped table-condensed table-hover">	
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Min</a></th>
+						<th>Max</th>
+						<th>Value</th>
+						<th>Units</th>
+						<th>Passed</th>
+						<th>Info</th>
+	     			</tr>
+				</thead>
+	    		<tbody>
+					<tr ng-repeat="qc in quality_controls "  >
+						<td><a href ng-click="open(qc.plot_file)">{{qc.id}}</a></td>
+						<td >{{info[qc.ref].Name}}  </td>
+						<td>{{qc.min_value}}</td>
+						<td>{{qc.max_value}}</td>
+						<td>{{qc.value}}</td>
+						<td>{{qc.units}}</td>
+						<td>{{qc.qc_pass}}</td>
+						<td > <i class='glyphicon glyphicon-info-sign' tooltip={{info[qc.ref].QC_description}}><i></td>
+					</tr>
+				</tbody>  
+			</table>
+		</div>
+	</div>
+</div>
+<script type="text/ng-template" id="myModalContent.html">
+<div class="modal-dialog">
+  <div class="modal-content">
+        <div class="modal-header">
+            <h3>Quality control Plot</h3>
+        </div>
+        <div class="modal-body">
+           <img ng-src="/img_plots/{{plot_name}}" style="margin:auto;">
+
+        </div>
+        <div class="modal-footer">
+
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

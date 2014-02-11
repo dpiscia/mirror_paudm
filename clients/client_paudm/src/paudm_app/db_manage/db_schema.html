@@ -1,0 +1,22 @@
+<div class="row">	
+	<p>This is annoying vediamo.</p>
+	<div class = "col-md-3">
+		<div class="table-responsive">
+			<table class="table table-striped  table-hover">	
+    			<thead>
+    				<tr>
+      					<th><a ui-sref=".plot">All DB</a> </th>
+     				</tr>
+    			</thead>
+    			<tbody>
+       				<tr ng-repeat="db in db_list"  >
+        				<td><a ui-sref=".table({contactId:db.name})">{{db.name}}</a></td>
+       				</tr>
+    			</tbody>  
+   			</table>
+  		</div>
+  	</div>	
+	<div class="col-md-9"> 
+		<div class="row" id = "prova"  ui-view></div>
+ 	</div>  
+</div>

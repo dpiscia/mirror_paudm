@@ -1,0 +1,21 @@
+<!-- filter section --->
+<div class="row">
+	<div class="panel panel-primary" style="background-color: rgb(245, 245, 245);">
+		<div class="panel-heading"> 
+				<h2 class="panel-title text-center" style="color:rgb(256,256,256); font-size:22px">
+					Table
+				<i   class=" pull-right glyphicon glyphicon-plus" ng-click="showTables = true"></i>
+				<i   class=" pull-right glyphicon glyphicon-minus" ng-click="showTables = false">&nbsp</i>
+				</h2>
+		</div>
+		<div class="panel-body" ng-show="showTables">
+				<div class="col-md-2" ng-repeat="db in db_list" style="margin-bottom:5px">
+					<button type="button" ng-class="{active: db.name == tables_filter}" class="btn btn-default" ng-model="tables_filter" ng-click="select(db.name)">{{db.name}}</button>
+					
+				</div>
+				
+		</div>
+	</div>
+</div>
+<div ui-view></div>
+	

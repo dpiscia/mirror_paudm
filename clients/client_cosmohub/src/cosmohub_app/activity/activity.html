@@ -1,0 +1,22 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-12" style="overflow: auto">
+		
+		<div class="table-responsive">
+			
+			<table class="table ">	
+				<thead>
+					<tr>
+						<th class = "text-center" ng-repeat="head in headers"> {{head| uppercase}} </th>
+					</tr>
+				</thead>
+	    		<tbody>
+					<tr ng-repeat="job in jobs"  >
+						<td class = "text-center" ng-repeat="key_value in headers">
+							{{job[key_value]}}				
+						</td>				
+					</tr>
+				</tbody>  
+			</table>
+		</div>
+	</div>		

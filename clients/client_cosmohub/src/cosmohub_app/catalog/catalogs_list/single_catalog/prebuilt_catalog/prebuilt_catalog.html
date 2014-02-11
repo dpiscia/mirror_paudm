@@ -1,0 +1,24 @@
+<div  ng-show="catalog.dl_catalog.length > 0 " class="row">
+	<h3>Prebuilt catalogs</h3>
+	<table ng-show="catalog.dl_catalog.length > 0 " class="table  table-hover">
+	    <thead>
+	        <tr>
+	            <th>Name</th>
+	            <th>Description</th>
+	            <th>Size</th>
+	            <th>Download</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        <tr ng-repeat="prebuilt in catalog.dl_catalog " >
+	            <td>{{prebuilt.name}}</td>
+	            <td>{{prebuilt.description}}</td>
+	            <td>{{prebuilt.size }}</td>
+	            <td>
+	                <a href="">Download catalog</a><br />
+	                <a href="">Download README</a></td>
+	        </tr>
+	        
+	  </tbody>
+	</table>
+</div>

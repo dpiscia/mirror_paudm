@@ -1,0 +1,22 @@
+
+
+
+	<div class="panel panel-primary" style="background-color: rgb(245, 245, 245);">
+		<div class="panel-heading"> 
+				<h2 class="panel-title text-center" style="color:rgb(256,256,256); font-size:22px">
+					Fields
+				</h2>
+		</div>
+		<div class="panel-body" data-toggle="buttons" >
+			<div class="row" style="margin-bottom:15px">
+				<div class="col-md-6 " ng-repeat="field in table_fields.list.indexes.name" style="margin-bottom:5px">
+						<button type="button" class="btn btn-success" tooltip="{{table_fields.list.indexes.column_names[$index]}}" > {{field}} 
+						</button>
+				</div>
+			</div>
+			<div class="col-md-3" ng-repeat="field in table_fields.list.columns" style="margin-bottom:5px">
+					<button  class="{{is_pr_key(field) && 'btn btn-success' || 'btn btn-default'}}"  >{{field}}</button>
+					
+			</div>
+		</div>
+	</div>

@@ -36,8 +36,7 @@ from server_python.lib.helpers import _create_token, valid_token, _USERS
 
 single_catalog = Service(name='single_catalog', path='/api_python/catalog/{catalog}', description="single catalog full detail info")
 catalogs_list_user  = Service(name='catalogs_group_list', path='api_python/catalogs', description="list of catalogs by user")
-run_query  = Service(name='catalog_query', path='api_pyhton/query', description="raw query against catalog")
-check_query  = Service(name='check_query', path='api_python/check_query', description="raw query against catalog")
+
     
 
 
@@ -94,90 +93,3 @@ def get(request):
 	}   
     
     
-@run_query.post(validators=valid_token)
-def post(request):
-   
-	user = request.validated['user']
-	query = request.body.replace('\n', ' ')
-	groups = request.db.query(model.Group).order_by(model.Group.name).filter(model.User.email == user).order_by(model.Group.id).all()
-   
-   
-	
-	def changed_user(groups,request):
-
-		context_user, context_password = generate_user_pwd_context(get_mapped_array(groups,get_group_mapped(request.db)), request.db,'prova')
-		url = urlparse(request.registry.settings['sqlalchemy.url'])
-		conn_string = "host="+url.hostname+" port="+str(url.port)+" dbname="+url.path.replace('/', '')+" user="+context_user+" password="+context_password+" options = '-c statement_timeout=1000' "
-		return psycopg2.connect(conn_string)
-
-	conn = changed_user(groups,request)
-	cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-	seconds = 1
-	t = threading.Timer(seconds, conn.cancel)
-	t.start()
-	try:
-            #cursor.execute("select pg_sleep(0.9)")
-             cursor.execute(query+' ;')
-
-
-
-	except DBAPIError, e:
-		print "timeoute error"
-		error = 'Query was cancelled, because it exceeded maximum time available for realtime query'
-		request.response.status = 400
-		return {'message' :error}
-            
-	except QueryCanceledError, e:
-		print "timeout error"
-		error = 'Timeout;'+e[0]
-		request.response.status = 400
-		return {'message' :error}
-	except Exception , e:
-		print e
-		error =  e[0]
-		request.response.status = 400
-		return {'message' :error}
-
-            	
-    	
-	t.cancel()
-	records = cursor.fetchall()
-	records.insert(0,[key for key in records[0].keys()])
-
-   
-	conn.close()    
-    
-
-	return {
-        'result' : json.dumps(records)
-        
-     }
- 
-@check_query.post(validators=valid_token)
-def post(request):
-
-
-	user = request.validated['user']
-	
-	
-	#import pdb; pdb.set_trace();
-	query = request.body.replace('\n', ' ')
-	
-	result = []
-	try:
-		db_result = request.db.execute('explain '+query+' ;')
-	
-	except Exception , e:
-		print e
-		request.response.status = 400
-		return {'message' : e.orig[0]}
-	#print request.db.execute(query).keys()
-	
-		
-	for row in db_result.fetchall():
-	    for col in row:
-	    	result.append(json.dumps(col))
-	return {
-	    'result' : result
-        
-    }

@@ -1,0 +1,17 @@
+{
+  "name": "angular-ui-ace",
+  "version": "0.1.0",
+  "main": "./ui-ace.js",
+  "dependencies": {
+    "angular": "~1.x",
+    "ace-builds": "~1.1.1"
+  },
+  "gitHead": "df5110dfa148dd3a6e3dcf60a3759fbc08d2c6ec",
+  "_id": "angular-ui-ace@0.1.0",
+  "readme": "ERROR: No README.md file found!",
+  "description": "ERROR: No README.md file found!",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/angular-ui/ui-ace.git"
+  }
+}

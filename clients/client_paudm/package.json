@@ -1,0 +1,19 @@
+{
+  "name": "paudm-client",
+  "version": "0.0.1",
+  "description": "paudm web",
+  "devDependencies": {
+    "phantomjs": "*",
+    "karma": "*",
+    "karma-junit-reporter": "*",
+    "karma-jasmine": "*",
+    "karma-ng-scenario": "*",
+    "recess": "*",
+    "grunt-ng-constant": "~0.4.5",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-preprocess": "~3.0.1",
+    "grunt-env": "~0.4.0",
+    "grunt-contrib-uglify": "~0.2.7"
+  }
+}

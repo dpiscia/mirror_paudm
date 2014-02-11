@@ -74,9 +74,12 @@ app.use(express.session(session_config));
   // persistent login sessions (recommended).
 app.use(flash());
 app.use(passport.initialize());
-app.use(express.static(path.join(__dirname, '../client_paudm/src')));
-app.use(express.static(path.join(__dirname, '../client_cosmohub/src')));
-app.use('/common_modules', express.static(path.join(__dirname, '../client_common')));
+app.use(express.static(path.join(__dirname, '../clients/client_paudm/src')));
+app.use(express.static(path.join(__dirname, '../clients/client_cosmohub/src')));
+app.use('/common_modules', express.static(path.join(__dirname, '../clients/client_common')));
+app.use('/security', express.static(path.join(__dirname, '../clients/security_module')));
+app.use('/lib', express.static(path.join(__dirname, '../clients/client_lib')));
+app.use('/css', express.static(path.join(__dirname, '../clients/css')));
 app.use(app.router);
 
 
@@ -109,7 +112,7 @@ app.get('/api_python/tb/:table',security.ensureAuthenticated,function(req,res){p
 app.get('/api_python/db_list',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
 
 app.get('/api_python/groups',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
-app.get('api_python_public/groups',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+app.get('/api_python_public/groups',function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
 
 app.get('/api_python/user',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
 app.delete('/api_python/user',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
@@ -119,6 +122,9 @@ app.get('/api_python/catalogs',security.ensureAuthenticated,function(req,res){pr
 app.get('/api_python/catalog/:Name',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
 
 app.get('/api_python/jobs',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+
+app.post('/api_python/check_query',function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+app.post('/api_python/query',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
 // Jobs API
 app.get('/api_node/jobs/:id',security.ensureAuthenticated,  api_jobs.list);
 app.get('/api_node/jobs/:id/:all',security.ensureAuthenticated, api_jobs.list);

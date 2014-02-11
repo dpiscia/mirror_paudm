@@ -48,7 +48,7 @@ def main(global_config, **settings):
     # Static views (css, js, jpg, ...)
     config.scan()
 
-    #config.add_static_view('', '/opt/dpiscia/catalog/catalog.web/catalog/web/client/app', cache_max_age=3600)
+    
     #Ddon't know why url in this should be absolute
     # User/Profile
     #nt

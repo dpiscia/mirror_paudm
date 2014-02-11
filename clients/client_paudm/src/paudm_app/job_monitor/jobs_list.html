@@ -1,0 +1,149 @@
+<link rel="stylesheet" href="job_monitor/job.css"/>
+
+<div class="container">
+<!-- first job section --->
+	<div  class="row">
+		<div ng-show="detail == true" class="table-responsive">
+			<table class="table table-condensed">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Jobs</th>
+						<th>Status</th>
+						<th>QC</th>
+						<th>Created</th>
+						<th>Started</th>
+						<th>Ended</th>
+						<th>Details</th>
+					</tr>
+				</thead>	
+				<tbody>
+					<tr ng-repeat="hjob in parent_job" class="success">
+						<td>{{hjob.id}}</td>
+						<td><p>{{hjob.task}}</p>  </td>
+						<td><p>{{hjob.nbr}}</p></td>
+						<td> <p>{{hjob.status}}</p>   </td>
+						<td><i ng-show="!(hjob.qc === undefined)" class= "{{job.qc && 'glyphicon glyphicon-ok' || 'glyphicon glyphicon-remove' }}" ></i></td>
+						<td> <p>{{hjob.ts_created | date:'medium'}}</p>   </td>
+						<td> <p>{{hjob.ts_started | date:'medium'}}</p>   </td>
+						<td> <p>{{hjob.ts_ended | date:'medium'}}</p>   </td>
+						<td class = "text-center"> <a  href="{{current_location}}/Job_details/{{hjob.id}}" tooltip-popup-delay='1000'  class="btn btn-primary" tooltip="Click to access job details and quality controls" ><i   class=" glyphicon glyphicon-zoom-in" ></i></a> </td>
+	         		</tr>
+				</tbody>  
+			</table>
+		</div>
+	</div>
+<!-- first job section end here--->
+
+<!-- plot section --->
+	<div class="row">
+		<div class="span12">   
+			<div class="btn-group" >
+				<button type="button" class="btn btn-primary" ng-model="$parent.type_task" btn-radio="'task'"    tooltip="plots element grouped by Task">Task</button>
+				<button type="button" class="btn btn-primary" ng-model="$parent.type_task" btn-radio="'status'"  tooltip="plots element grouped by Status">Status</button>
+				<button ng-disabled="selection != 'bar_chart' && selection != 'pie_chart'" type="button"  class="btn btn-primary" ng-model="$parent.type_task" btn-radio="'QC'"  tooltip="plots element grouped by Quality control value">Quality</button>
+				
+			</div>  
+			<div class="btn-group" >
+				<button type="button" class="btn btn-default " ng-model="selection" btn-radio="'pie_chart'"  >Percentage</button>
+				<button type="button" class="btn btn-default" ng-model="selection" btn-radio="'bar_chart'" >Counts</button>
+				<button ng-show="detail == true" ng-disabled = "(type_task == 'QC')" type="button" class="btn btn-default" ng-model="selection" btn-radio="'evolution'" >Evolution </button>
+				<button ng-show="detail == true" ng-disabled = "(type_task == 'QC')" type="button" class="btn btn-default" ng-model="selection" btn-radio="'zoom'" >Processing time </button>
+				<button ng-show="detail == true" ng-disabled = "(type_task == 'QC')" type="button" class="btn btn-default" ng-model="selection" btn-radio="'force_tree'" >Dependency </button>
+				<button ng-show="detail == true" ng-disabled = "(type_task != 'QC')" type="button" class="btn btn-default" ng-model="selection" btn-radio="'qc_tree'" >Quality </button>
+				
+				
+			</div>
+			<div data-toggle="buttons-radio" ng-switch on="selection" >
+				<span ng-switch-when="bar_chart"> <d3-bars data="filteredData" type="type_task" ></d3-bars>  </span>
+				<span ng-switch-when="pie_chart"> <d3-pie data="filteredData" type="type_task" ></d3-pie>  </span>
+				<span ng-switch-when="evolution"> <d3-lines data="filteredData" type="type_task" ></d3-lines>  </span>
+				<span ng-switch-when="zoom"> <d3-zoom head= "parent_job" data="filteredData" type="type_task" ></d3-zoom>  </span>
+				<span ng-switch-when="force_tree"><d3-forcetree head= "parent_job" data="filteredData" type="type_task" ></d3-forcetree> </span>
+				<span ng-switch-when="qc_tree"><d3-qctree head= "parent_job" data="filteredData" type="type_task" ></d3-qctree> </span>
+				<span ng-switch-default>default  </span>
+			</div>
+		</div> 
+	</div>
+<!-- plot section end here--->
+
+
+
+
+	
+	
+	
+<!-- filter section --->
+	<div ng-show="selection != 'qc_tree'" class="row">
+		<div class="col-md-2">
+		<!--Sidebar content-->
+	 		Status filter
+	 	</div>
+	 	<div class="col-md-2">
+			<select ng-model="status_filter" >
+	     		<option value="!!">-- All Status --</option>
+	     		<option ng-repeat="job in filteredData | unique:'status'" value="{{job.status}}">{{job.status}}</option>
+	  			// unique options from the categories
+			</select>
+		</div>
+		<div class="col-md-2">
+			Task filter 
+		</div>
+		<div class="col-md-2">   
+			<select ng-model="task_filter" >
+				<option value="!!">-- All Tasks --</option>
+	 			<option ng-repeat="job in filteredData | unique:'task'" value="{{job.task}}">{{job.task}}</option>
+			</select>
+		</div>
+		<div  ng-show="detail == false" class="col-md-2">	 
+			Production filter &nbsp; 
+		</div>
+		<div ng-show="detail == false" class="col-md-2">   
+			<select ng-model="production_filter" >
+	    		<option value="!!">-- All Jobs --</option>
+	 			<option ng-repeat="production in productions " value="{{production.job_id}}">{{production.release}}</option>
+			</select> 
+			<br>
+		</div>
+	</div>     
+       <!-- filter section end here---> 
+<!-- data table section --->
+	<div  ng-show="selection != 'qc_tree'" class="row">
+		<div class="table-responsive">
+			<table class="table  table-hover">	
+				<thead>
+					<tr>
+						<th><a href="" ng-click="orderProp = 'id'; reverse=!reverse">ID</a></th>
+						<th><a href="" ng-click="orderProp = 'task'; reverse=!reverse">Name</a></th>
+						<th>Jobs</th>
+						<th><a href="" ng-click="orderProp = 'status'; reverse=!reverse">Status</a></th>
+						<th>QC</th>
+						<th><a href="" ng-click="orderProp = 'ts_created'; reverse=!reverse">Created</a></th>
+						<th><a href="" ng-click="orderProp = 'ts_started'; reverse=!reverse">Started</a></th>
+						<th><a href="" ng-click="orderProp = 'ts_ended'; reverse=!reverse">Ended</a></th>
+						<th>All subjobs</th>
+						<th>One level subjobs</th> 
+						<th>Details</th> 				
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="job in filteredData = (jobs | job_check:[production_filter,task_filter , status_filter]) | orderBy:orderProp:reverse | startFrom:(currentPage-1)*maxSize | limitTo:maxSize" ng-class="{ danger: (job.status == 'FAILED') }">
+						<td>{{job.id}}</td>
+						<td><p>{{job.task}}</p>  </td>
+						<td><p>{{job.nbr}}</p></td>
+						<td> <p>{{job.status}}</p>   </td>
+						<td> <i ng-show="!(job.qc === undefined)" class= "{{job.qc && 'glyphicon glyphicon-ok' || 'glyphicon glyphicon-remove' }}" ></i> </td>
+						<td> <p>{{job.ts_created | date:'medium'}}</p>   </td>
+						<td> <p>{{job.ts_started | date:'medium'}}</p>   </td>
+						<td> <p>{{job.ts_ended | date:'medium'}}</p>   </td>
+	          			<td class = "text-center"> <a ng-show="job.nbr > 0"  href="{{current_location}}/List_jobs/{{job.id}}/99" class="btn btn-primary" tooltip-popup-delay='1000'  tooltip="Click to access all child jobs"><i   class="glyphicon glyphicon-list" ></i></a> </td>
+						<td class = "text-center"> <a ng-show="job.nbr > 0"  href="{{current_location}}/{{job.task}}/{{job.id}}/1" class="btn btn-primary" tooltip-popup-delay='1000'  tooltip="Click to access one level depth child jobs" ><i   class="glyphicon glyphicon-circle-arrow-down" ></i></a> </td>
+	         			<td class = "text-center"> <a  href="{{current_location}}/Job_details/{{job.id}}" tooltip-popup-delay='1000'  class="btn btn-primary" tooltip="Click to access job details and quality controls" ><i   class=" glyphicon glyphicon-zoom-in" ></i></a> </td>
+	         		</tr>
+				</tbody>  
+			</table>
+			<pagination total-items="filteredData.length" page="currentPage"></pagination>
+		</div>
+	</div>	
+</div>
