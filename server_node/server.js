@@ -16,6 +16,7 @@ var express = require('express'),
   LocalStrategy = require('passport-local').Strategy,
   uuid = require('node-uuid'),
   expressValidator = require('express-validator'),
+  connect_restreamer = require('connect-restreamer'),
   httpProxy = require('http-proxy');
 
 var app = module.exports = express();
@@ -34,7 +35,20 @@ if (config.session_store) {
  */
 
 //local configuration, in production the fornt end server will handle the proxy 
-var proxy = httpProxy.createProxyServer({});
+var proxy = httpProxy.createServer({});
+
+proxy.listen(8005);
+
+//
+// Listen for the `error` event on `proxy`.
+proxy.on('error', function (err, req, res) {
+  res.writeHead(500, {
+    'Content-Type': 'text/plain'
+  });
+
+  res.end('Something went wrong. And we are reporting a custom error message.');
+});
+
 
 //configuration of the environment
 // all environments
@@ -46,6 +60,7 @@ app.use(express.cookieParser());
 app.use(express.bodyParser());
 //app.use(cors());
 app.use(expressValidator());
+app.use(connect_restreamer());
 app.use(express.methodOverride());
 
 var session_config = { secret: 'keyboard cat' };
@@ -59,8 +74,9 @@ app.use(express.session(session_config));
   // persistent login sessions (recommended).
 app.use(flash());
 app.use(passport.initialize());
-app.use(express.static(path.join(__dirname, '../client/app')));
-
+app.use(express.static(path.join(__dirname, '../client_paudm/src')));
+app.use(express.static(path.join(__dirname, '../client_cosmohub/src')));
+app.use('/common_modules', express.static(path.join(__dirname, '../client_common')));
 app.use(app.router);
 
 
@@ -89,20 +105,30 @@ if (app.get('env') === 'production') {
 // serve index and view partials
 
 //proxy route
-app.get('/api_python*',function(req,res){proxy.web(req, res, { target: 'http://127.0.0.1:6544' })});
+app.get('/api_python/tb/:table',security.ensureAuthenticated,function(req,res){proxy.web(req, res, { target: config.api_python.host+':'+config.api_python.port })});
+app.get('/api_python/db_list',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
 
+app.get('/api_python/groups',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+app.get('api_python_public/groups',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+
+app.get('/api_python/user',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+app.delete('/api_python/user',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+app.put('/api_python/user',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+
+app.get('/api_python/catalogs',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+app.get('/api_python/catalog/:Name',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+
+app.get('/api_python/jobs',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
 // Jobs API
 app.get('/api_node/jobs/:id',security.ensureAuthenticated,  api_jobs.list);
 app.get('/api_node/jobs/:id/:all',security.ensureAuthenticated, api_jobs.list);
 app.get('/api_node/jobs',api_jobs.list);
 app.get('/api_node/qc/:id',security.ensureAuthenticated, api_jobs.qc_list);
 app.get('/api_node/prods', security.ensureAuthenticated,api_jobs.prod_list);
-app.get('/api_node/prods', security.ensureAuthenticated,api_jobs.prod_list);
 //app.get('/api_node/jobs/prod/:id', security.ensureAuthenticated, api_jobs.job_prod_list);
 // redirect all others to the index (HTML5 history)
 
 //structured query API
-//api/str_query?table&fields&clauses&limit
 
 app.get('/api_node/strc_query',security.ensureAuthenticated, api_strc_query.structure_query)
 

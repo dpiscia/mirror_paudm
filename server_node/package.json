@@ -43,7 +43,9 @@
     "knex" : "",
     "express-validator": "",
     "connect-redis" :"",
-    "cors" : ""
+    "cors" : "",
+    "http-proxy" : ""
+
   },
 
   "devDependencies": {

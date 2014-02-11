@@ -31,7 +31,7 @@ module.exports.ensureAuthenticated = function (req, res, next) {
 var users = [];
 module.exports.users = function(){return users;};
 module.exports.set_users = function(api_key,id,role){users.push({api_key: api_key, role: role, id : id})};
-//module.exports.findById = findById;
+module.exports.findById = findById;
 
 function findById(id,api_key) {
 	var deferred = q.defer();

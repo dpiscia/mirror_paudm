@@ -1,0 +1,62 @@
+<div class="container">
+
+
+<!-- filter section --->
+	<div class="row">
+		<div class="col-md-2">
+		<!--Sidebar content-->
+	 		Groups filter
+	 	</div>
+	 	<div class="col-md-2">
+			<select ng-model="groups_filter" >
+	     		<option value="!!">-- All Groups --</option>
+	     		<option ng-repeat="catalog in catalogs | unique:'group'" value="{{catalog.group}}">{{catalog.group}}</option>
+	  			// unique options from the categories
+			</select>
+		</div>
+		<div class="col-md-2">
+			Public filter 
+		</div>
+		<div class="col-md-2">   
+			<select ng-model="status_filter" >
+				<option value="!!">-- All Status --</option>
+	 			<option ng-repeat="catalog in catalogs | unique:'public'" value="{{catalog.public}}">{{catalog.public}}</option>
+			</select>
+		</div>
+		<div class="col-md-2">
+			Simulated/Real data filter 
+		</div>
+		<div class="col-md-2">   
+			<select ng-model="type_filter" >
+				<option value="!!">-- All Types --</option>
+	 			<option ng-repeat="catalog in catalogs | unique:'Type'" value="{{catalog.type}}">{{catalog.type}}</option>
+			</select>
+		</div>
+	</div>     
+	
+	
+<!-- data table section --->
+	<div class="row">
+		<div class="table-responsive">
+			<table class="table  table-hover">	
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Description</th>
+						<th>Version</th> 
+						<th>Date</th> 				
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="catalog in catalogs | filter:{group:groups_filter} | unique:'name'" >
+						<td><a href="#/catalogs/{{group}}/{{catalog.name}}">{{catalog.name}}</a></td>
+						<td><p>{{catalog.description}}</p>  </td>
+						<td><p>{{catalog.version}}</p></td>
+						<td> <p>{{catalog.date}}</p>   </td>
+	         		</tr>
+				</tbody>  
+			</table>
+		
+		</div>
+	</div>	
+</div>
