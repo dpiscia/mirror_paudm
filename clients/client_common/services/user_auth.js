@@ -83,11 +83,11 @@ angular.module('paudm.user_auth').factory('user_auth', [ '$rootScope', '$http','
   user.getname = function() {
     return user.name;
   };
-  	user.register =  function(name,email,surname, password, verification, groups) {
+  	user.register =  function(name,email, password, verification, groups) {
 				var deferred = $q.defer();
 				
 					
-	 	           	$http.post('/api_node/register', { name: name, email:email,   password: password, verification:verification, groups:groups })
+	 	           	$http.post('/api_python/register', { name: name, email:email,   password: password, verification:verification, groups:groups })
 	 	           	.success(function(data){
 		                console.log("OK");
 		                
