@@ -28,7 +28,7 @@ from pyramid.view import forbidden_view_config, view_config
 
 groups_info = Service(name='get groups filtered by User id', path='api_python/groups', description="get groups list filtered by user id")
 public_groups_info = Service(name='get groups', path='api_python_public/groups', description="get groups list")
-register = Service(name='register', path='api_cat/register', description="register")
+register = Service(name='register', path='api_python/register', description="register")
 users = Service(name='user list', path='api_python/user', description="get user list")
 #history_query_user = Service(name='history query user', path='api_cat/history', description="list user past queries/downloads")
 

@@ -60,7 +60,7 @@ app.use(express.cookieParser());
 app.use(express.bodyParser());
 //app.use(cors());
 app.use(expressValidator());
-app.use(connect_restreamer());
+
 app.use(express.methodOverride());
 
 var session_config = { secret: 'keyboard cat' };
@@ -77,7 +77,9 @@ app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, '../clients/client_paudm/src')));
 app.use(express.static(path.join(__dirname, '../clients/client_cosmohub/src')));
 app.use('/common_modules', express.static(path.join(__dirname, '../clients/client_common')));
-app.use('/security', express.static(path.join(__dirname, '../clients/security_module')));
+app.use('/security', express.static(path.join(__dirname, '../clients/security_app')));
+app.use('/query', express.static(path.join(__dirname, '../clients/query_app')));
+app.use('/results', express.static(path.join(__dirname, '../clients/results_app')));
 app.use('/lib', express.static(path.join(__dirname, '../clients/client_lib')));
 app.use('/css', express.static(path.join(__dirname, '../clients/css')));
 app.use(app.router);
@@ -108,23 +110,36 @@ if (app.get('env') === 'production') {
 // serve index and view partials
 
 //proxy route
+//database exploration
 app.get('/api_python/tb/:table',security.ensureAuthenticated,function(req,res){proxy.web(req, res, { target: config.api_python.host+':'+config.api_python.port })});
 app.get('/api_python/db_list',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
 
+//catalogs groups (DES,Euclid,etc..)
 app.get('/api_python/groups',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
 app.get('/api_python_public/groups',function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
 
+// user CRUD operation
 app.get('/api_python/user',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
 app.delete('/api_python/user',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
-app.put('/api_python/user',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+app.put('/api_python/user',require('connect-restreamer')(),security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
 
+//catalog info
 app.get('/api_python/catalogs',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
 app.get('/api_python/catalog/:Name',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
 
+
+//user job-query related info
 app.get('/api_python/jobs',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
 
-app.post('/api_python/check_query',function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
-app.post('/api_python/query',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+
+//raw query and check query syntax
+app.post('/api_python/check_query',require('connect-restreamer')(),security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+app.post('/api_python/query',require('connect-restreamer')(),security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+
+//register
+app.post('/api_python/register',require('connect-restreamer')(),function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+
+
 // Jobs API
 app.get('/api_node/jobs/:id',security.ensureAuthenticated,  api_jobs.list);
 app.get('/api_node/jobs/:id/:all',security.ensureAuthenticated, api_jobs.list);
@@ -139,8 +154,6 @@ app.get('/api_node/prods', security.ensureAuthenticated,api_jobs.prod_list);
 app.get('/api_node/strc_query',security.ensureAuthenticated, api_strc_query.structure_query)
 
 //raw query
-
-
 
 app.get('/api_node/raw_query',security.ensureAuthenticated, api_raw_query.raw_query)
 

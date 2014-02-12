@@ -4,18 +4,14 @@
 
 // Declare app level module which depends on filters, and services
 angular.module('paudm_jobs', [
-  'job_monitor.controllers',
-  'job_monitor.single_job',
-  'paudm.jobs',
-  'paudm.productions',
-  'paudm.QC',
   'd3Bars',
   'd3Pie',
   'd3Lines',
   'd3Zoom',
   'd3Forcetree',
   'd3Qctree',
-  'ngSanitize'
+  'ngSanitize',
+  'ngResource'
   
 ]).config(
 	['$stateProvider', '$urlRouterProvider',function ($stateProvider,   $urlRouterProvider) {

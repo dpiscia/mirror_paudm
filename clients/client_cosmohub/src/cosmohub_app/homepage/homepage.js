@@ -4,7 +4,6 @@
 
 // Declare app level module which depends on filters, and services
 angular.module('homepage_cat', [
-  'catalogs.controllers',
   'groups.resources', //might be included in user_auth module
   'd3Pie',
   'ui.bootstrap',

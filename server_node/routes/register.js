@@ -51,7 +51,7 @@ module.exports.register = function(req, res){
 	var hashedPassword = passwordHash.generate(password);
 	console.log("hashed paasa : "+passwordHash.verify(password, hashedPassword));
 	console.log("password is "+password );
- 	db.client_pau('user').insert({email : email, name : name, surname : surname, 'password' : hashedPassword, 'permissions' : 1, 'validated' : true}).then(
+ 	db.client_pau('user').insert({email : email, name : name, 'password' : hashedPassword, 'permissions' : 1, 'validated' : true}).then(
         	function(resp) {
                         console.log(resp);
                         res.json(200, email);

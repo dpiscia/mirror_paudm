@@ -1,4 +1,4 @@
-from catalog.web.lib.security.api import remove_all_user,remove_group_pwd_roles,create_group_pwd_roles,create_all_user,create_session, get_group_mapped 
+from server_python.lib.security.api import remove_all_user,remove_group_pwd_roles,create_group_pwd_roles,create_all_user,create_session, get_group_mapped 
 
 def create_security(session,groups_mapped,salt):
 	'''create all security infrastructure

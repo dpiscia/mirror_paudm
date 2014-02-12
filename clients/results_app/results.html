@@ -1,0 +1,58 @@
+
+<link rel="stylesheet" href="/results/scatter.css"/>
+
+<div class="panel panel-primary" style="background-color: rgb(245, 245, 245);">
+
+	<div class="panel-heading" > 
+			
+			<h2 class="panel-title text-center" style="color:rgb(256,256,256); font-size:22px">
+				Results
+
+			</h2>
+	</div>
+			<div class="btn-group" >
+				<button type="button" class="btn btn-primary" ng-model="$parent.type" btn-radio="'table'"    tooltip="plots element grouped by Task">Table</button>
+				<button type="button" class="btn btn-primary" ng-model="$parent.type" btn-radio="'scatter'"  tooltip="plots element grouped by Status">Scatter</button>
+				
+			</div>  
+<div class="container" >
+	<div class="row">
+		<div class="col-md-12" style="overflow: auto" ng-show="type == 'table'">
+		
+		<div class="table-responsive">
+			
+			<table class="table ">	
+				<thead>
+				
+					<tr>
+						<th ng-repeat="head in results[0]"> {{head}} </th>
+					</tr>
+				</thead>
+	    		<tbody>
+	    			
+					<tr ng-repeat="result in results"  >
+						<td ng-repeat="col in results[$index]"> {{col}}</td>
+					</tr>
+				</tbody>  
+			</table>
+		</div>
+	</div>		
+</div>
+
+<div class="row" ng-show="type == 'scatter'">
+	X axis 
+	<div class="col-md-2">
+		<select ng-model="var1" ng-options="field for field in results[0]">
+     			
+  			// unique options from the categories
+		</select>
+	</div>
+	Y axis 
+	<div class="col-md-2">
+		<select ng-model="var2" ng-options="field for field in results[0] ">
+     			
+  			// unique options from the categories
+		</select>
+	</div>
+	<d3-scatter data="data" ></d3-scatter> 
+</div>

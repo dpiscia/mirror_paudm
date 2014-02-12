@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-angular.module('strc_query.controllers', [])
+angular.module('paudm_strc_query')
 	.controller('strc_query_ctrl', ['$scope', 'table_list','$state', function strc_query_ctrl($scope, table_list,$state) {
    		$scope.db_list = table_list;
    		$scope.showTables = true;

@@ -11,14 +11,14 @@ from cornice import Service
 from psycopg2.extensions import QueryCanceledError
 from server_python.lib.security.api import generate_user_pwd_context, get_mapped_array, get_group_mapped
 from server_python.lib.helpers import _create_token, valid_token, _USERS
+from server_python import model
 
-
-run_query  = Service(name='catalog_query', path='api_pyhton/query', description="raw query against catalog")
+run_query  = Service(name='catalog_query', path='api_python/query', description="raw query against catalog")
 check_query  = Service(name='check_query', path='api_python/check_query', description="raw query against catalog")
 
 @run_query.post(validators=valid_token)
 def post(request):
-   
+
 	user_id = request.validated['user_id']
 	query = request.json_body['query']
 	groups = request.db.query(model.Group).order_by(model.Group.name).filter(model.User.id == user_id).order_by(model.Group.id).all()
