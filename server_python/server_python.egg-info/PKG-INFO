@@ -1,0 +1,20 @@
+Metadata-Version: 1.0
+Name: server-python
+Version: 0.12.1
+Summary: PIC catalog distribution web portal
+Home-page: UNKNOWN
+Author: Pau Tallada Crespí
+Author-email: pau.tallada@gmail.com
+License: UNKNOWN
+Description: Changes
+        =======
+        
+        (unreleased)
+        ------------
+        
+Keywords: web pyramid pylons
+Platform: UNKNOWN
+Classifier: Programming Language :: Python
+Classifier: Framework :: Pyramid
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Internet :: WWW/HTTP :: WSGI :: Application

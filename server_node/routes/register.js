@@ -22,15 +22,16 @@ security.strategy;
 
 module.exports.register = function(req, res){
 	var name = req.body.name;
-	var surname = req.body.surname;
+	
 	var email = req.body.email;
 	var password = req.body.password;
 	var verification = req.body.verification;
+	var groups = req.body.groups;
 	var error = null;
 	// regexp from https://github.com/angular/angular.js/blob/master/src/ng/directive/input.js#L4
 	var EMAIL_REGEXP = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/;
 	// check for valid inputs
-	if (!name || !email || !password || !verification || !surname) {
+	if (!name || !email || !password || !verification ) {
 	  error = 'All fields are required';
 	} else if (name !== encodeURIComponent(name)) {
 	  error = 'name may not contain any non-url-safe characters';
@@ -50,7 +51,7 @@ module.exports.register = function(req, res){
 	var hashedPassword = passwordHash.generate(password);
 	console.log("hashed paasa : "+passwordHash.verify(password, hashedPassword));
 	console.log("password is "+password );
- 	db.client_pau('user').insert({email : email, name : name, surname : surname, 'password' : hashedPassword, 'permissions' : 1, 'validated' : true}).then(
+ 	db.client_pau('user').insert({email : email, name : name, 'password' : hashedPassword, 'permissions' : 1, 'validated' : true}).then(
         	function(resp) {
                         console.log(resp);
                         res.json(200, email);

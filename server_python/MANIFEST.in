@@ -1,0 +1,3 @@
+include *.txt *.ini *.cfg *.rst
+graft catalog/web/static
+graft catalog/web/templates
