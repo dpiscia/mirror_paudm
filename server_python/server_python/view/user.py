@@ -10,9 +10,9 @@ import jsondate as json
 
 from sqlalchemy import and_
 from cornice import Service
-from .. import model
+from server_python import model
 
-from ..lib.helpers import _create_token, valid_token, _USERS
+from server_python.lib.helpers import _create_token, valid_token, _USERS
 
 from pyramid_mailer import get_mailer
 from pyramid_mailer.message import Message
@@ -29,8 +29,8 @@ from pyramid.view import forbidden_view_config, view_config
 groups_info = Service(name='get groups filtered by User id', path='api_python/groups', description="get groups list filtered by user id")
 public_groups_info = Service(name='get groups', path='api_python_public/groups', description="get groups list")
 register = Service(name='register', path='api_python/register', description="register")
-users = Service(name='user list', path='api_python/user', description="get user list")
-#history_query_user = Service(name='history query user', path='api_cat/history', description="list user past queries/downloads")
+users = Service(name='user list', path='api_python/user', description="get user list from admin view")
+personal_area = Service(name='user data', path='api_python/personal_area', description="get user data list from user view")
 
 class InvalidPassword(Exception):
     pass
@@ -135,6 +135,10 @@ def get_groups(request):
 @users.get(validators=valid_token)
 def user_get(request):
 	user_id = request.validated['user_id']
+	
+	if not request.user.is_admin:
+		request.response.status = 400
+		return {'error':'You are not allowed to access this resource'}
 	dict = []
 	try:
 		users = request.db.query(model.User).all()
@@ -151,6 +155,8 @@ def user_get(request):
 		request.response.status = 400
 		return {'error' : 'failed to retrieve user list'}
 
+
+		
 @users.put(validators=valid_token)
 def user_post(request):
 	
@@ -222,14 +228,59 @@ def user_post(request):
 		request.response.status = 400
 		return {'error': 'error'}	
 		
-#@history_query_user(validators=valid_token)
-def get_history_user(request):
+
+@personal_area.get(validators=valid_token)
+def user_get(request):
 	user_id = request.validated['user_id']
-	user   = request.db.query(model.User).filter_by(id = user_id).one()
-	dict = []
-	for query in user.queries:
-		dict.append('')#{'id':query.id, 'status': query.status, 'Request date' : json.loads(query.ts_created.strftime("%Y-%m-%d %H:%M:%S")), 'Deleivery data' : json.loads(q.ts_ended.strftime("%Y-%m-%d %H:%M:%S") if q.ts_ended else "")})
-	request.stauts = 200
-	return dict
+
+	dict = {}
+	try:
+
+		dict = {'_id' : request.user.id, 'name' : request.user.name, 'email' : request.user.email }
+		request.response.status = 200
+		return dict
+	except Exception:
+		request.response.status = 400
+		return {'error' : 'failed to retrieve user list'}
 		
+@personal_area.put(validators=valid_token)
+def user_put(request):
+
+
+	class User(colander.MappingSchema):
+	    email = colander.SchemaNode(colander.String())
+	    name = colander.SchemaNode(colander.String())
+	    password = colander.SchemaNode(colander.String(), missing=None)
+	    verification = colander.SchemaNode(colander.String(), missing=None)
+	    
+	schema = User()
+
+	try:  
+		
+		import ipdb; ipdb.set_trace()
+		deserialized = schema.deserialize(request.json_body) 
+	    
+	except Exception:
+		request.response.status = 400
+		return {'error': 'error'}
+	try:	
+
+		
+		request.user.email = deserialized['email']
+		request.user.name = deserialized['name']
+		if not (deserialized['password'] == None):
+			if (deserialized['password'] == deserialized['verification']):
+				request.user.password  = password = deserialized['password']
+			else:
+				raise
+
+
+		request.response.status = 201
+		return request.json_body
+	        
+	except Exception:
+		transaction.doom()
+		error = 'Failed to update data.'
+		request.response.status = 403
+		return {'error' :error}
 	

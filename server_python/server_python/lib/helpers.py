@@ -23,5 +23,6 @@ def valid_token(request):
 	user_id = request.headers.get('user_id')
 	if user_id is None:
 		raise _401()
-
+	user = request.db.query(model.User).filter(model.User.id == user_id).one()
+	request.user = user
 	request.validated['user_id'] = user_id

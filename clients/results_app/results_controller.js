@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-angular.module('results',['ui.bootstrap','d3Scatter', 'paudm.filters'])
+angular.module('results',['ui.bootstrap','d3Scatter', 'paudm.filters','ngCsv'])
 	.controller('results_ctrl', [ '$scope','user_auth', function ($scope,  user_auth) {
    	console.log("results");
    	$scope.type = 'table';
@@ -19,4 +19,7 @@ angular.module('results',['ui.bootstrap','d3Scatter', 'paudm.filters'])
 		   			function(x)
 		   			{return [ x[ $scope.results[0].indexOf($scope.var1)], x[$scope.results[0].indexOf($scope.var2)] ]  });
 		   		})   		
+	$scope.currentPage = 1;
+  	$scope.maxSize = 20;
+  	
 }])

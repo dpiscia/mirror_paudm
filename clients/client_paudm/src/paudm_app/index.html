@@ -5,6 +5,7 @@
   
   <link rel="stylesheet" href="/css/bootstrap.css"/>
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+   
   <title ng-bind="' PAUDM ' + $state.current.name">ui-router</title>
   
 </head>
@@ -23,7 +24,8 @@
 	  	<div ui-view></div>
 
 
-  
+  			<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+			<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js" ></script>
 <!-- @if NODE_ENV == 'DEVELOPMENT' -->
   <!-- In production use:
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
@@ -38,7 +40,10 @@
    <script src="/lib/angular/angular-sanitize.min.js"></script>
   <script src="/lib/angular/ui-bootstrap-tlp-0.7.0.min.js"></script>
   <script src="/lib/d3/d3_3.3.9_ang.js"></script>
-  
+  <script src="/lib/ace/ace-builds/src-min-noconflict/ace.js"></script>
+  <script src="/lib/d3/d3_3.3.9_ang.js"></script>
+  <script src="/lib/angular/ng-csv.min.js"></script>
+  <script src="/lib/ace/angular-ui-ace/ui-ace.js"></script>	
   <script src="db_manage/db_manage.js"></script>
   <script src="db_manage/controllers.js"></script>
   <script src="/common_modules/directives/d3/d3Force.js"></script>
@@ -56,7 +61,8 @@
   <script src="/common_modules/services/bread_crumbs.js"></script>
   <script src="/common_modules/services/plot_data_prepation.js"></script>
   <script src="/common_modules/resources/groups_resources.js"></script>
-  
+			<script src="/query/query_controller.js"></script>
+			<script src="/query/query_resources.js"></script>  
   <script src="/security/security.js"></script>
   <script src="/security/login/login_controller.js"></script>
   <script src="/security/register/register_controller.js"></script>
@@ -64,7 +70,7 @@
   <script src="job_monitor/job_controller.js"></script>
   <script src="job_monitor/job_resources.js"></script>
   <script src="strc_query/strc_query.js"></script>
-  <script src="strc_query/controllers.js"></script>
+  <script src="/results/results_controller.js"></script>
   <script src="/common_modules/services/user_auth.js"></script>
   <script src="paudm_app.js"></script>
 <!-- @endif -->

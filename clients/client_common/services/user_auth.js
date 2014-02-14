@@ -31,7 +31,11 @@ angular.module('paudm.user_auth').factory('user_auth', [ '$rootScope', '$http','
                 return false;
             return true;
         };
-
+	user.isAdmin= function() {
+            if(user.role === 4)
+                return true;
+            return false;
+        };
 	user.register = function(user, success, error) {
             $http.post('/register', user).success(success).error(error);
         };
@@ -67,14 +71,15 @@ angular.module('paudm.user_auth').factory('user_auth', [ '$rootScope', '$http','
 
 	user.logout =  function() {
 			var deferred = $q.defer();
-            $http({method: 'POST', url : '/api_node/logout', headers : {user_id: user.id, apikey:user.api_key} }).success(function(){
-            	user.role =	1;
+			    user.role =	1;
 				user.api_key = "";
 				user.name = null;
 				$cookieStore.remove('api_key');
 			    $cookieStore.remove('role');
 			    $cookieStore.remove('name');
 			    $cookieStore.remove('id');
+            $http({method: 'POST', url : '/api_node/logout', headers : {user_id: user.id, apikey:user.api_key} }).success(function(){
+
 				deferred.resolve();
             }).error(function(data) {deferred.reject(data.message);} );
             return deferred.promise;

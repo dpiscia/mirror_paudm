@@ -1,5 +1,16 @@
 <div class="container">
 	<div class="row">
- 		<d3-pie data="groups" ></d3-pie><d3-pie data="groups" ></d3-pie><d3-pie data="groups" ></d3-pie>
+		<div class="col-md-4">
+		<h3>Groups</h3>
+ 		<d3-pie data="groups" type="'group'" >
+ 		</div>
+ 		<div class="col-md-4">
+ 		<h3>Public/Private</h3>
+ 		</d3-pie><d3-pie data="public" type="'public'" >
+ 		</div>
+ 		<div class="col-md-4">
+ 		<h3>Real/simulated</h3>
+ 		</d3-pie><d3-pie data="type" type="'type'" ></d3-pie>
+		</div>
  	</div>
 </div>

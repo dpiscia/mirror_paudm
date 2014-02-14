@@ -33,7 +33,7 @@ button {
 						</div>
 					</div>
 					
-				<div class="col-md-6" ng-repeat="field in catalog.columns" style="margin-bottom:5px;margin-top:5px;">
+				<div class="col-md-6" ng-repeat="field in columns" style="margin-bottom:5px;margin-top:5px;">
 					<button type="button" class="btn btn-default" ng-model="fields_btn[$index]" btn-checkbox ng-change="query_changed()" ng-disabled="!readOnly">{{field}}</button>
 					
 				</div>
@@ -68,7 +68,7 @@ button {
 			</div>
 			<div class="col-md-2">
 					<select ng-model="cond.field" ng-change="query_changed()">
-			     		<option ng-repeat="field in catalog.columns " value="{{field}}" ng-disabled="!readOnly">{{field}}</option>
+			     		<option ng-repeat="field in columns " value="{{field}}" ng-disabled="!readOnly">{{field}}</option>
 			  			// unique options from the categories
 					</select>
 			</div>

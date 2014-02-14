@@ -13,7 +13,7 @@
 			<div class="btn-group" >
 				<button type="button" class="btn btn-primary" ng-model="$parent.type" btn-radio="'table'"    tooltip="plots element grouped by Task">Table</button>
 				<button type="button" class="btn btn-primary" ng-model="$parent.type" btn-radio="'scatter'"  tooltip="plots element grouped by Status">Scatter</button>
-				
+				<button type="button"  class="btn btn-default"ng-csv="results" filename="test.csv">Download CSV file</button>
 			</div>  
 <div class="container" >
 	<div class="row">
@@ -30,11 +30,12 @@
 				</thead>
 	    		<tbody>
 	    			
-					<tr ng-repeat="result in results"  >
-						<td ng-repeat="col in results[$index]"> {{col}}</td>
+					<tr ng-repeat="result in results | startFrom:(currentPage-1)*maxSize | limitTo:maxSize"  >
+						<td ng-repeat="col in result"> {{col}}</td>
 					</tr>
 				</tbody>  
 			</table>
+			<pagination total-items="results.length"  max-size="maxSize" page="currentPage" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
 		</div>
 	</div>		
 </div>

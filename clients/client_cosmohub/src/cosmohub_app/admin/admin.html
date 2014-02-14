@@ -16,7 +16,7 @@
 					</tr>
 				</thead>
 	    		<tbody>
-					<tr ng-repeat="result in resources" ng-init="sectionIndex = $index" >
+					<tr ng-repeat="result in resources | startFrom:(currentPage-1)*maxSize | limitTo:maxSize" ng-init="sectionIndex = $index" >
 					 <td ><i ng-show="!(resources_op_info[sectionIndex] === undefined)" class= "{{resources_op_info[sectionIndex]['success'] && 'glyphicon glyphicon-ok' || 'glyphicon glyphicon-remove' }}" ></i> </td>
 						<td ng-repeat="key_value in headers">
 							<div ng-if="check_type(result[key_value]) == 'boolean'">
@@ -43,5 +43,6 @@
 					</tr>
 				</tbody>  
 			</table>
+			<pagination total-items="resources.length"  max-size="maxSize" page="currentPage" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
 		</div>
 	</div>		

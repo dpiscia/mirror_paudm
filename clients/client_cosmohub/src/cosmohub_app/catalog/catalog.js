@@ -27,7 +27,7 @@ angular.module('catalogs_app', [
           .state("catalogs_list", {
             
             // Use a url of "/" to set a states as the "index".
-            url: "/catalogs",
+            url: "/catalogs?group&public&type",
             templateUrl: "catalog/catalogs_list/catalogs_list.html", 
             resolve : {        
                catalogs: function($q, catalogs_group_list_resources,  user_auth){
@@ -44,7 +44,7 @@ angular.module('catalogs_app', [
           .state("catalog_details", {
             
             // Use a url of "/" to set a states as the "index".
-            url: "/catalogs/:group/:catalog",
+            url: "/catalogs/:catalog",
             templateUrl: "catalog/catalogs_list/single_catalog/single_catalog.html", 
             resolve : {        
                catalog: function($q, single_catalog_resources,  $stateParams, user_auth){
@@ -72,6 +72,19 @@ angular.module('catalogs_app', [
             // Use a url of "/" to set a states as the "index".
             url: "/custom",
             templateUrl: "/query/query.html", 
+            resolve : {        
+			            columns: function($q){
+			            var deferred = $q.defer();
+			            deferred.resolve("");
+			             return deferred.promise;
+			           
+			        },
+			table: function($q){
+			            var deferred = $q.defer();
+			            deferred.resolve("");
+			             return deferred.promise;
+			           
+			        }},
             access : access.user,
             controller: "query_ctrl",
             

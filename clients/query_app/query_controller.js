@@ -2,11 +2,14 @@
 
 /* Controllers */
 
-angular.module('query',['ui.ace']).controller('query_ctrl', [ '$scope','user_auth','$state','run_query_resources', function ($scope, user_auth,$state,run_query_resources) {
+angular.module('query',['ui.ace']).controller('query_ctrl', [ '$scope','user_auth','$state','run_query_resources','columns','table', function ($scope, user_auth,$state,run_query_resources,columns, table) {
+  if (typeof($scope.catalog) == 'undefined') {$scope.columns = columns; $scope.table = table }
+  else {$scope.columns = $scope.catalog.columns; $scope.table = $scope.catalog.catalog.table;}
+
   $scope.aceModel = '';
   $scope.mode = 'SQL';
   $scope.readOnly = true;
-  $scope.fields_btn = $scope.catalog.columns.map(function(x,i){ return false;});
+  $scope.fields_btn = $scope.columns.map(function(x,i){ return false;});
   $scope.conditions = [];
   $scope.showQuery = true;
   $scope.add_condition = function(){
@@ -26,9 +29,9 @@ angular.module('query',['ui.ace']).controller('query_ctrl', [ '$scope','user_aut
   $scope.query_changed = function() {
     if ($scope.readOnly){
 	  	$scope.fields = [];
-		$scope.fields_btn.map(function(x,index){if (x != 'undefined' && x ==true)  $scope.fields.push($scope.catalog.columns[index]);})
+		$scope.fields_btn.map(function(x,index){if (x != 'undefined' && x ==true)  $scope.fields.push($scope.columns[index]);})
 	  	$scope.aceModel = " SELECT "+ $scope.fields.join()+' \n';
-	  	$scope.aceModel = $scope.aceModel+" FROM "+$scope.catalog.catalog.table+' \n';
+	  	$scope.aceModel = $scope.aceModel+" FROM "+$scope.table+' \n';
 	  	if ($scope.conditions.length > 0)
 	  	$scope.aceModel = $scope.aceModel+" WHERE "+ $scope.conditions.map(function(x){return x.logical+" "+x.field+" "+x.op+" "+x.value+" "}).join().replace(/,/g,'');
 	  	}

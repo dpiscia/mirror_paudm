@@ -120,6 +120,7 @@ app.get('/api_python_public/groups',function(req,res){proxy.web(req, res,{ targe
 
 // user CRUD operation
 app.get('/api_python/user',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+app.get('/api_python/personal_area',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
 app.delete('/api_python/user',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
 app.put('/api_python/user',require('connect-restreamer')(),security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
 
@@ -138,6 +139,11 @@ app.post('/api_python/query',require('connect-restreamer')(),security.ensureAuth
 
 //register
 app.post('/api_python/register',require('connect-restreamer')(),function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+
+//personal area api
+
+app.get('/api_python/personal_area',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+app.put('/api_python/personal_area',require('connect-restreamer')(),security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
 
 
 // Jobs API

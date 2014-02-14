@@ -4,8 +4,10 @@ angular.module('catalog', [
   'catalogs_app',
   'admin',
   'activity',
+  'personal_area',
   'homepage_cat',
   'paudm.breadcrumbs',
+  'contact',
   ])
   .run(
       [        '$rootScope', '$state', '$stateParams','$location','user_auth',

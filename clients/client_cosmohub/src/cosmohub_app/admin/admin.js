@@ -58,7 +58,8 @@ admin.controller('admin_ctrl', [ '$scope', 'resources','crud_resources', functio
    		$scope.headers = get_head(resources[0]);
    		console.log('ss');
    		$scope.check_type = function(object){return typeof(object)}
-   		
+   		$scope.currentPage = 1;
+  		$scope.maxSize = 10;
    		$scope.save = function(values){
    			console.log($scope.resources[values]);
    			console.log(resources_copy[values]);

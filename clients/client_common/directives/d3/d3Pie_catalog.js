@@ -9,10 +9,13 @@ angular.module('d3Pie', ['d3'])
 	return {
 		restrict: 'EA',
 		scope: {data: '=data',
+				type: '=type',
 				},
 		link: function(scope, element, attrs){
 			scope.w = 300;
 			scope.h = 400;
+			var data_raw = []
+			
 			//define variable name mapping 
 			var status = 'name';
 			//define variable number mapping
@@ -54,7 +57,7 @@ angular.module('d3Pie', ['d3'])
 				    
 				  });
 
-  				var legend = svg.selectAll('g').data(pie(data_mod)).enter().append('g').attr('class', 'legend').attr("transform", "translate(0 ,20 )");
+  				/*var legend = svg.selectAll('g').data(pie(data_mod)).enter().append('g').attr('class', 'legend').attr("transform", "translate(0 ,20 )");
 				legend.append('rect')
 					.attr('x', function(d, i){ return i *  70;})
 					.attr('y', 300)
@@ -70,7 +73,7 @@ angular.module('d3Pie', ['d3'])
 					.text(function(d)
 					{ return d.data[status]+" "+d.data[data]; });
         
-        
+        		*/
 				var g = svg.selectAll(".arc")
 					.data(pie(data_mod));
 				g.exit().remove();
@@ -86,15 +89,15 @@ angular.module('d3Pie', ['d3'])
 						})
 					.each(function(d) { this._current = d; })
 										.on("click", function(d) 
-						{ if (d.data.access == true) window.location = "/#/catalogs/"+d.data.name; }); // redraw the arcs
+						{ window.location = "#/catalogs?"+scope.type+"="+d.data.name; }); // redraw the arcs
    
 				g.append("text")
 					.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
 					.attr("dy", ".35em")
 					.style("text-anchor", "middle")
 					.on("click", function(d) 
-						{ if (d.data.access == true) window.location = "/#/catalogs/"+d.data.name; })
-					.text(function(d) { return d.data[status]+" "+d.data[data]; });
+						{  window.location = "#/catalogs?"+scope.type+"="+d.data.name; })
+					.text(function(d) { return d.data[status]; });
 				};
 
 		}
