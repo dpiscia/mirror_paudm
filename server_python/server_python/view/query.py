@@ -2,6 +2,7 @@ import jsondate as json
 import psycopg2
 import psycopg2.extras
 import threading
+import yaml
 from urlparse import urlparse
 from sqlalchemy import create_engine
 from sqlalchemy.exc import DBAPIError
@@ -12,9 +13,16 @@ from psycopg2.extensions import QueryCanceledError
 from server_python.lib.security.api import generate_user_pwd_context, get_mapped_array, get_group_mapped
 from server_python.lib.helpers import _create_token, valid_token, _USERS
 from server_python import model
+import datetime
+from task import create_catalog
+from brownthrower.interface import constants
+
+import brownthrower.api
 
 run_query  = Service(name='catalog_query', path='api_python/query', description="raw query against catalog")
 check_query  = Service(name='check_query', path='api_python/check_query', description="raw query against catalog")
+batch_query  = Service(name='batch query', path='api_python/batch_query', description="run a batch query through bt")
+
 
 @run_query.post(validators=valid_token)
 def post(request):
@@ -103,3 +111,41 @@ def post(request):
 	    'result' : result
         
     }
+    
+    
+@batch_query.post(validators=valid_token)
+def batch_query_put(request):
+	try:
+		import ipdb; ipdb.set_trace()
+		#to be added file_format = form_data['file_format']
+		file_format = 'csv'
+		sql = query = request.json_body['query']
+		task_config = yaml.safe_load(brownthrower.api.task.get_dataset('config', 'sample')(create_catalog.create_catalog_from_query))
+		task_config.update({'format' : file_format})  
+		task_config.update({'db_url' : request.registry.settings['sqlalchemy.url']})
+		query = model.Query(
+		    task      = create_catalog.create_catalog_from_query.name,
+		    config    = yaml.safe_dump(task_config),
+		    status    = constants.JobStatus.QUEUED,
+		    user      = request.user,
+		    email     = request.user.email,
+		    sql       = sql,
+		    ts_queued = datetime.datetime.now(),
+		)
+		request.db.add(query)
+		request.db.flush()		
+		prefix = 'catalog.task.'
+		with query.as_dict('config') as cfg:
+		    cfg.update(dict(
+		        (key[len(prefix):], value)
+		        for key, value in request.registry.settings.iteritems()
+		        if key.startswith(prefix)
+		    ))
+		    cfg['http_url'] = 'download_query/'+str(query.id)
+            
+		message= 'valid_box;Your query has been sent to the queue. You can follow the status of your pending queries in the left panel. You will receive the results at your e-mail address once the catalog is generated.'
+	except Exception:
+		request.session.flash(u'error_box;Query failed')
+		transaction.doom()
+	finally:
+		return {'message': message}

@@ -30,6 +30,7 @@ groups_info = Service(name='get groups filtered by User id', path='api_python/gr
 public_groups_info = Service(name='get groups', path='api_python_public/groups', description="get groups list")
 register = Service(name='register', path='api_python/register', description="register")
 users = Service(name='user list', path='api_python/user', description="get user list from admin view")
+users_number = Service(name='user numbers', path='api_python/users_counter', description="get user number")
 personal_area = Service(name='user data', path='api_python/personal_area', description="get user data list from user view")
 
 class InvalidPassword(Exception):
@@ -283,4 +284,18 @@ def user_put(request):
 		error = 'Failed to update data.'
 		request.response.status = 403
 		return {'error' :error}
-	
+
+
+@users_number.get(validators=valid_token)
+def users_number_get(request):
+
+	try:
+		
+		users_nbr = len(request.db.query(model.User).all())
+		request.stauts = 200
+		return {'users_nbr' : users_nbr}
+	except Exception:
+
+		error = 'Failed to retrieve data'
+		request.response.status = 403
+		return {'error' :error}	

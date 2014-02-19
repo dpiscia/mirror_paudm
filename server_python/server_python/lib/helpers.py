@@ -19,7 +19,7 @@ def _create_token():
     X-Messaging-Token
     
 def valid_token(request):
-	
+
 	user_id = request.headers.get('user_id')
 	if user_id is None:
 		raise _401()

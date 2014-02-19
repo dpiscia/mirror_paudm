@@ -105,7 +105,17 @@ $scope.check_query = function() {run_query_resources.check($scope.aceModel, user
    				$scope.success = "";
    				}
    			);}
- 	
+$scope.batch_query = function() {run_query_resources.batch_query($scope.aceModel, user_auth.api_key, user_auth.id).then(
+   			function(data){ 
+   							$scope.success = "QUERY has been succesfully run "+ data;
+    						$scope.error = ""
+   							}, 
+   			function(err){
+   				console.log(err);
+   				$scope.error = err;
+   				$scope.success = "";
+   				}
+   			);}	
   	
   	
 }]);

@@ -1,0 +1,3 @@
+[brownthrower.task]
+task01 = catalog.task.create_catalog:create_catalog_from_query
+

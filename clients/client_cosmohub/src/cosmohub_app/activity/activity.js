@@ -39,7 +39,7 @@ activity.factory('activity_resources', function($resource){
  	}
 });
 
-activity.controller('activity_ctrl', [ '$scope', 'jobs', function ($scope,jobs) {
+activity.controller('activity_ctrl', [ '$scope', 'jobs','user_auth', function ($scope,jobs,user_auth) {
    		if (typeof String.prototype.startsWith != 'function') {
 		  // see below for better implementation!
 		  String.prototype.startsWith = function (str){
@@ -48,6 +48,8 @@ activity.controller('activity_ctrl', [ '$scope', 'jobs', function ($scope,jobs) 
 		}   		$scope.jobs = jobs;
  		function get_head(array){
 		$scope.resources_op_info = [];
+		$scope.token = user_auth.api_key;
+		$scope.user_id = user_auth.id;
 		var dict = []
 		for (var key in array) {if (!key.startsWith('$') && !key.startsWith('_')) dict.push(key);}
 		return dict;
