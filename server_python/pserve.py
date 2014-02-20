@@ -1,1 +1,0 @@
-/home/tallada/Projectes/Envs/Euclid/bin/pserve
