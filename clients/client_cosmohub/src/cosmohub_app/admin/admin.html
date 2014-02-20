@@ -3,6 +3,28 @@
 
 <div class="container">
 	<div class="row">
+		<div class="col-md-2">
+		<!--Sidebar content-->
+	 		Email filter 
+	 	</div>
+	 	<div class="col-md-2">
+	
+	     		
+	     		<input ng-model="email_filter">
+	
+		</div>
+		<div class="col-md-2">
+		<!--Sidebar content-->
+	 		Name filter 
+	 	</div>
+	 	<div class="col-md-2">
+	
+	     		
+	     		<input ng-model="name_filter">
+	
+		</div>
+	</div>
+	<div class="row">
 		<div class="col-md-12" style="overflow: auto">
 		
 		<div class="table-responsive">
@@ -16,7 +38,7 @@
 					</tr>
 				</thead>
 	    		<tbody>
-					<tr ng-repeat="result in resources | startFrom:(currentPage-1)*maxSize | limitTo:maxSize" ng-init="sectionIndex = $index" >
+					<tr ng-repeat="result in filteredData = (resources | filter:{email:email_filter} | filter:{name:name_filter}) | startFrom:(currentPage-1)*maxSize | limitTo:maxSize" ng-init="sectionIndex = $index" >
 					 <td ><i ng-show="!(resources_op_info[sectionIndex] === undefined)" class= "{{resources_op_info[sectionIndex]['success'] && 'glyphicon glyphicon-ok' || 'glyphicon glyphicon-remove' }}" ></i> </td>
 						<td ng-repeat="key_value in headers">
 							<div ng-if="check_type(result[key_value]) == 'boolean'">
@@ -43,6 +65,6 @@
 					</tr>
 				</tbody>  
 			</table>
-			<pagination total-items="resources.length"  max-size="maxSize" page="currentPage" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+			<pagination total-items="filteredData.length"  max-size="maxSize" page="currentPage" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
 		</div>
 	</div>		

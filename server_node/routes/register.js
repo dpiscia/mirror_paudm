@@ -125,8 +125,11 @@ module.exports.login = function(req, res, next) {
       		if (err) { return res.send(500, info);  }
     	var api_key = uuid();
 		var user_id = user.id;
+		var role;
+		if (user.is_admin) role = 4;
+		else role  = 2;
 		security.set_users(api_key,user_id, 2);//todo : add callback if something wrong
-		res.json( {api_key : api_key, role : 2 , id: user_id}) ;
+		res.json( {api_key : api_key, role : role , id: user_id}) ;
 		return res;
     	});
   	})(req, res, next)};

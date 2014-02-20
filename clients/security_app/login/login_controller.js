@@ -10,7 +10,12 @@ angular.module('login.controllers', ['paudm.user_auth','ui.bootstrap'])
    			
    			user_auth.login(name.name.$modelValue,name.psw.$modelValue, $scope.rememberme).then(
    			function(data){console.log("ok works");
-   			$location.path('/home')}, 
+   			var url;
+   			if ($location.search().url !== undefined) url = $location.search().url;
+   			else url = '/home';
+   			 //url = '/home';
+   			 console.log(url);
+   			$location.path(url)}, 
    			function(err){
    				console.log(err);
    				$scope.error = err;

@@ -46,13 +46,8 @@ activity.controller('activity_ctrl', [ '$scope', 'jobs','user_auth', function ($
 		    return this.indexOf(str) == 0;
 		  };
 		}   		$scope.jobs = jobs;
- 		function get_head(array){
-		$scope.resources_op_info = [];
-		$scope.token = user_auth.api_key;
+   		$scope.currentPage = 1;
+  		$scope.maxSize = 10;
+  		$scope.token = user_auth.api_key;
 		$scope.user_id = user_auth.id;
-		var dict = []
-		for (var key in array) {if (!key.startsWith('$') && !key.startsWith('_')) dict.push(key);}
-		return dict;
-		} 
-   		$scope.headers = get_head(jobs[0]);
    		}]);

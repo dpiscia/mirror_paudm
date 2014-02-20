@@ -73,6 +73,7 @@ def post_user(request):
 		request.response.status = 400
 		return {'error': 'error'}
 	try:	
+		#import ipdb; ipdb.set_trace()
 		email = deserialized['email']
 		if (len(request.db.query(model.User).filter_by(email=email).all())>0):
 			request.response.status = 400
@@ -92,6 +93,38 @@ def post_user(request):
 		    is_admin = True,
 		    enabled  = True,
 		)
+		
+		mailer = get_mailer(request)
+		mailer.send(Message(
+		    subject = 'Account application for %s at Simulations portal @ PIC' % user.name,
+		    recipients = [user.email],
+		    body = textwrap.dedent("""\
+		    Thank you for registering at Simulations portal @ PIC. 
+		    
+		    Your application for an account has been granted and you already have access to all the public data.
+		    If you have requested additional membership, you will receive a confirmation e-mail once it has been approved.
+		    
+		    Regards,
+		    MICE@PIC.
+		    """)
+		))
+		
+		mailer.send(Message(
+		    subject = 'New user for approval at Simulations portal @ PIC',
+		    recipients = [admin.email for admin in admins],
+		    body = textwrap.dedent("""\
+		    Name:  {name}
+		    Email: {email}
+		    Groups: {groups}
+		     
+		    {url}
+		    """.format(
+		        name  = user.name,
+		        email = user.email,
+		        groups = [group['name'] for group in deserialized['groups']],
+		        url   = 'http://localhost:2999/cosmohub_app/#/admin/user'
+		    ))
+		))
 		request.response.status = 201
 		return {'OK' :'OK'}
 	        
@@ -108,7 +141,7 @@ def get_groups(request):
 	groups_dict = []
 	groups = request.db.query(model.Group).order_by(model.Group.name).all()
         # Retrieve public catalogs
-	groups_dict.append({'name' : 'public', 'nbr' : len(request.db.query(model.Catalog).filter(~model.Catalog.groups.any()).all())})
+	
     	
 	for group in groups:
 		query = request.db.query(model.Catalog).select_from(model.User).join(model.User.groups).join(model.Group.catalogs).filter(model.Group.id==group.id)
@@ -126,7 +159,7 @@ def get_groups(request):
 	groups_dict = []
 	groups = request.db.query(model.Group).order_by(model.Group.name).all()
         # Retrieve public catalogs
-	groups_dict.append({'name' : 'public'})
+	
     	
 	for group in groups:
 		groups_dict.append({'name' : group.name })

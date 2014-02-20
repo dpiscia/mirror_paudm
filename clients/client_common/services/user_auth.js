@@ -71,17 +71,25 @@ angular.module('paudm.user_auth').factory('user_auth', [ '$rootScope', '$http','
 
 	user.logout =  function() {
 			var deferred = $q.defer();
-			    user.role =	1;
-				user.api_key = "";
-				user.name = null;
+
 				$cookieStore.remove('api_key');
 			    $cookieStore.remove('role');
 			    $cookieStore.remove('name');
 			    $cookieStore.remove('id');
-            $http({method: 'POST', url : '/api_node/logout', headers : {user_id: user.id, apikey:user.api_key} }).success(function(){
-
+            $http({method: 'POST', url : '/api_node/logout', headers : {user_id: user.id, apiKey:user.api_key} }).success(function(){
+				user.role =	1;
+				user.api_key = "";
+				user.name = null;
 				deferred.resolve();
-            }).error(function(data) {deferred.reject(data.message);} );
+            }).error(function(data) {
+            
+            	user.role =	1;
+				user.api_key = "";
+				user.name = null;
+				deferred.resolve();
+            
+            deferred.reject(data.message);} );
+
             return deferred.promise;
         };
         
@@ -106,6 +114,8 @@ angular.module('paudm.user_auth').factory('user_auth', [ '$rootScope', '$http','
              	return deferred.promise;
              	
         };
+        
+    
 	return user;
 
 
@@ -113,3 +123,6 @@ angular.module('paudm.user_auth').factory('user_auth', [ '$rootScope', '$http','
 
     
 }]);
+
+
+

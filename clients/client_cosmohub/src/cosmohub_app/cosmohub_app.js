@@ -11,7 +11,7 @@ angular.module('catalog', [
   ])
   .run(
       [        '$rootScope', '$state', '$stateParams','$location','user_auth',
-      function ($rootScope,   $state,   $stateParams,  $location, user) {
+      function ($rootScope,   $state,   $stateParams,  $location, user_auth) {
 
         // It's very handy to add references to $state and $stateParams to the $rootScope
         // so that you can access them from any scope within your applications.For example,
@@ -21,23 +21,29 @@ angular.module('catalog', [
         $rootScope.$stateParams = $stateParams;
         $rootScope.$on('$stateChangeStart', 
 		function(event, toState, toParams, fromState, fromParams){ 
-			        if ((user.authorize(toState.access) === 0) ) {
+					if (toState.url === '/login') {
+					 if (user_auth.isLoggedIn())
+						user_auth.logout();
+					}
+			        if ((user_auth.authorize(toState.access) === 0) ) {
 			        	
 			        	event.preventDefault();
 			        	console.log(toState.name);
-			        	$location.path('/login');
+			        	url = $location.url();
+			        	$location.path('/login').search('url',url);
 			        	}
 
  	})
       }]).
     config(
-    [          '$stateProvider', '$urlRouterProvider', '$locationProvider',
-      function ($stateProvider,   $urlRouterProvider , $locationProvider) {
+    [          '$stateProvider', '$urlRouterProvider', '$locationProvider','$httpProvider',
+      function ($stateProvider,   $urlRouterProvider , $locationProvider, $httpProvider) {
 
         /////////////////////////////
         // Redirects and Otherwise //
         /////////////////////////////
-		 
+		 //user_auth.HttpInterceptor
+		 $httpProvider.interceptors.push('myHttpInterceptor');
         // Use $urlRouterProvider to configure any redirects (when) and invalid urls (otherwise).
 
              //$locationProvider.html5Mode(true);
@@ -61,3 +67,18 @@ angular.module('catalog', [
                         );;}
     $scope.goto = function(location){$location.path(location);}
     }]);
+
+    
+    angular.module('catalog').factory('myHttpInterceptor', function ($q, $location) {
+    return {
+
+        responseError: function (response) {
+            // do something on error
+            if (response.data == "not authorized") {
+
+			    $location.path('/login');
+			    }
+            return $q.reject(response);
+        }
+    };
+});

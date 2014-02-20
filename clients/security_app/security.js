@@ -20,7 +20,7 @@ angular.module('login', [
    		var access = routingConfig.accessLevels;
         $urlRouterProvider
              
-             .otherwise("/login");
+             //.otherwise("/login");
         $stateProvider
 
           //////////
@@ -30,7 +30,7 @@ angular.module('login', [
           .state("login", {
             
             // Use a url of "/" to set a states as the "index".
-            url: "/login",
+            url: "/login?url",
             templateUrl: "/security/login/login.html", 
             access : access.public,
             controller: "login_ctrl",

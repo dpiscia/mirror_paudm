@@ -116,13 +116,14 @@ def post(request):
 @batch_query.post(validators=valid_token)
 def batch_query_put(request):
 	try:
-		import ipdb; ipdb.set_trace()
+		
 		#to be added file_format = form_data['file_format']
 		file_format = 'csv'
 		sql = query = request.json_body['query']
 		task_config = yaml.safe_load(brownthrower.api.task.get_dataset('config', 'sample')(create_catalog.create_catalog_from_query))
 		task_config.update({'format' : file_format})  
 		task_config.update({'db_url' : request.registry.settings['sqlalchemy.url']})
+		import ipdb; ipdb.set_trace()
 		query = model.Query(
 		    task      = create_catalog.create_catalog_from_query.name,
 		    config    = yaml.safe_dump(task_config),

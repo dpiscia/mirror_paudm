@@ -131,11 +131,33 @@ app.get('/api_python/catalog/:Name',security.ensureAuthenticated,function(req,re
 
 //user job-query related info
 app.get('/api_python/jobs',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+app.get('/api_python/jobs_counter',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
 
+//users counter
+
+app.get('/api_python/users_counter',security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+
+//downloads readme
+app.get('/api_python/download_readme/:id/:user_id/:token',href_conversion,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+app.get('/api_python/download_prebuilt/:id/:user_id/:token',href_conversion,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+app.get('/api_python/download_query/:id/:user_id/:token',href_conversion,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+
+
+function href_conversion(req,res,next) {
+//get id and token as parameter and put them as header value to behave in the standard way
+debugger;
+req.headers['apikey'] = req.params['token'] ;
+req.headers['user_id']=req.params['user_id'] ;
+
+req.url =  req.url.split('/')[0]+'/'+req.url.split('/')[1]+'/'+req.url.split('/')[2]+'/'+req.url.split('/')[3]
+console.log(req.url);
+next();
+}
 
 //raw query and check query syntax
 app.post('/api_python/check_query',require('connect-restreamer')(),security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
 app.post('/api_python/query',require('connect-restreamer')(),security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
+app.post('/api_python/batch_query',require('connect-restreamer')(),security.ensureAuthenticated,function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});
 
 //register
 app.post('/api_python/register',require('connect-restreamer')(),function(req,res){proxy.web(req, res,{ target: config.api_python.host+':'+config.api_python.port })});

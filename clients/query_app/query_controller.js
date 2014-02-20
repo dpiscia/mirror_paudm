@@ -112,7 +112,7 @@ $scope.batch_query = function() {run_query_resources.batch_query($scope.aceModel
    							}, 
    			function(err){
    				console.log(err);
-   				$scope.error = err;
+   				$scope.error = "internal error";
    				$scope.success = "";
    				}
    			);}	
