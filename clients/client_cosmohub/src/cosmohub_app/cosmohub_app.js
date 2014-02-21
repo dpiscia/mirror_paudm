@@ -50,13 +50,13 @@ angular.module('catalog', [
         
         
  }])    
- .controller('HeaderCtrl', ['$scope','$state','breadcrumbs', 'user_auth' ,function HeaderCtrl($scope, $state, breadcrumbs, user_auth) {
+ .controller('HeaderCtrl', ['$scope','breadcrumbs', '$location' ,function HeaderCtrl($scope, breadcrumbs, $location) {
 	$scope.db = {"prova":"Header ctrl view in different position"};
     $scope.breadcrumbs = breadcrumbs;
-    $scope.username = user_auth;
+    $scope.show_nav = function() {return $location.url().indexOf("/login") !== 0;}
     }])
- .controller('nav_bar_Ctrl', ['$scope','user_auth','$location', function HeaderCtrl($scope, user_auth, $location) {
-
+ .controller('nav_bar_Ctrl', ['$scope','user_auth','$location','$state', function HeaderCtrl($scope, user_auth, $location, $state) {
+	$scope.show_nav = function() {return $location.url().indexOf("/login") !== 0;}
     $scope.username = user_auth;
     $scope.logout = function(){user_auth.logout().then(
                         function(data){console.log("ok logged-out");

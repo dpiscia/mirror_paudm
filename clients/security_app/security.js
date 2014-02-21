@@ -20,7 +20,7 @@ angular.module('login', [
    		var access = routingConfig.accessLevels;
         $urlRouterProvider
              
-             //.otherwise("/login");
+             .otherwise("/login");
         $stateProvider
 
           //////////
