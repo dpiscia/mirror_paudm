@@ -1,22 +1,46 @@
 <style>
-body {   
 
-	margin: 0;
-     background: url('img/_firstqsos_esa.jpg');
-     background-size:100% ;
-     background-repeat:no-repeat;
-    display: compact;
-     font: 13px/18px "Helvetica Neue", Helvetica, Arial, sans-serif;
+header.site-header.cover {
+    display: flex;
+    width: 100%;
+    height: 60%;
+    text-align: center;
+    color: #FFF;
+    background: none no-repeat scroll center center / cover #303538;
 }
+.row.central
+{
+background-color : rgb(244,244,244);
+}
+</style>
 
-</style>    
-    <div class="container">
-    	<div class="col-md-6 col-md-offset-3">
-    		
-    		<div class="panel panel-primary">
-    			<div class="panel-heading"><h4>Log in</h4></div>
-    			<div class="panel-body">
 
+	<div class="row">
+		<header class="site-header cover" style="background-image: url('img/cover.jpg')">
+			<div class="col-md-6 col-md-offset-3">
+				<h2>CosmoHub</h2>
+				<h3>Welcome to CosmoHub. <br> <br>Massive storage and database access of simulated and observed cosmological data. </h3>
+				<nav class="links">
+					<ul>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+					</ul>
+				</nav>
+			</div>
+		</header>
+	</div>
+	<div class="row central">
+		<div class=" col-md-4 col-md-offset-4">
+		
+		</div>
+		<div class=" col-md-4 col-md-offset-4">
+			
+	
+					<div class="panel-body">
+	
 		    		
 						<form  name="login_form" class="form-signin" ng-submit="myFunc(login_form)" novalidate>
 							<input type="email" name="name" ng-model="name" class="form-control" placeholder="Email" required >
@@ -29,20 +53,21 @@ body {
 							<button type="button" class="btn btn-default" ng-model="rememberme" btn-checkbox btn-checkbox-true=true btn-checkbox-false=false>
 		        				
 		  					<i  class= "{{rememberme && 'glyphicon glyphicon-ok' || 'glyphicon glyphicon-remove' }}" ></i> Rememberme</button>
-    
+	
 							<br />
 							<div class=" alert alert-danger " ng-show="error">{{error}}</div>
 		
 							<button type="submit" ng-disabled="login_form.$invalid" class="btn btn-lg btn-primary btn-block">Log in</button>
 						</form>
 					
-
-
+	
+	
 					
 						</br>
 						<button type="Register" ng-click="to_register()" class="btn btn-lg btn-info btn-block">Register</button>
 					
-
+	
 			</div>
 		</div>
-    </div> <!-- /container -->
+
+
