@@ -2,12 +2,13 @@
 
 header.site-header.cover {
     display: flex;
-    width: 100%;
+    width: 99%;
     height: 60%;
     text-align: center;
     color: #FFF;
     background: none no-repeat scroll center center / cover #303538;
     background-color : rgb(210,210,210);
+    
 }
 .row.central
 {
@@ -15,6 +16,7 @@ background-color : rgb(244,244,244);
 }
  body {
   padding-top: 0px;
+  
 }
 
 </style>
@@ -22,6 +24,7 @@ background-color : rgb(244,244,244);
 
 	<div class="row">
 		<header class="site-header cover" style="background-image: url('logos/datacenter.png')" >
+			
 			<div class="col-md-4 col-md-offset-4">
 				<img class="img-responsive " src="logos/logo_cosmohub_white.png">
 				<h3>Welcome to CosmoHub. <br> <br>Massive storage and database access <br> of simulated and observed cosmological data. </h3>
@@ -38,10 +41,11 @@ background-color : rgb(244,244,244);
 		<div class=" col-md-4 col-md-offset-4">
 			<div class="panel-body">
 				<form  name="login_form" class="form-signin" ng-submit="myFunc(login_form)" novalidate>
+					<br>
 					<input type="email" name="name" ng-model="name" class="form-control" placeholder="Email" required >
 					<p class="help-block error" ng-show="login_form.name.$error.required">please enter your Email</p>
 					<p class="help-block error" ng-show="!login_form.name.$valid && !login_form.name.$error.required">please enter a valid email</p>
-			    	<br />
+			    	
 			    	<input type="password" name="psw" ng-model="password" class="form-control" placeholder="Password" required >
 					<p class="help-block error" ng-show="login_form.psw.$error.required">please enter your Password</p>
 					<p class="help-block error" ng-show="!login_form.psw.$error.required"><p>
@@ -64,12 +68,12 @@ background-color : rgb(244,244,244);
 		
 		<div class=" col-md-6 col-md-offset-3">
 			<div class="row">
-				<div class=" col-md-3 col-md-offset-1">
+				<div class=" col-md-3">
 					<p>Supporting projects:<p>
 				</div>
 			</div>
 			<div class="row">
-				<div class=" col-md-1 col-md-offset-1 ">
+				<div class=" col-md-1  ">
 				
 					<img  src="logos/mice-logo_black_100.png">
 				</div>

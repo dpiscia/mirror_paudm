@@ -6,7 +6,7 @@ header.site-header.cover {
     height: 60%;
     text-align: center;
     color: #FFF;
-    background: none no-repeat scroll center center / cover #303538;
+    background: none no-repeat  center center / cover #303538;
     background-color : rgb(210,210,210);
 }
 .row.central
@@ -75,9 +75,9 @@ background-color : rgb(244,244,244);
 					<div class=" alert alert-danger " ng-show="error">{{error}}</div>
 					<div class=" alert alert-success " ng-show="success">{{success}}</div>
 					
-					<button type="submit" value="Sign up" ng-disabled="form.$invalid || success" class = "btn btn-lg btn-info btn-block">Sign up</button>
+					<button type="submit" value="Sign up" ng-disabled="form.$invalid || success" class = "btn btn-lg btn-primary btn-block">Sign up</button>
 					<br>
-					<button  ng-click="to_login()" class="btn btn-lg btn-primary btn-block">Go to log in</button>
+					<button  ng-click="to_login()" class="btn btn-lg btn-info btn-block">Go to log in</button>
 				</form>
 				
 				
