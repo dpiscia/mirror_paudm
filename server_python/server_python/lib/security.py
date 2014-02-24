@@ -25,7 +25,7 @@ def remove_security(session,groups_mapped):
 
 
 if __name__ == "__main__":
-	session = create_session('postgresql://dpiscia:dP1sc1a@db01.pau.pic.es/dm')
+	session = create_session('postgresql://')
 	groups_mapped = get_group_mapped(session)
 	create_security(session,groups_mapped,'prova')
 	#remove_security(session,groups_mapped)
