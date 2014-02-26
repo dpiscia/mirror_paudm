@@ -83,7 +83,7 @@
 	 	<div class="col-md-2">
 			<select ng-model="status_filter" >
 	     		<option value="!!">-- All Status --</option>
-	     		<option ng-repeat="job in filteredData | unique:'status'" value="{{job.status}}">{{job.status}}</option>
+	     		<option ng-repeat="job in jobs | unique:'status'" value="{{job.status}}">{{job.status}}</option>
 	  			// unique options from the categories
 			</select>
 		</div>
@@ -93,7 +93,7 @@
 		<div class="col-md-2">   
 			<select ng-model="task_filter" >
 				<option value="!!">-- All Tasks --</option>
-	 			<option ng-repeat="job in filteredData | unique:'task'" value="{{job.task}}">{{job.task}}</option>
+	 			<option ng-repeat="job in jobs | unique:'task'" value="{{job.task}}">{{job.task}}</option>
 			</select>
 		</div>
 		<div  ng-show="detail == false" class="col-md-2">	 
