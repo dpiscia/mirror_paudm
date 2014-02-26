@@ -1,0 +1,40 @@
+<div class="container">
+			<div class="col-md-4 col-md-offset-3">
+				<form name="form" method="post" ng-submit="myFunc(form)" novalidate>
+					<div class="form-group">
+						<label for="name" class="control-label">Name</label>
+						<input type="text" name="name" id="name"required ng-model="user.name" autofocus class="form-control">
+						<i ng-show="busy" class="halflings-icon refresh rotating"></i>
+						<span ng-show="form.name.$dirty &amp;&amp; form.name.$error.required" class="help-block">Please choose a name</span
+						><span ng-show="form.name.$dirty &amp;&amp; form.name.$error.isTaken" class="help-block">name already taken</span
+						><span ng-show="form.name.$dirty &amp;&amp; form.name.$error.invalidChars" class="help-block">name may not contain any non-url-safe characters</span>
+					</div>
+					<div class="form-group">
+						<label for="email" class="control-label">Email</label>
+						<input type="email" ng-model="user.email" name="email" id="email"  required class="form-control">
+						<span ng-show="form.email.$dirty &amp;&amp; form.email.$error.email" class="help-block">Email is invalid</span>
+					</div>
+					
+					<div class="form-group">
+						<label for="password" class="control-label">Password</label>
+						<input type="password" name="password" id="password" ng-model="user.password" placeholder="Leave empty if you don't want to change it" required match="verification" class="form-control">
+						<span ng-show="form.password.$dirty &amp;&amp; form.password.$error.required" class="help-block">Please enter a password</span>
+					</div>
+					<div class="form-group">
+						<label for="verification" class="control-label">Repeat password</label>
+						<input type="password" name="verification" id="verification" ng-model="user.verification" placeholder="Leave empty if you don't want to change it" required match="password" class="form-control">
+						<span ng-show="form.verification.$dirty &amp;&amp; form.verification.$error.required" class="help-block">Please repeat your password</span>
+						<span ng-show="form.verification.$dirty &amp;&amp; form.verification.$error.match &amp;&amp; !form.verification.$error.required" class="help-block">Passwords don't match</span>
+					</div>
+					<br />
+					<div class=" alert alert-danger " ng-show="error">{{error}}</div>
+					<div class=" alert alert-success " ng-show="success">{{success}}</div>
+					
+					<button type="button" class="btn btn-primary" ng-click="save()">
+								Update data
+							</button>
+				</form>
+				
+				
+			</div>
+</div>

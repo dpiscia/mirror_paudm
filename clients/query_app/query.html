@@ -1,0 +1,133 @@
+<style type="text/css">
+.ace_editor { height: 200px; }
+
+.disable {
+    background-color: grey;
+button {
+ cursor: pointer;
+}
+.glyphicon {
+ cursor: pointer;
+}
+}
+</style>
+<div  class="row">
+	<h3>Custom catalogs</h3>
+	<div class="{{readOnly && 'panel panel-primary' || 'panel panel-default'}}" style="background-color: rgb(245, 245, 245);">
+			<div class="panel-heading" ng-click="showFields=!showFields"> 
+					<h2 class="panel-title text-center" style="color:rgb(256,256,256); font-size:22px">
+						Fields
+
+					<i  class= "pull-right {{showFields && 'glyphicon glyphicon-arrow-up' || 'glyphicon glyphicon-arrow-down' }}"  ></i>
+					</h2>
+			</div>
+			<div class="panel-body" data-toggle="buttons" ng-show="showFields" >
+				<div class="row" style="margin-bottom:15px">
+						<div class="col-md-6 ">
+							<button type="button" class="btn btn-success" ng-click="check_all(fields_btn);query_changed()" ng-disabled="!readOnly"> Check All
+							</button>
+						</div>
+						<div class="col-md-3">
+								<button type="button" class="btn btn-danger" ng-click="uncheck_all(fields_btn);query_changed()" ng-disabled="!readOnly"> Uncheck All
+								</button>
+						</div>
+					</div>
+					
+				<div class="col-md-6" ng-repeat="field in columns" style="margin-bottom:5px;margin-top:5px;">
+					<div class="btn btn-default"  ng-click="query_changed([$index])" >
+					<i  class= "{{fields_btn[$index] && 'glyphicon glyphicon-ok' || 'glyphicon glyphicon-remove' }}" ></i>
+					{{field}} </div>
+				
+				</div>
+				
+			</div>
+	</div>
+
+	<div>
+	<div class="{{readOnly && 'panel panel-primary' || 'panel panel-default'}}" style="background-color: rgb(245, 245, 245);">
+		<div class="panel-heading"> 
+				
+				<h2 class="panel-title text-center" style="color:rgb(256,256,256); font-size:22px">
+				
+				<i   class=" pull-left glyphicon glyphicon-plus-sign" ng-click="add_condition()" ></i>
+					Conditions
+				
+				
+
+					<i ng-show="conditions.length > 0" class= "pull-right {{showConditions && 'glyphicon glyphicon-arrow-up' || 'glyphicon glyphicon-arrow-down' }}" ng-click="showConditions=!showConditions" ></i>
+				</h2>
+		</div>
+
+		<div ng-repeat="cond in conditions" class="panel-body" ng-show="showConditions">
+			<div class="col-md-2">
+			<!--Sidebar content-->
+		 		Where
+			</div>
+			<div class="col-md-2" >
+					<select ng-model="cond.logical" ng-show="$index > 0" ng-change="query_changed()" >
+			     		<option ng-repeat="logical in logical_op " value="{{logical}}"ng-disabled="!readOnly" >{{logical}}</option>
+			  			// unique options from the categories
+					</select>
+			</div>
+			<div class="col-md-2">
+					<select ng-model="cond.field" ng-change="query_changed()">
+			     		<option ng-repeat="field in columns " value="{{field}}" ng-disabled="!readOnly">{{field}}</option>
+			  			// unique options from the categories
+					</select>
+			</div>
+	
+			<div class="col-md-2"> 
+					<select ng-model="cond.op" ng-change="query_changed()">
+			     		Is <option ng-repeat="op in comparison_op " value="{{op.op}}" ng-disabled="!readOnly">{{op.name}}</option>
+			  			// unique options from the categories
+					</select>
+			</div>		
+			<div class="col-md-2">
+			     		 <input type="text" ng-model="cond.value" ng-change="query_changed()" ng-disabled="!readOnly">
+			</div>
+	
+			<div class="col-md-2" >
+						<i   class=" pull-right glyphicon glyphicon-minus-sign" 	ng-click="remove_condition($index);query_changed()" ></i>	
+			</div>
+		</div>
+
+
+	</div>
+	<div class="{{(!readOnly && !query_disabled) && 'panel panel-primary' || 'panel panel-default'}}" style="background-color: rgb(245, 245, 245);">
+		<div class="panel-heading" ng-click="showQuery=!showQuery">
+			<h2 class="panel-title text-center" style="color:rgb(256,256,256); font-size:22px">
+				SQL Query  
+					
+					<i class= "pull-right {{showQuery && 'glyphicon glyphicon-arrow-up' || 'glyphicon glyphicon-arrow-down' }}"  ></i> 
+			</h2>
+		</div>	
+		<div class="panel-body" ng-show = "showQuery">	
+			<div class="row" style="margin-bottom:15px">
+				<div class="col-md-2" >
+		   	 		<button type="button" class="btn btn-success btn-lg" ng-model="readOnly" ng-change="modeChanged()" ng-show="readOnly" btn-checkbox >Write/Edit Query</button>
+		   	 	</div>
+		   	</div>
+		    <div class="row">
+		    	<div class="col-md-12 " >
+		    		<div class=" alert alert-warning " ng-show="!readOnly"> Since you have entered the edited mode, the above guided query-building options have been disabled </div>
+		    		<div class=" alert alert-danger " ng-show="error">{{error}}</div>
+		    		<div class=" alert alert-success " ng-show="success">{{success}}</div>
+					<div ui-ace="aceOption" readonly="true" ng-model="aceModel">
+					</div>
+				</div>
+			</div>
+			<div class="row" style="margin-top:15px">
+		    	<div class="col-md-2" >
+					<button type="button" class="btn btn-default" ng-click="check_query(document)" >Check Query syntax</button>
+				</div>
+				<div class="col-md-2" >
+					<button type="button" class="btn btn-default" ng-click="batch_query(document)" >Run Batch Query</button>
+				</div>
+				<div class="col-md-2" >
+					<button type="button" class="btn btn-default" ng-click="realtime_query(document)" >Run Real-time Query</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div ui-view></div>
+</div>

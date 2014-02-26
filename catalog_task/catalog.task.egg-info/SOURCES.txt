@@ -1,0 +1,12 @@
+README.txt
+setup.py
+catalog.task.egg-info/PKG-INFO
+catalog.task.egg-info/SOURCES.txt
+catalog.task.egg-info/dependency_links.txt
+catalog.task.egg-info/entry_points.txt
+catalog.task.egg-info/not-zip-safe
+catalog.task.egg-info/requires.txt
+catalog.task.egg-info/top_level.txt
+task/__init__.py
+task/create_catalog.py
+task/version.py

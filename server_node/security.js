@@ -13,12 +13,11 @@ var db = require('./db');
 var q = require('q');
 var passwordHash = require('password-hash');
 
+
+
 module.exports.ensureAuthenticated = function (req, res, next) {
-	console.log(req.query.apiKey);
-	console.log(req.query.user_id);
-	console.log(req.headers);
-	console.log(req.headers.apikey);
-	console.log(req.headers.user_id);
+
+	console.log("ensured");
   	findById(req.headers.user_id,req.headers.apikey).then(
   		function(data) {
 	  	console.log("api_key ok");
@@ -37,14 +36,16 @@ module.exports.findById = findById;
 function findById(id,api_key) {
 	var deferred = q.defer();
 	console.log(users);
-	console.log(id);
-	console.log(api_key);
+	console.log("id "+id+"  ");
+	console.log("api_key "+ api_key);
 	console.log("lenght user list "+users.length);
+	console.log("print user"); 
 	users.forEach(function (x) {
 		if (x.id == id && x.api_key == api_key) deferred.resolve(); 
 		console.log("inside");})
-	console.log("before return false");
+	console.log("why is checking? before return false");
 	deferred.reject();
+	console.log("deferred")
 	return deferred.promise;
 	//return false;
 }
@@ -89,13 +90,14 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-console.log("deserialize");
+
+console.log("why deserialize now?");
   findById(id, function (err, user) {
     done(err, user);
   });
 });
 
-
+var salt = '82299c7d63bfbe34b89fe51d5daa9738';
 // Use the LocalStrategy within Passport.
 //   Strategies in passport require a `verify` function, which accept
 //   credentials (in this case, a username and password), and invoke a callback
@@ -120,7 +122,8 @@ console.log("does not wait");
         console.log(password);
         console.log(user.password);
         console.log("check pass "+passwordHash.verify(password, user.password));
-        if (!passwordHash.verify(password, user.password)) { return done(null, false, { message: 'Invalid password' }); }
+        var userHash = require('crypto').createHash('sha512').update(password+salt).digest('hex');
+        if (userHash  != user.password) { return done(null, false, { message: 'Invalid password' }); }
         return done(null, user);
       });
     });

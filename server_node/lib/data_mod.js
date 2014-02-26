@@ -1,5 +1,11 @@
 var q = require('q');
 
+/**
+ * Description
+ * @method list_to_array
+ * @param {} result
+ * @return MemberExpression
+ */
 module.exports.list_to_array = function(result)
 	{  
 		var deferred = q.defer();

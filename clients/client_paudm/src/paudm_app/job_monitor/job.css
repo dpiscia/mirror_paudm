@@ -1,0 +1,102 @@
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  stroke: #000;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2 px;
+}
+{  font-size: 11px;
+ pointer-events: none;
+}
+
+text.parent {
+  fill: #1f77b4;
+}
+
+circle {
+  fill: #ccc;
+  stroke: #999;
+  pointer-events: all;
+}
+
+circle.parent {
+  fill: #1f77b4;
+  fill-opacity: .1;
+  stroke: steelblue;
+}
+
+circle.parent:hover {
+  stroke: #ff7f0e;
+  stroke-width: .5px;
+}
+
+
+     .legend {
+position : absolute;
+left: 200px;
+top: 80px;
+
+}
+.node circle {
+  cursor: pointer;
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  font-size: 11px;
+}
+
+path.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+.node rect {
+  cursor: pointer;
+  fill: #fff;
+  fill-opacity: .5;
+  stroke: #3182bd;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  font: 10px sans-serif;
+  pointer-events: none;
+}
+
+marker#arrow {
+    fill: #666;
+}
+     line.link {
+        stroke: #999;
+        stroke-opacity: .6;
+      }
+      line.link_2 {
+        stroke: #000;
+        stroke-opacity: .6;
+        stroke-dasharray: 0,2 1;
+      }
+          line.link_3 {
+        stroke: #FFF;
+        stroke-opacity: .6;
+        stroke-dasharray: 0,2 1;
+.node.a { fill: #1f77b4; }
+.node.b { fill: #ff7f0e; }
+.node.c { fill: #2ca02c; }
+      }
+      
+.modal {
+  display: block; 
+}

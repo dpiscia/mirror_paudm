@@ -1,0 +1,77 @@
+
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-2">
+		<!--Sidebar content-->
+	 		Email filter 
+	 	</div>
+	 	<div class="col-md-2">
+	
+	     		
+	     		<input ng-model="email_filter">
+	
+		</div>
+		<div class="col-md-2">
+		<!--Sidebar content-->
+	 		Name filter 
+	 	</div>
+	 	<div class="col-md-2">
+	
+	     		
+	     		<input ng-model="name_filter">
+	
+		</div>
+	</div>
+	<div class="row">
+		
+		<div class="col-md-6 col-md-offset-6">
+			<h3 ng-if="resources_op_info.error" class="label label-danger">
+	    		Error! THer might be a problem in the DB server
+	  		</h3>
+	  				<span ng-if="resources_op_info.success" class="label label-success">
+	    		Correct! Operation correctly done
+	  		</span>
+	  	</div>
+	  	<div class="col-md-12" style="overflow: auto">
+			<div class="table-responsive">
+				
+				<table class="table ">	
+					<thead>
+						<tr>
+					
+							<th class = "text-center" ng-repeat="head in headers"> {{head| uppercase}} </th>
+							<th class = "text-center" ng-repeat="(name, fn) in operations">{{name}} </th>
+						</tr>
+					</thead>
+		    		<tbody>
+						<tr ng-repeat="result in filteredData = (resources | filter:{email:email_filter} | filter:{name:name_filter}) | startFrom:(currentPage-1)*maxSize | limitTo:maxSize" ng-init="sectionIndex = $index" >
+						 						<td ng-repeat="key_value in headers">
+								<div ng-if="check_type(result[key_value]) == 'boolean'">
+									<button type="button" class="btn btn-default" ng-model="result[key_value]" btn-checkbox >
+	       							 	{{result[key_value]}}
+	    							</button>
+								</div>
+								<div ng-if="(check_type(result[key_value]) != 'boolean') && check_type(result[key_value]) != 'object'">
+									<div class="form-group"> 
+										<input name="input" ng-model="result[key_value]" class="form-control" required>
+									</div>
+								</div>
+								<div ng-if="check_type(result[key_value]) == 'object'">
+									<div class="btn-group">
+	    							<button ng-repeat="(key, value) in result[key_value]" type="button" class="btn btn-default" ng-model="result[key_value][key]" btn-checkbox style="margin-left:5px"> {{key}}</button>
+	    							</div>
+								</div>							
+							</td>				
+							<td  ng-repeat="(name, op) in operations">
+								<button type="button" class="btn btn-primary" ng-click="op.call(this,sectionIndex)">
+									{{name}}
+								</button>
+		    				</td>
+						</tr>
+					</tbody>  
+				</table>
+				<pagination total-items="filteredData.length"  max-size="maxSize" page="currentPage" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+		</div>
+	</div>		
