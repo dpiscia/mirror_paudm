@@ -1,48 +1,107 @@
 <style>
-body {   
 
-	margin: 0;
-     background: url('img/_firstqsos_esa.jpg');
-     background-size:100% ;
-     background-repeat:no-repeat;
-    display: compact;
-     font: 13px/18px "Helvetica Neue", Helvetica, Arial, sans-serif;
+header.site-header.cover {
+    display: flex;
+    width: 99%;
+    height: 60%;
+    min-height: 394px;
+    text-align: center;
+    color: #FFF;
+    background: none no-repeat scroll center center  #303538;
+    background-color : rgb(210,210,210);
+    
+}
+.row.central
+{
+background-color : rgb(244,244,244);
+}
+ body {
+  padding-top: 0px;
+  
+}
+.navbar-nav li a {
+ line-height: 50px;
 }
 
-</style>    
-    <div class="container">
-    	<div class="col-md-6 col-md-offset-3">
-    		
-    		<div class="panel panel-primary">
-    			<div class="panel-heading"><h4>Log in</h4></div>
-    			<div class="panel-body">
 
-		    		
-						<form  name="login_form" class="form-signin" ng-submit="myFunc(login_form)" novalidate>
-							<input type="email" name="name" ng-model="name" class="form-control" placeholder="Email" required >
-							<p class="help-block error" ng-show="login_form.name.$error.required">please enter your email</p>
-							<p class="help-block error" ng-show="!login_form.name.$valid && !login_form.name.$error.required">please enter a valid email</p>
-					    	<br />
-					    	<input type="password" name="psw" ng-model="password" class="form-control" placeholder="Password" required >
-							<p class="help-block error" ng-show="login_form.psw.$error.required">please enter your Password</p>
-							<p class="help-block error" ng-show="!login_form.psw.$error.required"><p>
-							<button type="button" class="btn btn-default" ng-model="rememberme" btn-checkbox btn-checkbox-true=true btn-checkbox-false=false>
-		        				
-		  					<i  class= "{{rememberme && 'glyphicon glyphicon-ok' || 'glyphicon glyphicon-remove' }}" ></i> Rememberme</button>
-    
-							<br />
-							<div class=" alert alert-danger " ng-show="error">{{error}}</div>
+</style>
+
+
+	<div class="row">
+		<header class="site-header cover" style="background-image: url(logos/tapes_reduced.jpg)" >
+			
+			<div class="col-md-4 col-md-offset-4">
+				<img class="img-responsive " src="logos/logo_cosmohub_white.png">
+				<h3>Welcome to CosmoHub. <br> <br>Massive storage and database access <br> of simulated and observed cosmological data. </h3>
+				<nav class="links">
+					<ul>
+						<br>
+
+					</ul>
+				</nav>
+			</div>
+		</header>
+	</div>
+	<div class="row central">
+		<div class=" col-md-4 col-md-offset-4">
+			<div class="panel-body">
+				<form  name="login_form" class="form-signin" ng-submit="myFunc(login_form)" novalidate>
+					<br>
+					<input type="email" name="name" ng-model="name" class="form-control" placeholder="Email" required >
+					<p class="help-block error" ng-show="login_form.name.$error.required">please enter your Email</p>
+					<p class="help-block error" ng-show="!login_form.name.$valid && !login_form.name.$error.required">please enter a valid email</p>
+			    	
+			    	<input type="password" name="psw" ng-model="password" class="form-control" placeholder="Password" required >
+					<p class="help-block error" ng-show="login_form.psw.$error.required">please enter your Password</p>
+					<p class="help-block error" ng-show="!login_form.psw.$error.required"><p>
+					<button type="button" class="btn btn-default" ng-model="rememberme" btn-checkbox btn-checkbox-true=true btn-checkbox-false=false>
+        				
+  					<i  class= "{{rememberme && 'glyphicon glyphicon-ok' || 'glyphicon glyphicon-remove' }}" ></i> Remember me</button>
+
+					<br />
+					<div class=" alert alert-danger " ng-show="error">{{error}}</div>
+
+					<button type="submit" ng-disabled="login_form.$invalid" class="btn btn-lg btn-primary btn-block">Log in</button>
+					
+					</br>
+					<button type="Register" ng-click="to_register()" class="btn btn-lg btn-info btn-block">Register</button>
+				</form>
+							
+			</div>
+		</div>	
 		
-							<button type="submit" ng-disabled="login_form.$invalid" class="btn btn-lg btn-primary btn-block">Log in</button>
-						</form>
+		
+		<div class=" col-md-6 col-md-offset-3">
+			<div class="row">
+				<div class=" col-md-3">
+					<p>Supporting projects:<p>
+				</div>
+			</div>
+			<div class="row">
+				<div class=" col-md-3  ">
+				
+					<img  class="img-responsive " src="logos/mice-logo_black_100.png">
+				</div>
+				<div class=" col-md-3">
 					
-
-
-					
-						</br>
-						<button type="Register" ng-click="to_register()" class="btn btn-lg btn-info btn-block">Register</button>
-					
-
+						<img  class="img-responsive " src="logos/DES_remastered_black_100.png">
+		
+				</div>
+				<div class=" col-md-3">
+					<img class="img-responsive " src="logos/logo_pau_100.png">
+				</div>
+				<div class=" col-md-3">
+					<img class="img-responsive " src="logos/Euclid_simple_new.png">
+				</div>
 			</div>
 		</div>
-    </div> <!-- /container -->
+		<div class=" col-md-6 col-md-offset-3">
+			
+				<br>
+				<br>
+		</div>		
+
+	</div>
+</div>
+
+

@@ -1,3 +1,4 @@
+
 <style type="text/css">
  body {
   padding-top: 80px;
@@ -11,6 +12,10 @@
 
 {
   line-height: 50px;
+}
+.row {
+  margin-left: 0px;
+  margin-right: 0px;
 }
 </style>
  
@@ -41,9 +46,9 @@
 	       <ul class="nav navbar-nav navbar-right">
 	        <li class="dropdown">
 	        	<form class="navbar-form navbar-right" role="search">
-	          <a href="#" class="btn btn-info dropdown-toggle" data-toggle="collapse">Welcome {{username.getname()}} </a>
+	          <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="collapse">Welcome {{username.getname()}} </a>
 	          	
-	          <ul class="navbar-inverse dropdown-menu">
+	          <ul class=" dropdown-menu">
 
 						<li><a href="#/personal_area">Personal Area</a></li>
 						<li><a href="#" ng-click = "logout()">Log out</a></li>

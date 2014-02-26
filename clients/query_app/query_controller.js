@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-angular.module('query',['ui.ace']).controller('query_ctrl', [ '$scope','user_auth','$state','run_query_resources','columns','table', function ($scope, user_auth,$state,run_query_resources,columns, table) {
+angular.module('query',['ui.ace','ui.bootstrap']).controller('query_ctrl', [ '$scope','user_auth','$state','run_query_resources','columns','table', function ($scope, user_auth,$state,run_query_resources,columns, table) {
   if (typeof($scope.catalog) == 'undefined') {$scope.columns = columns; $scope.table = table }
   else {$scope.columns = $scope.catalog.columns; $scope.table = $scope.catalog.catalog.table;}
 
@@ -26,9 +26,10 @@ angular.module('query',['ui.ace']).controller('query_ctrl', [ '$scope','user_aut
 								{name : 'not equal', op : '!='}
 								]
   $scope.logical_op = ['AND','OR','NOT']
-  $scope.query_changed = function() {
+  $scope.query_changed = function(btn_index) {
     if ($scope.readOnly){
 	  	$scope.fields = [];
+	  	$scope.fields_btn[btn_index] = !$scope.fields_btn[btn_index];
 		$scope.fields_btn.map(function(x,index){if (x != 'undefined' && x ==true)  $scope.fields.push($scope.columns[index]);})
 	  	$scope.aceModel = " SELECT "+ $scope.fields.join()+' \n';
 	  	$scope.aceModel = $scope.aceModel+" FROM "+$scope.table+' \n';
@@ -96,7 +97,7 @@ $scope.check_query = function() {run_query_resources.check($scope.aceModel, user
    							var state_url;
    							state_url = $state.current.name;
    							if (!state_url.endsWith('.results')) {state_url+='.results'; }
-   							$state.go(state_url);
+   							$state.go(state_url,{},{reload : true});
    							$scope.error = ""
    							}, 
    			function(err){

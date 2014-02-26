@@ -72,7 +72,10 @@ angular.module('d3Scatter', ['d3'])
       .enter().append("svg:circle")
           .attr("cx", function (d,i) { return x(d[0]); } )
           .attr("cy", function (d) { return y(d[1]); } )
-          .attr("r", 8);
+          .attr("r", 4)
+          .append("svg:title")
+          .text(function(d) { 
+          	return 'x ='+d[0]+'\n'+'y ='+d[1]; });;
     	      
 			}
 		}	
