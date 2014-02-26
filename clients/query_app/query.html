@@ -34,9 +34,12 @@ button {
 					</div>
 					
 				<div class="col-md-6" ng-repeat="field in columns" style="margin-bottom:5px;margin-top:5px;">
-					<button type="button" class="btn btn-default" ng-model="fields_btn[$index]" btn-checkbox ng-change="query_changed()" ng-disabled="!readOnly">{{field}}</button>
-					
+					<div class="btn btn-default"  ng-click="query_changed([$index])" >
+					<i  class= "{{fields_btn[$index] && 'glyphicon glyphicon-ok' || 'glyphicon glyphicon-remove' }}" ></i>
+					{{field}} </div>
+				
 				</div>
+				
 			</div>
 	</div>
 

@@ -50,7 +50,7 @@ admin.controller('admin_ctrl', [ '$scope', 'resources','crud_resources', functio
 		}
    		var resources_copy = angular.copy(resources);
 		function get_head(array){
-		$scope.resources_op_info = [];
+		$scope.resources_op_info = {} ;
 		var dict = []
 		for (var key in array) {if (!key.startsWith('$') && !key.startsWith('_')) dict.push(key);}
 		return dict;
@@ -67,13 +67,13 @@ admin.controller('admin_ctrl', [ '$scope', 'resources','crud_resources', functio
                			console.log(data);
                			angular.copy( $scope.resources[values],resources_copy[values]);
                			resources_copy[values] = $scope.resources[values];
-               			$scope.resources_op_info[values] = {'error': false, 'success': true};
+               			$scope.resources_op_info = {'error': false, 'success': true};
                			 }
                		, function(err){ 
                			console.log(err);
                			
                			angular.copy(resources_copy[values], $scope.resources[values]);
-               			$scope.resources_op_info[values] = {'error': true, 'success': false};
+               			$scope.resources_op_info = {'error': true, 'success': false};
                			})
    			//function save(). success(message and resource_copy[values] = $scope.resources[values] ) .fail(error message; $scope.resources[values]=resources_copy[values])
    			}
@@ -83,11 +83,11 @@ admin.controller('admin_ctrl', [ '$scope', 'resources','crud_resources', functio
                			angular.copy( $scope.resources[values],resources_copy[values]);
                			resources_copy.splice(values,1);
                			$scope.resources.splice(values,1);
-               			$scope.resources_op_info[values] = {'error': false, 'success': true};
+               			$scope.resources_op_info = {'error': false, 'success': true};
                			 }
                		, function(err){ 
                			console.log(err);
-               			$scope.resources_op_info[values] = {'error': false, 'success': true};
+               			$scope.resources_op_info = {'error': true, 'success': false};
                			});
    			}
    		$scope.operations = {'DELETE': $scope.delete,'SAVE':$scope.save}

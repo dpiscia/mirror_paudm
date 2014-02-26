@@ -1,4 +1,7 @@
-
+<style>
+svg {
+background-color: white;}
+</style>
 <link rel="stylesheet" href="/results/scatter.css"/>
 
 <div class="panel panel-primary" style="background-color: rgb(245, 245, 245);">
@@ -10,12 +13,22 @@
 
 			</h2>
 	</div>
+	<div class="container" >
+	<div class="row">
+		<div class="col-md-12" ><br>
 			<div class="btn-group" >
-				<button type="button" class="btn btn-primary" ng-model="$parent.type" btn-radio="'table'"    tooltip="plots element grouped by Task">Table</button>
-				<button type="button" class="btn btn-primary" ng-model="$parent.type" btn-radio="'scatter'"  tooltip="plots element grouped by Status">Scatter</button>
-				<button type="button"  class="btn btn-default"ng-csv="results" filename="test.csv">Download CSV file</button>
+				<div class="col-md-4" >
+					<button type="button" class="btn btn-primary" ng-model="$parent.type" btn-radio="'table'"    tooltip="plots element grouped by Task">Table</button>
+				</div>
+				<div class="col-md-4" >
+					<button type="button" class="btn btn-primary" ng-model="$parent.type" btn-radio="'scatter'"  tooltip="plots element grouped by Status">Scatter</button>
+				</div>
+				<div class="col-md-4" >
+					<button type="button"  class="btn btn-default" ng-csv="results" filename="test.csv">Download CSV file</button>
+				</div>
 			</div>  
-<div class="container" >
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-md-12" style="overflow: auto" ng-show="type == 'table'">
 		
@@ -37,23 +50,27 @@
 			</table>
 			<pagination total-items="results.length"  max-size="maxSize" page="currentPage" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
 		</div>
+		<p> {{results.length}}</p>
 	</div>		
 </div>
 
-<div class="row" ng-show="type == 'scatter'">
-	X axis 
+<div class="row" ng-show="type == 'scatter'">	
+
 	<div class="col-md-2">
+		X axis
 		<select ng-model="var1" ng-options="field for field in results[0]">
      			
   			// unique options from the categories
 		</select>
 	</div>
-	Y axis 
+	
 	<div class="col-md-2">
+		Y axis 
 		<select ng-model="var2" ng-options="field for field in results[0] ">
      			
   			// unique options from the categories
 		</select>
 	</div>
+
 	<d3-scatter data="data" ></d3-scatter> 
 </div>
